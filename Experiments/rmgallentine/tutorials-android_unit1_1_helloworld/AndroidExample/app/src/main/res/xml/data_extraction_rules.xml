@@ -8,12 +8,10 @@
         <!-- TODO: Use <include> and <exclude> to control what is backed up.
         -->
         <include domain="file" path="string"/>
-        <exclude domain="file" path="colors"/>
+        <exclude domain="file" path="**/*.kt" />
     </cloud-backup>
     <device-transfer>
-        <include domain=["file" | "database" | "sharedpref" | "external" |
-        "root"] path="string"/>
-        <exclude domain=["file" | "database" | "sharedpref" | "external" |
-        "root"] path="string"/>
+        <include domain="file" path="layout"/>
+        <exclude domain="file" path="drawable"/>
     </device-transfer>
 </data-extraction-rules>
