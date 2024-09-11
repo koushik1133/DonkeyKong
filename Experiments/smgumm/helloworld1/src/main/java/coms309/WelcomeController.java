@@ -11,7 +11,9 @@ class WelcomeController {
     public String intro() {
         return """
                 Here is a list of available endpoints:
+                
                 /{name} to be greeted with a personalized message!
+                
                 /art to see some lovely ASCII art!""";
     }
 

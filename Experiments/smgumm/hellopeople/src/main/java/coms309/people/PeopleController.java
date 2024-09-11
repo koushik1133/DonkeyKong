@@ -34,7 +34,7 @@ public class PeopleController {
     // Springboot automatically converts the list to JSON format 
     // in this case because of @ResponseBody
     // Note: To LIST, we use the GET method
-    @GetMapping("/people")
+    @GetMapping("/all")
     public  HashMap<String,Person> getAllPersons() {
         return peopleList;
     }
@@ -45,7 +45,7 @@ public class PeopleController {
     // It returns a string message in THIS example.
     // in this case because of @ResponseBody
     // Note: To CREATE we use POST method
-    @PostMapping("/people")
+    @PostMapping("/createPerson")
     public  String createPerson(@RequestBody Person person) {
         System.out.println(person);
         peopleList.put(person.getFirstName(), person);
@@ -71,7 +71,7 @@ public class PeopleController {
     // Here we are returning what we sent to the method
     // in this case because of @ResponseBody
     // Note: To UPDATE we use PUT method
-    @PutMapping("/people/{firstName}")
+    @PutMapping("/updatePerson/{firstName}")
     public Person updatePerson(@PathVariable String firstName, @RequestBody Person p) {
         peopleList.replace(firstName, p);
         return peopleList.get(firstName);
@@ -83,7 +83,7 @@ public class PeopleController {
     // in this case because of @ResponseBody
     // Note: To DELETE we use delete method
     
-    @DeleteMapping("/people/{firstName}")
+    @DeleteMapping("/deletePerson/{firstName}")
     public HashMap<String, Person> deletePerson(@PathVariable String firstName) {
         peopleList.remove(firstName);
         return peopleList;
