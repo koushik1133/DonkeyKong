@@ -9,11 +9,11 @@ class WelcomeController {
 
     @GetMapping("/")
     public String welcome() {
-        return "Hello and welcome to COMS 309";
+        return "Hello, welcome to the first page I launched with Spring Boot!";
     }
 
     @GetMapping("/{name}")
     public String welcome(@PathVariable String name) {
-        return "Hello and welcome to COMS 309: " + name;
+        return "Hello, your name is: " + name + "!";
     }
 }
