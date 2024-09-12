@@ -13,14 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 class WelcomeController {
 
     @GetMapping("/")
-    public String welcomeMessage() {
-        return """
-                Hello, this is the main page! Here are some extensions:
-                /createPerson
-                /updatePerson/{name}
-                /deletePerson/{name}
-                /getPerson/{name}
-                /all
-                """;
+    public String welcome() {
+        return "Hello and welcome to COMS 309";
     }
 }
