@@ -2,4 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="green">#0xff00ff00</color>
+    <color name="red">#0xffff0000</color>
+
+    <color name="my_light_primary">#6200EE</color>
+    <color name="my_light_primary_variant">#3700B3</color>
+    <color name="my_light_secondary">#03DAC6</color>
+    <color name="my_light_secondary_variant">#018786</color>
+    <color name="my_light_background">#FFFFFF</color>
+    <color name="my_light_surface">#FFFFFF</color>
+    <color name="my_light_error">#B00020</color>
+
 </resources>
