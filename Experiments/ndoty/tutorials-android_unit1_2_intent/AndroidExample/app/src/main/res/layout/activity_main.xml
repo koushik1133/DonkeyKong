@@ -25,7 +25,7 @@
         android:layout_marginTop="100dp"
         android:backgroundTint="#820000"
         android:gravity="bottom"
-        android:text="To the Counter Activity"
+        android:text="To Counter Activity"
         android:textColor="#FFEB3B"
         android:textSize="20sp"></Button>
 
