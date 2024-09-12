@@ -19,11 +19,11 @@ import java.util.HashMap;
  */
 
 @RestController
-public class PeopleController {
+public class MeatController {
 
     // Note that there is only ONE instance of PeopleController in 
     // Springboot system.
-    HashMap<String, Person> peopleList = new  HashMap<>();
+    HashMap<String, Meat> meatList = new  HashMap<>();
 
     //CRUDL (create/read/update/delete/list)
     // use POST, GET, PUT, DELETE, GET methods for CRUDL
@@ -35,8 +35,8 @@ public class PeopleController {
     // in this case because of @ResponseBody
     // Note: To LIST, we use the GET method
     @GetMapping("/all")
-    public  HashMap<String,Person> getAllPersons() {
-        return peopleList;
+    public  HashMap<String,Meat> getAllPersons() {
+        return meatList;
     }
 
     // THIS IS THE CREATE OPERATION
@@ -45,11 +45,11 @@ public class PeopleController {
     // It returns a string message in THIS example.
     // in this case because of @ResponseBody
     // Note: To CREATE we use POST method
-    @PostMapping("/createPerson")
-    public  String createPerson(@RequestBody Person person) {
-        System.out.println(person);
-        peopleList.put(person.getFirstName(), person);
-        return "New person "+ person.getFirstName() + " Saved";
+    @PostMapping("/createCut")
+    public  String createPerson(@RequestBody Meat meat) {
+        System.out.println(meatList);
+        meatList.put(meat.getNameOfCut(), meat);
+        return "New cut "+ meat.getNameOfCut() + " Saved";
     }
 
     // THIS IS THE READ OPERATION
@@ -58,10 +58,9 @@ public class PeopleController {
     // springboot automatically converts Person to JSON format when we return it
     // in this case because of @ResponseBody
     // Note: To READ we use GET method
-    @GetMapping("/people/{firstName}")
-    public Person getPerson(@PathVariable String firstName) {
-        Person p = peopleList.get(firstName);
-        return p;
+    @GetMapping("/cuts/{name}")
+    public Meat getPerson(@PathVariable String name) {
+        return meatList.get(name);
     }
 
     // THIS IS THE UPDATE OPERATION
@@ -71,10 +70,10 @@ public class PeopleController {
     // Here we are returning what we sent to the method
     // in this case because of @ResponseBody
     // Note: To UPDATE we use PUT method
-    @PutMapping("/updatePerson/{firstName}")
-    public Person updatePerson(@PathVariable String firstName, @RequestBody Person p) {
-        peopleList.replace(firstName, p);
-        return peopleList.get(firstName);
+    @PutMapping("/updateCut/{name}")
+    public Meat updateMeat(@PathVariable String name, @RequestBody Meat p) {
+        meatList.replace(name, p);
+        return meatList.get(name);
     }
 
     // THIS IS THE DELETE OPERATION
@@ -83,10 +82,10 @@ public class PeopleController {
     // in this case because of @ResponseBody
     // Note: To DELETE we use delete method
     
-    @DeleteMapping("/deletePerson/{firstName}")
-    public HashMap<String, Person> deletePerson(@PathVariable String firstName) {
-        peopleList.remove(firstName);
-        return peopleList;
+    @DeleteMapping("/deleteCut/{name}")
+    public HashMap<String, Meat> deleteCut(@PathVariable String name) {
+        meatList.remove(name);
+        return meatList;
     }
 }
 
