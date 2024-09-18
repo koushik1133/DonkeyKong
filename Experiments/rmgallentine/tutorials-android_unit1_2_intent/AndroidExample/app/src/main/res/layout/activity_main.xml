@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".MainActivity"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/main_msg_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Intent Example"
         android:layout_gravity="center"
         android:layout_marginTop="200dp"
-        android:textSize="30dp"
-        android:textColor="#3F51B5">
-    </TextView>
+        android:text="&quot;Random Text&quot;"
+        android:textColor="#3F51B5"
+        android:textSize="34sp"></TextView>
 
     <Button
         android:id="@+id/main_counter_btn"
@@ -29,5 +28,25 @@
         android:textColor="#ffffff"
         android:textSize="20sp"
         app:iconTint="#DC0852"></Button>
+
+    <EditText
+        android:id="@+id/TestText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="time"
+        android:text='"WTF is going on RN?"'
+        android:textColor="@color/my_dark_primary"
+        android:textSize="34sp" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="This box does nothing"
+        android:textColor="#E72323"
+        android:textSize="34sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
