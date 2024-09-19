@@ -46,7 +46,7 @@ public class MeatController {
     // in this case because of @ResponseBody
     // Note: To CREATE we use POST method
     @PostMapping("/createCut")
-    public  String createPerson(@RequestBody Meat meat) {
+    public  String createCut(@RequestBody Meat meat) {
         System.out.println(meatList);
         meatList.put(meat.getNameOfCut(), meat);
         return "New cut "+ meat.getNameOfCut() + " Saved";
@@ -59,7 +59,7 @@ public class MeatController {
     // in this case because of @ResponseBody
     // Note: To READ we use GET method
     @GetMapping("/cuts/{name}")
-    public Meat getPerson(@PathVariable String name) {
+    public Meat getCut(@PathVariable String name) {
         return meatList.get(name);
     }
 
