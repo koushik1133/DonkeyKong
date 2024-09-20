@@ -30,8 +30,8 @@ public class PersonController {
     @Autowired
     LaptopRepository laptopRepository;
 
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private final String success = "{\"message\":\"success\"}";
+    private final String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/Persons")
     List<Person> getAllPersons(){
@@ -90,7 +90,12 @@ public class PersonController {
 
     @DeleteMapping(path = "/Persons/{id}")
     String deletePerson(@PathVariable int id){
-        PersonRepository.deleteById(id);
-        return success;
+        Person Person = PersonRepository.findById(id);
+        if(Person == null)
+            return failure;
+        else {
+            PersonRepository.delete(Person);
+            return success;
+        }
     }
 }
