@@ -19,7 +19,7 @@ public class ImageReqActivity extends AppCompatActivity {
     private Button btnImageReq;
     private ImageView imageView;
 
-    public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
+    public static final String URL_IMAGE = "https://static.wikia.nocookie.net/starwars/images/9/92/Just_wrong.jpg/revision/latest?cb=20061006174720";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
