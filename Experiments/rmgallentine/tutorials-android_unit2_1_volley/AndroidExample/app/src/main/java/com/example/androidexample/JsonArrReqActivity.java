@@ -26,6 +26,7 @@ public class JsonArrReqActivity extends AppCompatActivity {
 
     private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/users";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
