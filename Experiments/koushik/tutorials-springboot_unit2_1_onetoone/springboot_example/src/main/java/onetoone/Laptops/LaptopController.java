@@ -33,17 +33,17 @@ public class LaptopController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/Laptops")
+    @GetMapping(path = "/laptops")
     List<Laptop> getAllLaptops(){
         return laptopRepository.findAll();
     }
 
-    @GetMapping(path = "/Laptops/{id}")
+    @GetMapping(path = "/laptops/{id}")
     Laptop getLaptopById(@PathVariable int id){
         return laptopRepository.findById(id);
     }
 
-    @PostMapping(path = "/Laptops")
+    @PostMapping(path = "/laptops")
     String createLaptop(@RequestBody Laptop Laptop){
         if (Laptop == null)
             return failure;
@@ -51,7 +51,7 @@ public class LaptopController {
         return success;
     }
 
-    @PutMapping(path = "/Laptops/{id}")
+    @PutMapping(path = "/laptops/{id}")
     Laptop updateLaptop(@PathVariable int id, @RequestBody Laptop request){
         Laptop laptop = laptopRepository.findById(id);
         if(laptop == null)
@@ -60,7 +60,7 @@ public class LaptopController {
         return laptopRepository.findById(id);
     }
 
-    @DeleteMapping(path = "/Laptops/{id}")
+    @DeleteMapping(path = "/laptops/{id}")
     String deleteLaptop(@PathVariable int id){
 
         // Check if there is an object depending on Person and then remove the dependency
