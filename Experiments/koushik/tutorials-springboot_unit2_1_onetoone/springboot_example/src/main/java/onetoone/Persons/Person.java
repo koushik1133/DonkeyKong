@@ -26,7 +26,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String Name;
     private String emailId;
     private boolean ifActive;
 
@@ -41,7 +41,7 @@ public class Person {
     private Laptop laptop;
 
     public Person(String name, String emailId) {
-        this.name = name;
+        this.Name = name;
         this.emailId = emailId;
         this.ifActive = true;
     }
@@ -60,11 +60,11 @@ public class Person {
     }
 
     public String getName(){
-        return name;
+        return Name;
     }
 
     public void setName(String name){
-        this.name = name;
+        this.Name = name;
     }
 
     public String getEmailId(){
