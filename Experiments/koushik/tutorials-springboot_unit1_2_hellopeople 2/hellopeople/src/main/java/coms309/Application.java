@@ -1,4 +1,3 @@
-
 package coms309;
 
 import org.springframework.boot.SpringApplication;
@@ -10,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Vivek Bengre
  */
 
-@coms309.SpringBootApplication
+@SpringBootApplication
 public class Application {
-
+	
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
