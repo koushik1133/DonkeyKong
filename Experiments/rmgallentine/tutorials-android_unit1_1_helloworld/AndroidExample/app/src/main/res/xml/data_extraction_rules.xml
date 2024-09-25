@@ -8,11 +8,11 @@
 <!--    <cloud-backup disableIfNoEncryptionCapabilities="true|false">-->
         <!-- TODO: Use <include> and <exclude> to control what is backed up.
         -->
-<!--        <include domain="file" path="string"/>-->
-<!--        <exclude domain="file" path="**/*.kt" />-->
+        <include domain="file" path="string"/>
+<!--        <exclude domain="file" path="" />-->
     </cloud-backup>
     <device-transfer>
-<!--        <include domain="file" path="layout"/>-->
-<!--        <exclude domain="file" path="drawable"/>-->
+        <include domain="file" path="layout"/>
+<!--        <exclude domain="file" path=""/>-->
     </device-transfer>
 </data-extraction-rules>
