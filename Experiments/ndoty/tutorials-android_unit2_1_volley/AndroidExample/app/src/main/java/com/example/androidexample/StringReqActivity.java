@@ -22,10 +22,12 @@ public class StringReqActivity extends AppCompatActivity {
     private Button btnStringReq;
     private TextView msgResponse;
 
-    private static final String URL_STRING_REQ = "https://jsonplaceholder.typicode.com/users/1";
-    //   public static final String URL_STRING_REQ = "https://2aa87adf-ff7c-45c8-89bc-f3fbfaa16d15.mock.pstmn.io/users/1";
+    //private static final String URL_STRING_REQ = "https://jsonplaceholder.typicode.com/users/1";
+    //  public static final String URL_STRING_REQ = "https://2aa87adf-ff7c-45c8-89bc-f3fbfaa16d15.mock.pstmn.io/users/1";
     //   public static final String URL_STRING_REQ = "http://10.0.2.2:8080/users/1";
-
+    //private static final String URL_STRING_REQ = "http://ip.jsontest.com/";
+    //private static final String URL_STRING_REQ = "http://echo.jsontest.com/insert-roles-here/Admin-Player1-Player2-Spectator-DK/Key/Has-all-permissions-and-can-edit-and-stop-the-game-player1-player2-Watches-the-game-Throws-barrels-at-players";
+    private static final String URL_STRING_REQ = "https://postman-echo.com/get?test=123 &Player1={{Player1}}&Player2={{Player2}}&Spectator={{Spectator}}&Admin={{Admin}}&DK={{DK}}";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

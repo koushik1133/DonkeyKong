@@ -19,7 +19,8 @@ public class ImageReqActivity extends AppCompatActivity {
     private Button btnImageReq;
     private ImageView imageView;
 
-    public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
+    //public static final String URL_IMAGE = "https://static.wikia.nocookie.net/starwars/images/9/92/Just_wrong.jpg/revision/latest?cb=20061006174720";
+    public static final String URL_IMAGE = "https://cdn.discordapp.com/attachments/1278701294613303296/1281269885934108702/SideDwalkL.png?ex=66f57911&is=66f42791&hm=6a56fe7695232774d4863b03aee9456e33cbab7dec16e2227ee883a37a19326b&";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
