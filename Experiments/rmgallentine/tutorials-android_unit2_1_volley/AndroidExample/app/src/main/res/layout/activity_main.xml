@@ -13,36 +13,48 @@
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
         android:textSize="30sp"
-        android:text="Volley Examples">
+        android:textColor="@color/HeaderText"
+        android:text="Log In Page (Volley Ex.)">
     </TextView>
 
     <Button android:id="@+id/btnStringRequest"
-        android:layout_width="200dp"
+        android:layout_width="225dp"
         android:layout_height="80dp"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:text="String Request" />
+        android:text="(Convert to Login) String Request" />
+    <!--Change this to be the login button that will ask for
+    the user to enter a username and password.
+    This will in turn go to the backk end for a check
+    If there is a username/password that matches a welcome
+    back message should appear else a thanks for joining
+    message will appear.-->
 
     <Button android:id="@+id/btnJsonObjRequest"
-        android:layout_width="200dp"
+        android:layout_width="225dp"
         android:layout_height="80dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
         android:text="JSON Object Request" />
 
     <Button android:id="@+id/btnJsonArrRequest"
-        android:layout_width="200dp"
+        android:layout_width="225dp"
         android:layout_height="80dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
         android:text="JSON Array Request" />
 
     <Button android:id="@+id/btnImageRequest"
-        android:layout_width="200dp"
+        android:layout_width="225dp"
         android:layout_height="80dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:text="Image Request" />
+        android:text="(Convert to admin login) Image Request" />
+    <!--It might be a good idea to make a unique admin login
+    that will check to see if this user is allowed to be an
+    admin. I might make this an image request with a return to
+    home button after clicking and a denied photo if the user
+    is not an admin or a check mark if they are.-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>
