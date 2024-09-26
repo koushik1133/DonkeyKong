@@ -25,7 +25,7 @@ public class JsonArrReqActivity extends AppCompatActivity {
     private TextView msgResponse;
 
     private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/posts";
-
+    //private static final String URL_JSON_ARRAY = "https://postman-echo.com/get?test=123 &Player1={{Player1}}&Player2={{Player2}}&Spectator={{Spectator}}&Admin={{Admin}}&DK={{DK}}";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
