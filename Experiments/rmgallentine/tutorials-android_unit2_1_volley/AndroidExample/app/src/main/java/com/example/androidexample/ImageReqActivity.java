@@ -23,9 +23,9 @@ public class ImageReqActivity extends AppCompatActivity {
 
   //  public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
     //public static final String URL_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg";
-    //public static final String URL_IMAGE = "https://www.w3schools.com/w3images/fjords.jpg\n";
+    public static final String URL_IMAGE = "https://www.w3schools.com/w3images/fjords.jpg\n";
     //public static final String URL_IMAGE = "https://www.w3schools.com/w3images/nature.jpg\n";
-    public static final String URL_IMAGE = "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg\n";
+    //public static final String URL_IMAGE = "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg\n";
 
 
     @Override
