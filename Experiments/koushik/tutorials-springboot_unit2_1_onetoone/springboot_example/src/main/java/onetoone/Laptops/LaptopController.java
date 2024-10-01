@@ -2,8 +2,6 @@ package onetoone.Laptops;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,14 +22,18 @@ import onetoone.Persons.PersonRepository;
 @RestController
 public class LaptopController {
 
-    @Autowired
+    final
     LaptopRepository laptopRepository;
 
-    @Autowired
+    final
     PersonRepository personRepository;
     
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private final String success = "{\"message\":\"success\"}";
+
+    public LaptopController(LaptopRepository laptopRepository, PersonRepository personRepository) {
+        this.laptopRepository = laptopRepository;
+        this.personRepository = personRepository;
+    }
 
     @GetMapping(path = "/Laptops")
     List<Laptop> getAllLaptops(){
@@ -45,6 +47,7 @@ public class LaptopController {
 
     @PostMapping(path = "/Laptops")
     String createLaptop(@RequestBody Laptop Laptop){
+        String failure = "{\"message\":\"failure\"}";
         if (Laptop == null)
             return failure;
         laptopRepository.save(Laptop);
