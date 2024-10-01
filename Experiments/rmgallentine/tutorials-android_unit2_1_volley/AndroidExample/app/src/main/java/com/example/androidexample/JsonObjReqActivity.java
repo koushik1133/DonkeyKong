@@ -26,7 +26,8 @@ public class JsonObjReqActivity extends AppCompatActivity {
     private TextView msgResponse;
 
 //    private static final String URL_JSON_OBJECT = "https://jsonplaceholder.typicode.com/users/1";
-    private static final String URL_JSON_OBJECT = "http://echo.jsontest.com/Please/God/Kill_Me/Now";
+  //  private static final String URL_JSON_OBJECT = "http://echo.jsontest.com/Please/God/Kill_Me/Now";
+    private static final String URL_JSON_OBJECT = "https://postman-echo.com/get?Test=123&Kill=Yourself&Child=Support";
     //Supposed to show a custom Key : Value pair but am having issues
 
     @Override

@@ -10,16 +10,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 
 public class ImageReqActivity extends AppCompatActivity {
 
     private Button btnImageReq;
     private ImageView imageView;
 
-    public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
+  //  public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
+    //public static final String URL_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg";
+    public static final String URL_IMAGE = "https://www.w3schools.com/w3images/fjords.jpg\n";
+    //public static final String URL_IMAGE = "https://www.w3schools.com/w3images/nature.jpg\n";
+    //public static final String URL_IMAGE = "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg\n";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,7 @@ public class ImageReqActivity extends AppCompatActivity {
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(imageRequest);
+
     }
 
 }

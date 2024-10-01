@@ -30,8 +30,7 @@ public class LaptopController {
     @Autowired
     PersonRepository personRepository;
     
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private final String success = "{\"message\":\"success\"}";
 
     @GetMapping(path = "/laptops")
     List<Laptop> getAllLaptops(){
@@ -45,6 +44,7 @@ public class LaptopController {
 
     @PostMapping(path = "/laptops")
     String createLaptop(@RequestBody Laptop Laptop){
+        String failure = "{\"message\":\"failure\"}";
         if (Laptop == null)
             return failure;
         laptopRepository.save(Laptop);

@@ -2,4 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="HeaderText">#800000</color>
+
+    <!-- res/values-night/colors.xml -->
+        <!-- Primary Color (Dark Blue) -->
+        <color name="colorPrimaryNight">#0D47A1</color>
+        <!-- Primary Dark Color (Very Dark Blue) -->
+        <color name="colorPrimaryDarkNight">#002171</color>
+        <!-- Accent Color (Lime) -->
+        <color name="colorAccentNight">#CDDC39</color>
+        <!-- Background Color (Almost Black) -->
+        <color name="colorBackgroundNight">#121212</color>
+        <!-- Text Color (Light Grey) -->
+        <color name="colorTextNight">#E0E0E0</color>
+
+    <!-- res/values/colors.xml -->
+        <!-- Primary Color (Light Blue) -->
+        <color name="colorPrimary">#2196F3</color>
+        <!-- Primary Dark Color (Darker Blue) -->
+        <color name="colorPrimaryDark">#1976D2</color>
+        <!-- Accent Color (Orange) -->
+        <color name="colorAccent">#FF5722</color>
+        <!-- Background Color (Light Grey) -->
+        <color name="colorBackground">#F5F5F5</color>
+        <!-- Text Color (Dark Grey) -->
+        <color name="colorText">#212121</color>
+
 </resources>
