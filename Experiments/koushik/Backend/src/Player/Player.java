@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import onetoone.Laptops.Laptop;
-import onetoone.Laptops.LaptopRepository;
-import onetoone.Persons.Person;
-import onetoone.Persons.PersonRepository;
+//import src.Player;
+import src.PlayerRepository;
 public class Player {
 
     private int id;
