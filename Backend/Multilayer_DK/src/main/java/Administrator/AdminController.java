@@ -32,8 +32,11 @@ public class AdminController {
 
 
 
-
-    //ADD (@GetMapping(path = "/<something here>)
+    //MAPPINGS HERE:
+    //READ (@GetMapping(path = "/<something here>)
+    //EDIT (@PutMapping(...))
+    //DELETE (@DeleteMapping(..))
+    //ADD (@PostMapping(...))
 
 
 
