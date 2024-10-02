@@ -5,7 +5,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>group_031</groupId>
-  <artifactId>onetoone</artifactId>
+  <artifactId>backend</artifactId>
   <version>1.0.0</version>
 
   <!-- To make it a spring boot project -->
@@ -15,7 +15,7 @@
     <version>3.1.4</version>
   </parent>
 
-  <name>one-to-one</name>
+  <name>backend</name>
 
   <properties>
 
