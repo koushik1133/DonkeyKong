@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import onetoone.Persons.Person;
-import onetoone.Persons.PersonRepository;
-
 /**
  * 
  * @author Vivek Bengre
@@ -24,28 +21,24 @@ public class LaptopController {
 
     final
     LaptopRepository laptopRepository;
-
-    final
-    PersonRepository personRepository;
     
     private final String success = "{\"message\":\"success\"}";
 
-    public LaptopController(LaptopRepository laptopRepository, PersonRepository personRepository) {
+    public LaptopController(LaptopRepository laptopRepository) {
         this.laptopRepository = laptopRepository;
-        this.personRepository = personRepository;
     }
 
-    @GetMapping(path = "/Laptops")
+    @GetMapping(path = "/laptops")
     List<Laptop> getAllLaptops(){
         return laptopRepository.findAll();
     }
 
-    @GetMapping(path = "/Laptops/{id}")
+    @GetMapping(path = "/laptops/{id}")
     Laptop getLaptopById(@PathVariable int id){
         return laptopRepository.findById(id);
     }
 
-    @PostMapping(path = "/Laptops")
+    @PostMapping(path = "/laptops")
     String createLaptop(@RequestBody Laptop Laptop){
         String failure = "{\"message\":\"failure\"}";
         if (Laptop == null)
@@ -54,7 +47,7 @@ public class LaptopController {
         return success;
     }
 
-    @PutMapping(path = "/Laptops/{id}")
+    @PutMapping(path = "/laptops/{id}")
     Laptop updateLaptop(@PathVariable int id, @RequestBody Laptop request){
         Laptop laptop = laptopRepository.findById(id);
         if(laptop == null)
@@ -63,15 +56,8 @@ public class LaptopController {
         return laptopRepository.findById(id);
     }
 
-    @DeleteMapping(path = "/Laptops/{id}")
+    @DeleteMapping(path = "/laptops/{id}")
     String deleteLaptop(@PathVariable int id){
-
-        // Check if there is an object depending on Person and then remove the dependency
-        Person person = personRepository.findByLaptop_Id(id);
-        person.setLaptop(null);
-        personRepository.save(person);
-
-        // delete the laptop if the changes have not been reflected by the above statement
         laptopRepository.deleteById(id);
         return success;
     }
