@@ -29,6 +29,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
     //private static final String URL_JSON_OBJECT = "http://echo.jsontest.com/bonjour/welcome/to/309";
     //private static final String URL_JSON_OBJECT = "https://a9cc2780-4daa-42c5-afc3-807d1aa5fad9.mock.pstmn.io/get";
     private static final String URL_JSON_OBJECT = "https://postman-echo.com/get?test=123%20&Player1={{Player1}}&Player2={{Player2}}&Admin={{Admin}}&Spectator={{Spectator}}&DK={{DK}}";
+    //private static final String URL_JSON_OBJECT = "https://postman-echo.com/post";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
