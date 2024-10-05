@@ -42,6 +42,9 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     //Implement signup logic here
                     Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                    //Navigate to Join Lobby page upon successful signup
+                    Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
+                    startActivity(joinLobbyIntent);
                 }
             }
         });

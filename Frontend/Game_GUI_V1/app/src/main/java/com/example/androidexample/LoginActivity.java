@@ -39,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     //Implement login logic here
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    //Navigate to Join Lobby page upon successful login
+                    Intent joinLobbyIntent = new Intent(LoginActivity.this, JoinLobbyActivity.class);
+                    startActivity(joinLobbyIntent);
                 }
             }
         });
