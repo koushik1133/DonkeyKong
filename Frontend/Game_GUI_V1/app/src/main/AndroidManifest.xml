@@ -29,11 +29,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 <!-- Adding these for my new screens -->
         <activity
@@ -42,9 +42,16 @@
         <activity
             android:name=".SignupActivity"
             android:exported="true" />
+        <!-- This is now the first thing users see and home button takes them here -->
         <activity
             android:name=".HomeActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     <!-- End here -->
     </application>
 
