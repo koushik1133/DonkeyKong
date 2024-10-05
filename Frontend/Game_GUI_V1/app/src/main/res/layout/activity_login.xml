@@ -9,6 +9,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="16dp">
+
         <!-- Txt that tells user where they are -->
         <TextView
             android:layout_width="wrap_content"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:hint="Username"
             android:inputType="text"
+            android:minHeight="48dp"
             android:layout_marginBottom="24dp" />
 
         <!-- Instruction Text for Password -->
@@ -58,6 +60,7 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
+            android:minHeight="48dp"
             android:layout_marginBottom="24dp" />
 
         <!-- Login Button -->
