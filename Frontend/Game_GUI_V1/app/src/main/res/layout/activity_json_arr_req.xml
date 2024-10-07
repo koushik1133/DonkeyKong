@@ -30,12 +30,11 @@
 
     </ListView>
 
-    <TextView
-        android:id="@+id/msgResponse"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Test" />
-    <!--Text test no real gain-->
+<!--    <TextView-->
+<!--        android:id="@+id/msgResponse"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:text="" />-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>

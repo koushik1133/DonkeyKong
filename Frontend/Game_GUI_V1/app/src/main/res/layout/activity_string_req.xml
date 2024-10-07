@@ -8,11 +8,18 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btnJsonArr"
+        android:id="@+id/btnStringReq"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="JSON Array Request" />
+        android:text="String Request [GET]" />
+
+    <Button
+        android:id="@+id/btnStringReqWithBody"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="String Request With Body [POST]" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -21,21 +28,11 @@
         android:textSize="30sp"
         android:text="Response: " />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
-
-    </ListView>
-
     <TextView
         android:id="@+id/msgResponse"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Test" />
-    <!--Text test no real gain-->
+        android:text="" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
