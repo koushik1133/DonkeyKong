@@ -5,12 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
- * @author Vivek Bengre
+ * @author Sam Gumm
  * 
  */ 
 
-public interface LaptopRepository extends JpaRepository<Laptop, Long> {
-    Laptop findById(int id);
+public interface AdminRepository extends JpaRepository<Admin, Long> {
+    Admin findById(int id);
 
     @Transactional
     void deleteById(int id);

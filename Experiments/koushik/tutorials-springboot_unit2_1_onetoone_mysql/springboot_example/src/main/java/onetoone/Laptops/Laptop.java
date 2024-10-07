@@ -11,14 +11,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import onetoone.Users.User;
 
 /**
- * 
+ *
  * @author Vivek Bengre
- */ 
+ */
 
 @Entity
 public class Laptop {
-    
-    /* 
+
+    /*
      * The annotation @ID marks the field below as the primary key for the table created by springboot
      * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
      */
