@@ -22,8 +22,8 @@ public class LaptopController {
 
     @Autowired
     LaptopRepository laptopRepository;
-    
-    private String success = "{\"message\":\"success\"}";
+
+    private String success = "{\"Hi\":\"Its working!\"}";
     private String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/Laptops")
