@@ -28,7 +28,7 @@ public class StringReqActivity extends AppCompatActivity {
     //private static final String URL_STRING_REQ = "http://ip.jsontest.com/";
     //private static final String URL_STRING_REQ = "http://echo.jsontest.com/insert-roles-here/Admin-Player1-Player2-Spectator-DK/Key/Has-all-permissions-and-can-edit-and-stop-the-game-player1-player2-Watches-the-game-Throws-barrels-at-players";
     //private static final String URL_STRING_REQ = "https://postman-echo.com/get?test=123 &Player1={{Player1}}&Player2={{Player2}}&Spectator={{Spectator}}&Admin={{Admin}}&DK={{DK}}";
-    private static final String URL_STRING_REQ = "https://727d17b9-e5ec-4ccd-b495-0799bd7c6490.mock.pstmn.io/Object/";
+    private static final String URL_STRING_REQ = "https://88428976-1b27-430a-b866-e26838e374fc.mock.pstmn.io/employee";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
