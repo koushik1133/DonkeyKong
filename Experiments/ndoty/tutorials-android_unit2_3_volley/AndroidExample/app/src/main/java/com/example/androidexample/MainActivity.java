@@ -30,7 +30,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String url = "https://jsonplaceholder.typicode.com/users/1";
+    //private String url = "https://jsonplaceholder.typicode.com/users/1";
+    private String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+
 
     private Spinner spMethod;
     private EditText etUrl;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // method spinner
         Spinner spMethod = findViewById(R.id.spMethod);
-        String[] methods = new String[]{"GET", "POST"};
+        String[] methods = new String[]{"GET", "POST", "DELETE"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, methods);
         spMethod.setAdapter(adapter);
         spMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -179,5 +181,34 @@ public class MainActivity extends AppCompatActivity {
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+    //Added a delete request to delete a specific ID
+    private void deleteRequest() {
+        // Construct the full URL by appending the ID from the EditText field
+        String deleteUrl = url + "/" + etRequest.getText().toString();
+
+        StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, deleteUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        tvResponse.setText("Delete successful: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        tvResponse.setText("Delete failed: " + error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(deleteRequest);
     }
 }
