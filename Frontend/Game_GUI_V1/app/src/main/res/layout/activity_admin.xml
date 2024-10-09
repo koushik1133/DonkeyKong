@@ -18,6 +18,7 @@ android:layout_height="match_parent">
         android:layout_gravity="center"
         android:padding="16dp" />
 
+    <!-- Home button -->
     <Button
         android:id="@+id/btnHome"
         android:layout_width="wrap_content"

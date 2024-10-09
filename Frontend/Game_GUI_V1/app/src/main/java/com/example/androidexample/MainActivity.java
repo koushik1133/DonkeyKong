@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button loginBtn, signupBtn, adminBtn;
+    //All the buttons on screen need initialized
+    private Button loginBtn, signupBtn, adminBtn, homeBtn;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +21,10 @@ protected void onCreate(Bundle savedInstanceState) {
     loginBtn = findViewById(R.id.btnLogin);
     signupBtn = findViewById(R.id.btnSignup);
     adminBtn = findViewById(R.id.btnAdmin);
+    homeBtn = findViewById(R.id.btnHome);
 
     // Set click listeners
+    //Set click listener for Login button
     loginBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -31,6 +34,7 @@ protected void onCreate(Bundle savedInstanceState) {
         }
     });
 
+    //Set click lsitener for Signup button
     signupBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -40,12 +44,24 @@ protected void onCreate(Bundle savedInstanceState) {
         }
     });
 
+    //Set click listener for Admin button
     adminBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             // Create an Intent to start AdminActivity
             Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(adminIntent);  // Start AdminActivity
+        }
+    });
+
+    //Set click listener for the Home button
+    homeBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //Navigate back to the HomeActivity
+            Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(homeIntent);
+            finish();  //Close the current LoginActivity
         }
     });
     }
