@@ -15,7 +15,7 @@ public class PhoneController {
 
     @Autowired
     PhoneRepository phoneRepository;
-    private String success = "{\"Hi\":\"Its working!\"}";
+    private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/phones")
