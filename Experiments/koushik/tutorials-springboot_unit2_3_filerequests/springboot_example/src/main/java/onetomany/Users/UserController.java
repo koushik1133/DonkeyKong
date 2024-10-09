@@ -61,7 +61,7 @@ public class UserController {
      * this is because a file and data cannot be uploaded together with different formats with @RequestBody.
      * @RequestParam allows for 2 different types of data i.e. file and text. The text is entered as a JSON and then 
      * converted into an Object by the Object mapper and then saved into the database. Note: use form data as body for postman testing
-     * first key will be avatar with assciated file, and the second key will be user with input as a json
+     * first key will be avatar with associated file, and the second key will be user with input as a json
      */
     @PostMapping(path = "/users")
     String createUser(@RequestParam("avatar") MultipartFile avatar, @RequestParam("user") String userString) throws Exception {
@@ -69,12 +69,12 @@ public class UserController {
         if (userString == null)
             return failure;
 
-        // convert the string into an object which is requied, this is what happens by default when
+        // convert the string into an object which is required, this is what happens by default when
         // you use @RequestBody
         ObjectMapper objectMapper = new ObjectMapper();
         User user = objectMapper.readValue(userString, User.class);
         
-        // This indicates the file name and the extenstion of the image i.e. png jpg etc and is required when
+        // This indicates the file name and the extension of the image i.e. png jpg etc. and is required when
         // the image has to be sent to the front end
         user.setExtenstion(avatar.getOriginalFilename());
 
@@ -121,7 +121,7 @@ public class UserController {
 
     /**
      * The Response Entity type is set as <Resource>, which can handle files and images very well
-     * additional header have to be set to tell the front end what type of conent is being sent from the 
+     * additional header have to be set to tell the front end what type of content is being sent from the
      * backend, thus in this example headers are set.
     */
     @GetMapping(path = "/users/{id}/avatar")
