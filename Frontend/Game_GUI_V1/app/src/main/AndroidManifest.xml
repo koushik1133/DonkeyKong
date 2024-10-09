@@ -36,6 +36,8 @@
 <!--            </intent-filter>-->
         </activity>
 <!-- Adding these for my new screens -->
+        <activity android:name=".AdminActivity"
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
