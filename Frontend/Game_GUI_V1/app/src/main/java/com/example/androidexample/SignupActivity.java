@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;  //Import for AppCompatActivity
 public class SignupActivity extends AppCompatActivity {
 
     //Define input fields and buttons
-    private EditText etEmail, etPassword;
+    private EditText etUsername, etPassword;
     private Button signupBtn, homeBtn;
 
     @Override
@@ -21,7 +21,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);  //Link to the activity_signup.xml layout
 
         //Initialize the input fields and buttons
-        etEmail = findViewById(R.id.etEmail);
+        etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         signupBtn = findViewById(R.id.btnSignup);
         homeBtn = findViewById(R.id.btnHome);
@@ -31,11 +31,13 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Retrieve user input
-                String email = etEmail.getText().toString();
+                String email = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
                 //Validate email and password
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(SignupActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(SignupActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6 || password.length() > 10) {
                     Toast.makeText(SignupActivity.this, "Password must be 6-10 digits long", Toast.LENGTH_SHORT).show();
