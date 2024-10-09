@@ -31,8 +31,6 @@ public class StringReqActivity extends AppCompatActivity {
     //This shows human readable DTG
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -54,12 +54,13 @@
             android:layout_marginBottom="8dp" />
 
         <!-- Password Input Field -->
+        <!-- Use numberPassword to limit input to digits -->
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:minHeight="48dp"
             android:layout_marginBottom="24dp" />
 

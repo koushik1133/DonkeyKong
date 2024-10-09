@@ -34,4 +34,20 @@
         android:layout_gravity="center"
         android:text="Signup" />
 
+    <!--  Admin Button  -->
+    <Button android:id="@+id/btnAdmin"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:text="Admin" />
+
+    <!-- Home button -->
+    <Button
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:layout_gravity="center" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>
