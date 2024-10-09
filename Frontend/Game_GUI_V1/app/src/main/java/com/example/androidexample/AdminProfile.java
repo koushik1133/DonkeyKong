@@ -1,5 +1,8 @@
 package com.example.androidexample;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,17 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,21 +111,21 @@ public class AdminProfile extends AppCompatActivity {
                     }
                 }){
 
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-    //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-    //                headers.put("Content-Type", "application/json");
-                    return headers;
-                }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                //                headers.put("Content-Type", "application/json");
+                return headers;
+            }
 
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-    //                params.put("param1", "value1");
-    //                params.put("param2", "value2");
-                    return params;
-                }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
         };
 
         // Adding request to request queue
@@ -206,4 +211,3 @@ public class AdminProfile extends AppCompatActivity {
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(deleteRequest);
     }
-}
