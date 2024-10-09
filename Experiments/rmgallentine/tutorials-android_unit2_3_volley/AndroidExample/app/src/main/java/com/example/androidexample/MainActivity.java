@@ -30,7 +30,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String url = "https://jsonplaceholder.typicode.com/users/1";
+//    private String url = "https://jsonplaceholder.typicode.com/users/1";
+   private String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+    //private String url = "http://coms-3090-031.class.las.iastate.edu:8080/laptops";
 
     private Spinner spMethod;
     private EditText etUrl;
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // method spinner
         Spinner spMethod = findViewById(R.id.spMethod);
-        String[] methods = new String[]{"GET", "POST"};
+        String[] methods = new String[]{"GET", "POST", "DELETE"};   //add delete as option for spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, methods);
         spMethod.setAdapter(adapter);
         spMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 method = (String) parent.getItemAtPosition(position);
                 if (method.equals("GET")) etRequest.setText("Leave this field empty");
-                else etRequest.setText("Enter JSON object here");
+                else if (method.equals("POST"))etRequest.setText("Enter JSON object here");
+                else etRequest.setText("Enter ID number to delete");   //Define what needs to be entered for deletion
             }
 
             @Override
@@ -84,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 url = etUrl.getText().toString();
                 requestBody = etRequest.getText().toString();
                 if (method.equals("GET")) getRequest();
-                else postRequest();
+                else if (method.equals("POST")) postRequest();
+                else deleteRequest();   //delete request when delete is clicked
             }
         });
     }
@@ -112,16 +116,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
-    //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-    //                headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                    headers.put("Content-Type", "application/json");
                     return headers;
                 }
 
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-    //                params.put("param1", "value1");
-    //                params.put("param2", "value2");
+                    params.put("param1", "value1");
+                    params.put("param2", "value2");
                     return params;
                 }
         };
@@ -163,21 +167,51 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-                //                headers.put("Content-Type", "application/json");
+                                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                                headers.put("Content-Type", "application/json");
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                //                params.put("param1", "value1");
-                //                params.put("param2", "value2");
+                                params.put("param1", "value1");
+                                params.put("param2", "value2");
                 return params;
             }
         };
 
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+    }
+
+//Added a delete request to delete a specific ID
+    private void deleteRequest() {
+        // Construct the full URL by appending the ID from the EditText field
+        String deleteUrl = url + "/" + etRequest.getText().toString();
+
+        StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, deleteUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        tvResponse.setText("Delete successful: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        tvResponse.setText("Delete failed: " + error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(deleteRequest);
     }
 }

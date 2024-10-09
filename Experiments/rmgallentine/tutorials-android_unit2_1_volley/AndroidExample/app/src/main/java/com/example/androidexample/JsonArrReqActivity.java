@@ -24,9 +24,11 @@ public class JsonArrReqActivity extends AppCompatActivity {
     private Button btnJsonArrReq;
     private TextView msgResponse;
 
-    private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/users";
-    //private static final String URL_JSON_ARRAY = "https://postman-echo.com/get?Test=123&Kill=Yourself&Child=Support";
+//    private static final String URL_JSON_ARRAY = "https://jsonplaceholder.typicode.com/users";
 //this is an object not array
+    //private static final String URL_JSON_ARRAY = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+private static final String URL_JSON_ARRAY = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

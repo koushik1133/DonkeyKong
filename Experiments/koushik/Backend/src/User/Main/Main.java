@@ -1,5 +1,5 @@
 /* Login page, all the player info will verified*/
-package Player;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

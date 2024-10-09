@@ -1,24 +1,24 @@
-package onetoone.Laptops;
+package onetomany.Laptops;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import onetoone.Users.User;
+import onetomany.Users.User;
 
 /**
- *
+ * 
  * @author Vivek Bengre
- */
+ */ 
 
 @Entity
 public class Laptop {
-
-    /*
+    
+    /* 
      * The annotation @ID marks the field below as the primary key for the table created by springboot
      * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
      */
@@ -30,6 +30,7 @@ public class Laptop {
     private int ram;
     private String manufacturer;
     private int cost;
+    private String invoicePath;
 
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
@@ -38,6 +39,10 @@ public class Laptop {
     @OneToOne
     @JsonIgnore
     private User user;
+
+    
+     // =============================== Constructors ================================== //
+
 
     public Laptop( double cpuClock, int cpuCores, int ram, String manufacturer, int cost) {
         this.cpuClock = cpuClock;
@@ -106,6 +111,14 @@ public class Laptop {
 
     public void setRam(int ram){
         this.ram = ram;
+    }
+
+    public void setInvoicePath(String invoicePath){
+        this.invoicePath = invoicePath;
+    }
+
+    public String getInvoicePath(){
+        return invoicePath;
     }
 
 }

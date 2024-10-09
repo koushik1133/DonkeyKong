@@ -26,10 +26,10 @@ public class JsonObjReqActivity extends AppCompatActivity {
     private TextView msgResponse;
 
     //private static final String URL_JSON_OBJECT = "https://jsonplaceholder.typicode.com/users/1";
-    //private static final String URL_JSON_OBJECT = "http://echo.jsontest.com/bonjour/welcome/to/309";
-    //private static final String URL_JSON_OBJECT = "https://a9cc2780-4daa-42c5-afc3-807d1aa5fad9.mock.pstmn.io/get";
-    private static final String URL_JSON_OBJECT = "https://postman-echo.com/get?test=123%20&Player1={{Player1}}&Player2={{Player2}}&Admin={{Admin}}&Spectator={{Spectator}}&DK={{DK}}";
+    //private static final String URL_JSON_OBJECT = "https://727d17b9-e5ec-4ccd-b495-0799bd7c6490.mock.pstmn.io/Object/";
+    private static final String URL_JSON_OBJECT = "https://88428976-1b27-430a-b866-e26838e374fc.mock.pstmn.io/employeeDetails";
     //private static final String URL_JSON_OBJECT = "https://postman-echo.com/post";
+      //private static final String URL_JSON_OBJECT = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,8 @@ public class JsonObjReqActivity extends AppCompatActivity {
      */
     private void makeJsonObjReq() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
+                //Request.Method.GET,
+                Request.Method.POST,
                 URL_JSON_OBJECT,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONObject>() {
