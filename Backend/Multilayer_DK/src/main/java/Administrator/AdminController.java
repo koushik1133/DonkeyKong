@@ -1,7 +1,8 @@
-package Multilayer_DK.Administrator;
+package Administrator;
 
 import java.util.List;
 
+import Administrator.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;

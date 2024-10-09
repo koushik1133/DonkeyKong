@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import src.Player;
-import src.PlayerRepository;
-public class Player {
+import Main.Player;
+import Main.PlayerRepository;
 
+public class Player{
     private int id;
     private String UserName;
     private String Password;

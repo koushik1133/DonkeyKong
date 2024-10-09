@@ -49,17 +49,17 @@ public class LaptopController {
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/laptops")
+    @GetMapping(path = "/Laptops")
     List<Laptop> getAllLaptops(){
         return laptopRepository.findAll();
     }
 
-    @GetMapping(path = "/laptops/{id}")
+    @GetMapping(path = "/Laptops/{id}")
     Laptop getLaptopById(@PathVariable int id){
         return laptopRepository.findById(id);
     }
 
-    @PostMapping(path = "/laptops")
+    @PostMapping(path = "/Laptops")
     String createLaptop(@RequestBody Laptop Laptop){
         if (Laptop == null)
             return failure;
@@ -67,7 +67,7 @@ public class LaptopController {
         return success;
     }
 
-    @PutMapping(path = "/laptops/{id}")
+    @PutMapping(path = "/Laptops/{id}")
     Laptop updateLaptop(@PathVariable int id, @RequestBody Laptop request){
         Laptop laptop = laptopRepository.findById(id);
         if(laptop == null)
@@ -76,7 +76,7 @@ public class LaptopController {
         return laptopRepository.findById(id);
     }
 
-    @DeleteMapping(path = "/laptops/{id}")
+    @DeleteMapping(path = "/Laptops/{id}")
     String deleteLaptop(@PathVariable int id){
 
         Laptop laptop = laptopRepository.findById(id);
@@ -100,7 +100,7 @@ public class LaptopController {
      * and has the key 'invoice'. Note that in this case the file is being saved to the disk and the path is stored in
      * database. Using this path, one can access the files. While testing with postman use form-data as body and key as invoice
      */
-    @PutMapping(path = "/laptops/{id}/invoice")
+    @PutMapping(path = "/Laptops/{id}/invoice")
     public String uploadLaptopInvoice(@PathVariable int id, @RequestParam("invoice") MultipartFile invoiceFile) throws IOException{
         if(invoiceFile.isEmpty()) 
             return failure;
@@ -143,7 +143,7 @@ public class LaptopController {
      * additional header have to be set to tell the front end what type of conent is being sent from the 
      * backend, thus in this example headers are set.
     */
-    @GetMapping(path = "/laptops/{id}/invoice")
+    @GetMapping(path = "/Laptops/{id}/invoice")
     ResponseEntity<Resource> getLaptopInvoice(@PathVariable int id) throws IOException{
         
         Laptop laptop = laptopRepository.findById(id);

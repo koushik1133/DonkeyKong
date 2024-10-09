@@ -27,7 +27,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
     //private static final String URL_JSON_OBJECT = "https://jsonplaceholder.typicode.com/users/1";
     //private static final String URL_JSON_OBJECT = "https://727d17b9-e5ec-4ccd-b495-0799bd7c6490.mock.pstmn.io/Object/";
-    private static final String URL_JSON_OBJECT = "https://727d17b9-e5ec-4ccd-b495-0799bd7c6490.mock.pstmn.io/Post/";
+    private static final String URL_JSON_OBJECT = "https://88428976-1b27-430a-b866-e26838e374fc.mock.pstmn.io/employeeDetails";
     //private static final String URL_JSON_OBJECT = "https://postman-echo.com/post";
       //private static final String URL_JSON_OBJECT = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
     @Override
