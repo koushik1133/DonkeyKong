@@ -26,7 +26,7 @@ public class Player{
     @JoinColumn(name = "Player_id")
     private Player player;
 
-    public Player(String username, String emailId, String password) {
+    public Player(String username, String password) {
         this.username = username;
         this.password = password;
     }

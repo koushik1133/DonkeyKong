@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
  */ 
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    Admin findById(Long id);
+    Admin findById(int id);
 
     @Transactional
-    void deleteById(Long id);
+    void deleteById(int id);
 }

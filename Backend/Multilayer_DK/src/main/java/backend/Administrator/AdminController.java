@@ -1,7 +1,9 @@
 package backend.Administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -14,66 +16,45 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
 
     @Autowired
-    //LaptopRepository laptopRepository;
     AdminRepository adminRepository;
     
     private final String success = "{\"message\":\"success\"}";
+    public final String failure = "{\"message\":\"failure\"}";
 
-
-
-
-
-    //MAPPINGS HERE:
-    //READ (@GetMapping(path = "/<something here>)
-    //EDIT (@PutMapping(...))
-    //DELETE (@DeleteMapping(..))
-    //ADD (@PostMapping(...))
-
-
-
-
-
-
-
-
-    /**@GetMapping(path = "/laptops")
-    List<Laptop> getAllLaptops(){
-        return laptopRepository.findAll();
+    public AdminController(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
     }
 
-    @GetMapping(path = "/laptops/{id}")
-    Laptop getLaptopById(@PathVariable int id){
-        return laptopRepository.findById(id);
+    @GetMapping(path = "/Admin")
+    List<Admin> getAllUsers(){
+        return adminRepository.findAll();
     }
 
-    @PostMapping(path = "/laptops")
-    String createLaptop(@RequestBody Laptop Laptop){
-        String failure = "{\"message\":\"failure\"}";
-        if (Laptop == null)
+    @GetMapping(path = "/Admin/{id}")
+    Admin getUserById( @PathVariable int id){
+        return adminRepository.findById(id);
+    }
+
+    @PostMapping(path = "/Admin")
+    String createUser(@RequestBody Admin admin){
+        if (admin == null)
             return failure;
-        laptopRepository.save(Laptop);
+        adminRepository.save(admin);
         return success;
     }
 
-    @PutMapping(path = "/laptops/{id}")
-    Laptop updateLaptop(@PathVariable int id, @RequestBody Laptop request){
-        Laptop laptop = laptopRepository.findById(id);
-        if(laptop == null)
+    @PutMapping("/Admin/{id}")
+    Admin updateUser(@PathVariable int id, @RequestBody Admin request){
+        Admin admin = adminRepository.findById(id);
+        if(admin == null)
             return null;
-        laptopRepository.save(request);
-        return laptopRepository.findById(id);
+        adminRepository.save(request);
+        return adminRepository.findById(id);
     }
 
-    @DeleteMapping(path = "/laptops/{id}")
-    String deleteLaptop(@PathVariable int id){
-
-        // Check if there is an object depending on Person and then remove the dependency
-        Person person = personRepository.findByLaptop_Id(id);
-        person.setLaptop(null);
-        personRepository.save(person);
-
-        // delete the laptop if the changes have not been reflected by the above statement
-        laptopRepository.deleteById(id);
+    @DeleteMapping(path = "/Admin/{id}")
+    String deleteAdmin(@PathVariable int id){
+        adminRepository.deleteById(id);
         return success;
-    } */
+    }
 }
