@@ -1,17 +1,13 @@
-package onetoone.Users;
+package backend.Dk;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * 
- * @author Vivek Bengre
- * 
- */ 
-
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findById(int id);
+public interface DkRepository extends JpaRepository<Dk_object, Long> {
+    Dk_object findById(int id);
 
     @Transactional
     void deleteById(int id);
+
+
 }

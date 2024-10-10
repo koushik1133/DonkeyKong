@@ -1,15 +1,20 @@
-package backend.Players;
+package backend.Dk;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
-@Entity
-public class Player{
+public class Dk_object{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String username;
-    private String password;
+    private String object;
+    private int damage;
 
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
@@ -17,20 +22,13 @@ public class Player{
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-
-    /*
-    * TODO: Decide on the relation to use here
-    * */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Player_id")
-    private Player player;
+    @JoinColumn(name = "Dk_id")
+    private Dk_object dk_obj;
 
-    public Player(String username,String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public Player() {
+    public Dk_object(String object, int damage) {
+        this.object = object;
+        this.damage = damage;
     }
 
 
@@ -45,23 +43,19 @@ public class Player{
     }
 
     public String getName(){
-        return username;
+        return object;
     }
 
     public void setName(String name){
-        this.username = name;
+        this.object = name;
     }
 
-    public String getPassword(){
-        return password;
+    public int getDamage(){
+        return damage;
     }
 
-    public void setPassword(String password){
-        this.password = password;
+    public void setDamage(int damage){
+        this.damage = damage;
     }
-
-    public Player getPlayer(){return player;}
-
-    public void setPlayer(Player player){this.player = player;}
 
 }
