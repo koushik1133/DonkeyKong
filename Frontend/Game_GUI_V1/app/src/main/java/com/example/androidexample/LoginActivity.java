@@ -77,20 +77,20 @@ public class LoginActivity extends AppCompatActivity {
         // Backend URL to verify if the email exists (replace with your actual URL)
         String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons?email=" + emailID;
 
-        // GET request using Volley
+        //GET request using Volley
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("LoginActivity", "Response: " + response);  // Log the raw response for debugging
+                        Log.d("LoginActivity", "Response: " + response);  //Log the raw response for debugging
 
                         try {
-                            // Parse as JSONArray if the response is an array
+                            //Parse as JSONArray if the response is an array
                             JSONArray jsonArray = new JSONArray(response);
 
                             boolean emailExists = false;
 
-                            // Iterate through the array to find a matching emailId
+                            //Iterate through the array to find a matching emailId
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject userObject = jsonArray.getJSONObject(i);
                                 String dbEmail = userObject.optString("emailId", "");
