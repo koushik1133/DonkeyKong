@@ -1,4 +1,4 @@
-package Dk.Players;
+package backend.Players;
 
 import org.springframework.web.bind.annotation.*;
 
