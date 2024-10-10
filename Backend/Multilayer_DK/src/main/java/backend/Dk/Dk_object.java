@@ -60,4 +60,8 @@ public class Dk_object{
     public void setDamage(int damage){
         this.damage = damage;
     }
+
+    public void setDk_obj(Dk_object dk_obj){this.dk_obj = dk_obj;}
+
+    public Dk_object getDk_obj(){return dk_obj;}
 }
