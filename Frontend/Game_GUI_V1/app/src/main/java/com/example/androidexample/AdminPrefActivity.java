@@ -2,7 +2,6 @@ package com.example.androidexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,24 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class AdminPrefActivity extends AppCompatActivity {
 
     //private String url = "https://jsonplaceholder.typicode.com/users/1";
     private String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_adminprefactivity);
 
         /* initialize UI elements */
         etUrl = findViewById(R.id.etUrl);
@@ -64,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
         String[] methods = new String[]{"GET", "POST", "DELETE"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, methods);
         spMethod.setAdapter(adapter);
-        spMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 method = (String) parent.getItemAtPosition(position);
@@ -79,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener()
-        {
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 url = etUrl.getText().toString();
@@ -101,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         // Display the first 500 characters of the response string.
                         // String response can be converted to JSONObject via
                         // JSONObject object = new JSONObject(response);
-                        tvResponse.setText("Response is: "+ response);
+                        tvResponse.setText("Response is: " + response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -109,23 +102,23 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         tvResponse.setText("That didn't work!" + error.toString());
                     }
-                }){
+                }) {
 
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-    //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-    //                headers.put("Content-Type", "application/json");
-                    return headers;
-                }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+                //                headers.put("Content-Type", "application/json");
+                return headers;
+            }
 
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-    //                params.put("param1", "value1");
-    //                params.put("param2", "value2");
-                    return params;
-                }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                //                params.put("param1", "value1");
+                //                params.put("param2", "value2");
+                return params;
+            }
         };
 
         // Adding request to request queue
@@ -136,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Convert input to JSONObject
         JSONObject postBody = null;
-        try{
+        try {
             // etRequest should contain a JSON object string as your POST body
             // similar to what you would have in POSTMAN-body field
             // and the fields should match with the object structure of @RequestBody on sb
             postBody = new JSONObject(etRequest.getText().toString());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -161,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         tvResponse.setText(error.getMessage());
                     }
                 }
-        ){
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -182,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
+
     //Added a delete request to delete a specific ID
     private void deleteRequest() {
         // Construct the full URL by appending the ID from the EditText field

@@ -45,12 +45,12 @@ public class AdminActivity extends AppCompatActivity {
 
 
                     //Nick this is where you will replace joinLobbyIntent with
-                    //adminPrefIntent = new Intent(AdmimActivity.this, AdminPrefActivity.this)
+                    //adminPrefIntent = new Intent(AdminActivity.this, AdminPrefActivity.this)
                     //startActivity(adminPrefIntent);
 
                     //Navigate to Admin profile page upon successful signup
-                    Intent joinLobbyIntent = new Intent(AdminActivity.this, JoinLobbyActivity.class);
-                    startActivity(joinLobbyIntent);
+                    Intent adminPrefIntent = new Intent(AdminActivity.this, AdminPrefActivity.class);
+                    startActivity(adminPrefIntent);
                 }
             }
         });

@@ -21,7 +21,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"/>
 
         <EditText
             android:id="@+id/etUrl"
@@ -30,8 +30,7 @@
             android:background="#e5ebeb"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text=" Enter URL Here"
-            android:textColor="@color/black" />
+            android:text=" Enter URL Here" />
 
     </LinearLayout>
 
@@ -46,15 +45,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:text="Request Body: "
-            android:textColor="@color/cardview_dark_background"/>
+            android:textColor="#000000"/>
 
         <EditText
             android:id="@+id/etRequest"
             android:layout_width="380sp"
             android:layout_height="200sp"
             android:layout_marginLeft="5dp"
-            android:background="#e5ebeb"
-            android:textColor="@color/black"/>
+            android:background="#e5ebeb" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,15 +60,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:text="Response Body: "
-            android:textColor="@color/cardview_dark_background" />
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/tvResponse"
             android:layout_width="380sp"
             android:layout_height="200sp"
             android:layout_marginLeft="5dp"
-            android:background="#e5ebeb"
-            android:textColor="@color/black" />
+            android:background="#e5ebeb" />
 
     </LinearLayout>
 
