@@ -1,4 +1,4 @@
-package Administrator;
+package backend.Administrator;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;

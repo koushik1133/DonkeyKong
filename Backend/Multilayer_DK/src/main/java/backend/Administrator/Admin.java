@@ -1,10 +1,7 @@
-package Administrator;
+package backend.Administrator;
 
 //IMPORT STATEMENTS HERE
 import jakarta.persistence.*;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
