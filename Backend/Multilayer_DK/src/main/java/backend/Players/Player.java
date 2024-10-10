@@ -8,9 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
-//import Dk.Players.Player;
-
-
 public class Player{
 
     @Id
@@ -52,7 +49,7 @@ public class Player{
     }
 
     public void setName(String name){
-        this.username = username;
+        this.username = name;
     }
 
     public String getEmailId(){

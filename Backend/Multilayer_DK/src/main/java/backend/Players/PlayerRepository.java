@@ -8,4 +8,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     @Transactional
     void deleteById(int id);
+    
+    
 }

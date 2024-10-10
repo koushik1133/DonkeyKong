@@ -3,10 +3,10 @@ package backend.Players;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import backend.Players.*;
 
 @RestController
-public class Playercontroller{
+public class PlayerController{
 
     final
     PlayerRepository playerRepository;
@@ -14,9 +14,8 @@ public class Playercontroller{
     private final String success = "{\"message\":\"success\"}";
     public final String failure = "{\"message\":\"failure\"}";
 
-    public Playercontroller(PlayerRepository playerRepository) {
+    public PlayerController(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
-        //this.laptopRepository = laptopRepository;
     }
 
     @GetMapping(path = "/Player")
