@@ -53,14 +53,6 @@ class Main {
             dkRepository.save(object1);
             dkRepository.save(object2);
             dkRepository.save(object3);
-
-            /*Person1.setLaptop(laptop1);
-            Person2.setLaptop(laptop2);
-            Person3.setLaptop(laptop3);
-            PersonRepository.save(Person1);
-            PersonRepository.save(Person2);
-            PersonRepository.save(Person3);
-            */
         };
     }
 

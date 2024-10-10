@@ -1,14 +1,21 @@
 package backend.Dk;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import backend.Dk.*;
+
+/*
+*
+* @author Sam Gumm
+*
+*/
+
 
 @RestController
 public class DkController{
 
-    final
+    @Autowired
     DkRepository dkRepository;
 
     private final String success = "{\"message\":\"success\"}";
@@ -36,14 +43,14 @@ public class DkController{
         return success;
     }
 
-    /*@PutMapping("/Dk/{id}")
+    @PutMapping("/Dk/{id}")
     Dk_object updateUser(@PathVariable int id, @RequestBody Dk_object request){
         Dk_object player = dkRepository.findById(id);
         if(player == null)
             return null;
-        playerRepository.save(request);
-        return playerRepository.findById(id);
-    }*/
+        dkRepository.save(request);
+        return dkRepository.findById(id);
+    }
 
     @DeleteMapping(path = "/Dk/{id}")
     String deletePlayer(@PathVariable int id){

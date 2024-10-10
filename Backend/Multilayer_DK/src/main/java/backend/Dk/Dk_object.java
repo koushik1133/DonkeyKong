@@ -1,13 +1,12 @@
 package backend.Dk;
 
-//import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+/**
+ * @author Sam Gumm, Koushik
+ */
+
+@Entity
 public class Dk_object{
 
     @Id
@@ -22,6 +21,9 @@ public class Dk_object{
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
+
+    //TODO: Maybe change this to OneToMany
+    //Reasoning: multiple objects will interact with it
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Dk_id")
     private Dk_object dk_obj;
@@ -29,6 +31,10 @@ public class Dk_object{
     public Dk_object(String object, int damage) {
         this.object = object;
         this.damage = damage;
+    }
+
+    public Dk_object() {
+        //necessary @Koushik stop removing these
     }
 
 
@@ -42,11 +48,11 @@ public class Dk_object{
         this.id = id;
     }
 
-    public String getName(){
+    public String getObject(){
         return object;
     }
 
-    public void setName(String name){
+    public void setObject(String name){
         this.object = name;
     }
 
@@ -58,4 +64,11 @@ public class Dk_object{
         this.damage = damage;
     }
 
+    public Dk_object getDk_obj() {
+        return dk_obj;
+    }
+
+    public void setDk_obj(Dk_object dk_obj) {
+        this.dk_obj = dk_obj;
+    }
 }
