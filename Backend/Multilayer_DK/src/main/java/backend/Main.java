@@ -1,14 +1,9 @@
-package onetoone;
+package backend;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
-import onetoone.Laptops.Laptop;
-import onetoone.Laptops.LaptopRepository;
-import onetoone.Persons.Person;
-import onetoone.Persons.PersonRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 
@@ -17,6 +12,7 @@ import onetoone.Persons.PersonRepository;
  */ 
 
 @SpringBootApplication
+@EnableJpaRepositories
 class Main {
 
     public static void main(String[] args) {
@@ -32,7 +28,7 @@ class Main {
      * As mentioned in Person.java just associating the Laptop object with the Person will save it into the database because of the CascadeType
      */
 //    @Bean
-//    CommandLineRunner initPerson(PersonRepository PersonRepository, LaptopRepository laptopRepository) {
+//    CommandLineRunner initPerson(PersonRepository, LaptopRepository laptopRepository) {
 //        return args -> {
 //            Person Person1 = new Person("John", "john@somemail.com");
 //            Person Person2 = new Person("Jane", "jane@somemail.com");

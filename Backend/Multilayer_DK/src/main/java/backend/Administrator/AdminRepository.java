@@ -1,7 +1,9 @@
-package onetoone.Laptops;
+package backend.Administrator;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * 
@@ -10,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
  */ 
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    Admin findById(int id);
+    Optional<Admin> findById(Long id);
 
     @Transactional
-    void deleteById(int id);
+    void deleteById(Long id);
 }
