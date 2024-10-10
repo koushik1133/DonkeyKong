@@ -49,8 +49,8 @@ public class AdminActivity extends AppCompatActivity {
                     //startActivity(adminPrefIntent);
 
                     //Navigate to Admin profile page upon successful signup
-                    Intent AdminPrefIntent = new Intent(AdminActivity.this, AdminProfile.class);
-                    startActivity(AdminPrefIntent);
+                    Intent adminPrefIntent = new Intent(AdminActivity.this, AdminPrefActivity.class);
+                    startActivity(adminPrefIntent);
                 }
             }
         });

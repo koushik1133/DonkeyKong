@@ -1,9 +1,7 @@
-package Administrator;
+package backend.Administrator;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 /**
  * 
@@ -12,8 +10,8 @@ import java.util.Optional;
  */ 
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
-    Optional<Admin> findById(Long id);
+    Admin findById(int id);
 
     @Transactional
-    void deleteById(Long id);
+    void deleteById(int id);
 }
