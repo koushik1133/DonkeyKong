@@ -14,7 +14,6 @@ public class Player{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
-    private String emailId;
     private String password;
 
     /*
@@ -29,7 +28,6 @@ public class Player{
 
     public Player(String username, String emailId, String password) {
         this.username = username;
-        this.emailId = emailId;
         this.password = password;
     }
 
@@ -50,14 +48,6 @@ public class Player{
 
     public void setName(String name){
         this.username = name;
-    }
-
-    public String getEmailId(){
-        return emailId;
-    }
-
-    public void setEmailId(String emailId){
-        this.emailId = emailId;
     }
 
     public String getPassword(){
