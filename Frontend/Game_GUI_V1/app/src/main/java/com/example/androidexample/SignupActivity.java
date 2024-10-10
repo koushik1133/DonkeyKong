@@ -40,23 +40,19 @@ public class SignupActivity extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Retrieve user input
                 String email = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                //Validate email and password
+                // Validate email and password
                 if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(SignupActivity.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(SignupActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 6 || password.length() > 10) {
                     Toast.makeText(SignupActivity.this, "Password must be 6-10 digits long", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Implement signup logic here
-                    Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                    //Navigate to Join Lobby page upon successful signup
-                    Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
-                    startActivity(joinLobbyIntent);
+                    // Call signUpUser method to make POST request
+                    signUpUser(email, password);
                 }
             }
         });
@@ -77,7 +73,7 @@ public class SignupActivity extends AppCompatActivity {
     private void verifyEmail(final String username, final String password) {
         //Replace with backend URL
         //////////////////////////////////////////////////////////////////////////////////
-        String url = "https://your-backend-url.com/user/verifyEmail?email=" + username;
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons"; //+username
         //////////////////////////////////////////////////////////////////////////////////
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -115,32 +111,36 @@ public class SignupActivity extends AppCompatActivity {
         //Add request to Volley request queue
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
-
-    //POST Request to create a new user (Signup)
+    //Post request to add new user
     private void signUpUser(final String username, final String password) {
-        //Replace with backend URL
-        //////////////////////////////////////////////////////////////////////
-        String url = "https://your-backend-url.com/user/signup";
-        //////////////////////////////////////////////////////////////////////
+        //Replace with backend URL for signup
+        /////////////////////////////////////////////////////////////////////////////
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+        /////////////////////////////////////////////////////////////////////////////
+        // Create JSON object for request body
         JSONObject requestBody = new JSONObject();
-
         try {
-            requestBody.put("username", username);
-            requestBody.put("password", password);
+            requestBody.put("name", username);  // Use the username as the name field
+            requestBody.put("emailId", username);  // Assuming email is same as username
+            requestBody.put("isActive", true);  // Set active status as true for new user
+            requestBody.put("password", password);  // Include password if needed by backend
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        // Create POST request
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            // Assuming backend returns success field in response JSON
                             boolean success = response.getBoolean("success");
                             String message = response.getString("message");
 
                             if (success) {
                                 Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                // Navigate to Join Lobby Activity
                                 Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
                                 startActivity(joinLobbyIntent);
                             } else {
@@ -158,15 +158,16 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //Add request to Volley request queue
+        // Add request to Volley request queue
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
+
 
     //PUT Request to update user information
     private void updateUser(final String username, final String password) {
         //Replace with backend URL
         ///////////////////////////////////////////////////////////////
-        String url = "https://your-backend-url.com/user/update";
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
         ///////////////////////////////////////////////////////////////
         JSONObject requestBody = new JSONObject();
 
