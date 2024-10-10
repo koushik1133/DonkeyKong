@@ -40,8 +40,8 @@
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
-            android:inputType="text"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:layout_marginBottom="24dp" />
 

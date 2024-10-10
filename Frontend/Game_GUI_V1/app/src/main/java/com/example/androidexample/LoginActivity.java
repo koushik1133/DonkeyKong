@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                // Validate email and password
+                //Validate email and password
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
