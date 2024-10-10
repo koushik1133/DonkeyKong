@@ -1,6 +1,7 @@
 package backend.Administrator;
 
 //IMPORT STATEMENTS HERE
+import backend.Players.Player;
 import jakarta.persistence.*;
 
 /**
@@ -15,25 +16,19 @@ public class Admin {
     private int id;
     private String name;
     private String password;
-    /* 
-     * The annotation @ID marks the field below as the primary key for the table created by springboot
-     * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
-     */
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //VARIABLES HERE
 
-    /*
-     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(Person)
-     * @JsonIgnore is to assure that there is no infinite loop while returning either Person/laptop objects (laptop->Person->laptop->...)
-     */
-    //@OneToOne
-    //@JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Admin_id")
+    private Admin admin;
 
+    public Admin(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 
-    //CONSTRUCTOR HERE
+    public Admin() {
 
-    //Interface here
+    }
 
     // =============================== Getters and Setters for each field ================================== //
     public int getId() {return id;}

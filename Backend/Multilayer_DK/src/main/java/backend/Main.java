@@ -39,7 +39,10 @@ class Main {
             Player player2 = new Player("Sam", "1234");
             Player player3 = new Player("Nick", "1234");
             Player player4 = new Player("Alex", "1234");
-            Admin admin1 = new Admin("admin1", "1234");
+            Admin admin1 = new Admin("admin1", "admin1");
+            AdminRepository.save(admin1);
+            PlayerRepository.save(player1);
+
             Person1.setLaptop(laptop1);
             Person2.setLaptop(laptop2);
             Person3.setLaptop(laptop3);
