@@ -34,7 +34,6 @@ public class Dk_object{
     }
 
     public Dk_object() {
-        //necessary @Koushik stop removing these
     }
 
 
