@@ -78,10 +78,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     //GET Request to verify username (email)
-    private void verifyUsername(final String email, final String password) {
+    private void verifyUsername(final String username, final String password) {
         //Replace with backend URL
         ///////////////////////////////////////////////////////////////////////////////
-        String url = "https://your-backend-url.com/user/verifyEmail?email=" + email;
+        String url = "https://your-backend-url.com/user/verifyEmail?email=" + username;
         ///////////////////////////////////////////////////////////////////////////////
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -210,10 +210,6 @@ public class LoginActivity extends AppCompatActivity {
         //Add request to Volley request queue
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
-
-
-
-
 }
 
 

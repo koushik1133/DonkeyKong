@@ -8,6 +8,16 @@ import android.widget.Button;  //Import for Button class
 import android.widget.EditText;  //Import for EditText class
 import android.widget.Toast;  //Import for Toast class
 import androidx.appcompat.app.AppCompatActivity;  //Import for AppCompatActivity
+import android.util.Log;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -61,5 +71,138 @@ public class SignupActivity extends AppCompatActivity {
                 finish();  //Close the current LoginActivity
             }
         });
+    }
+
+    //GET Request to verify username (email)
+    private void verifyEmail(final String username, final String password) {
+        //Replace with backend URL
+        //////////////////////////////////////////////////////////////////////////////////
+        String url = "https://your-backend-url.com/user/verifyEmail?email=" + username;
+        //////////////////////////////////////////////////////////////////////////////////
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            String userId = jsonResponse.getString("userId");
+
+                            if (success) {
+                                //If email exists, proceed to check password
+                                if (password.equals(userId)) {
+                                    Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                    Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
+                                    startActivity(joinLobbyIntent);
+                                } else {
+                                    Toast.makeText(SignupActivity.this, "Password does not match", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(SignupActivity.this, "Email not found", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(SignupActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Add request to Volley request queue
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    //POST Request to create a new user (Signup)
+    private void signUpUser(final String username, final String password) {
+        //Replace with backend URL
+        //////////////////////////////////////////////////////////////////////
+        String url = "https://your-backend-url.com/user/signup";
+        //////////////////////////////////////////////////////////////////////
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("username", username);
+            requestBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            String message = response.getString("message");
+
+                            if (success) {
+                                Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+                                Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
+                                startActivity(joinLobbyIntent);
+                            } else {
+                                Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(SignupActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Add request to Volley request queue
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    //PUT Request to update user information
+    private void updateUser(final String username, final String password) {
+        //Replace with backend URL
+        ///////////////////////////////////////////////////////////////
+        String url = "https://your-backend-url.com/user/update";
+        ///////////////////////////////////////////////////////////////
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("username", username);
+            requestBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, requestBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            String message = response.getString("message");
+
+                            if (success) {
+                                Toast.makeText(SignupActivity.this, "Update Successful", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(SignupActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Add request to Volley request queue
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 }
