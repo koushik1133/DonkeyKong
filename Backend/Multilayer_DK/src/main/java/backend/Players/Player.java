@@ -1,13 +1,8 @@
 package backend.Players;
 
-//import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+@Entity
 public class Player{
 
     @Id
@@ -22,6 +17,10 @@ public class Player{
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
+
+    /*
+    * TODO: Decide on the relation to use here
+    * */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Player_id")
     private Player player;
@@ -29,6 +28,9 @@ public class Player{
     public Player(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Player() {
     }
 
 

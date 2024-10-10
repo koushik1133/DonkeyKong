@@ -40,16 +40,11 @@ class Main {
             Player player3 = new Player("Nick", "1234");
             Player player4 = new Player("Alex", "1234");
             Admin admin1 = new Admin("admin1", "admin1");
-            AdminRepository.save(admin1);
-            PlayerRepository.save(player1);
-
-            Person1.setLaptop(laptop1);
-            Person2.setLaptop(laptop2);
-            Person3.setLaptop(laptop3);
-            PersonRepository.save(Person1);
-            PersonRepository.save(Person2);
-            PersonRepository.save(Person3);
-
+            adminRepository.save(admin1);
+            playerRepository.save(player1);
+            playerRepository.save(player2);
+            playerRepository.save(player3);
+            playerRepository.save(player4);
         };
     }
 

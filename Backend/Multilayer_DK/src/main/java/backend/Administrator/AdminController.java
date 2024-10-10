@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 /**
  * 
  * @author Sam Gumm
@@ -21,9 +20,9 @@ public class AdminController {
     private final String success = "{\"message\":\"success\"}";
     public final String failure = "{\"message\":\"failure\"}";
 
-    public AdminController(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
-    }
+//    public AdminController(AdminRepository adminRepository) {
+//        this.adminRepository = adminRepository;
+//    }
 
     @GetMapping(path = "/Admin")
     List<Admin> getAllUsers(){
