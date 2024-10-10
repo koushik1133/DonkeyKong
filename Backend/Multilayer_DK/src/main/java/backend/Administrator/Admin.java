@@ -1,7 +1,5 @@
 package backend.Administrator;
 
-//IMPORT STATEMENTS HERE
-import backend.Players.Player;
 import jakarta.persistence.*;
 
 /**
@@ -43,8 +41,11 @@ public class Admin {
 
     public void setPassword(String password) {this.password = password;}
 
+    public Admin getAdmin() {
+        return admin;
+    }
 
-
+    public void setAdmin(Admin admin) {this.admin = admin;}
     //WILL BE REPLACED WITH JPA???
 
 }
