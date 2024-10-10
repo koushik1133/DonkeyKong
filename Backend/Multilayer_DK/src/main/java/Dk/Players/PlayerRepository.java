@@ -1,11 +1,11 @@
-package Player;
+package Dk.Players;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.transaction.annotation.Transactional;
-import src.Player;
+import org.springframework.transaction.annotation.Transactional;
+
 public interface PlayerRepository extends JpaRepository<Player, Long> {
     Player findById(int id);
 
-    //@Transactional
+    @Transactional
     void deleteById(int id);
 }
