@@ -40,6 +40,8 @@
             android:exported="true" />
         <activity android:name=".AdminPrefActivity"
             android:exported="true" />
+        <activity android:name=".DeleteAccountActivity"
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true" />

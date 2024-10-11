@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     //All the buttons on screen need initialized
-    private Button loginBtn, signupBtn, adminBtn, homeBtn;
+    private Button loginBtn, signupBtn, adminBtn, homeBtn, deleteBtn;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ protected void onCreate(Bundle savedInstanceState) {
     signupBtn = findViewById(R.id.btnSignup);
     adminBtn = findViewById(R.id.btnAdmin);
     homeBtn = findViewById(R.id.btnHome);
+    deleteBtn = findViewById(R.id.btnNavigateToDeleteAccount);
 
     // Set click listeners
     //Set click listener for Login button
@@ -51,6 +52,16 @@ protected void onCreate(Bundle savedInstanceState) {
             // Create an Intent to start AdminActivity
             Intent adminIntent = new Intent(MainActivity.this, AdminActivity.class);
             startActivity(adminIntent);  // Start AdminActivity
+        }
+    });
+
+    //Set click listener for the Delete Account button
+    deleteBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //Create Intent to start Delete Account
+            Intent deleteIntent = new Intent(MainActivity.this, DeleteAccountActivity.class);
+            startActivity(deleteIntent);
         }
     });
 
