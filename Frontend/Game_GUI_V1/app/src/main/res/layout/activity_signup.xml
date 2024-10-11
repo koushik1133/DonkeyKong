@@ -38,8 +38,8 @@
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email Address"
-            android:inputType="textEmailAddress"
+            android:hint="Username"
+            android:inputType="text"
             android:minHeight="48dp"
             android:layout_marginBottom="24dp" />
 
@@ -47,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create a password (6-10 digit number):"
+            android:text="Create a password (4-8 digit number):"
             android:textSize="18sp"
             android:layout_marginBottom="8dp" />
 
