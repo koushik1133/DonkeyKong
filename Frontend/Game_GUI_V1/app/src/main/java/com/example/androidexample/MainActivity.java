@@ -64,5 +64,8 @@ protected void onCreate(Bundle savedInstanceState) {
             finish();  //Close the current LoginActivity
         }
     });
+
+
+
     }
 }
