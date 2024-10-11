@@ -26,7 +26,7 @@ import java.util.Map;
 public class DeleteAccountActivity extends AppCompatActivity {
 
     //private String url = "https://jsonplaceholder.typicode.com/users/1";
-    private String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
+    private String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player";
 
 
     private Spinner spMethod;
@@ -56,7 +56,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
         // method spinner
         Spinner spMethod = findViewById(R.id.spMethod);
-        String[] methods = new String[]{"GET", "POST", "DELETE", "PUT"};
+        String[] methods = new String[]{"GET", "POST", "DELETE"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, methods);
         spMethod.setAdapter(adapter);
         spMethod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
