@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Difficulty Settings Page"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/etObject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Object Name (for POST/PUT)"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/etDamage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Damage Value (for POST/PUT)"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/etId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID (for PUT/DELETE)"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnGetRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(GET) List Objects" />
+
+        <Button
+            android:id="@+id/btnPostRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(POST) Add Object" />
+
+        <Button
+            android:id="@+id/btnPutRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(PUT) Update Damage" />
+
+        <Button
+            android:id="@+id/btnDeleteRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(DELETE) Remove Object" />
+
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
