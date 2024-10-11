@@ -22,8 +22,6 @@ public class Dk_object{
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
 
-    //TODO: Maybe change this to OneToMany
-    //Reasoning: multiple objects will interact with it
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Dk_id")
     private Dk_object dk_obj;
@@ -63,11 +61,7 @@ public class Dk_object{
         this.damage = damage;
     }
 
-    public Dk_object getDk_obj() {
-        return dk_obj;
-    }
+    public void setDk_obj(Dk_object dk_obj){this.dk_obj = dk_obj;}
 
-    public void setDk_obj(Dk_object dk_obj) {
-        this.dk_obj = dk_obj;
-    }
+    public Dk_object getDk_obj(){return dk_obj;}
 }

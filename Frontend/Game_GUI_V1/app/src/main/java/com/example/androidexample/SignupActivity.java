@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -43,15 +44,13 @@ public class SignupActivity extends AppCompatActivity {
                 String email = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                // Validate email and password
+                //Validate email and password
                 if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(SignupActivity.this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(SignupActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-                } else if (password.length() < 6 || password.length() > 10) {
-                    Toast.makeText(SignupActivity.this, "Password must be 6-10 digits long", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Please enter both name and password", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 4 || password.length() > 8) {
+                    Toast.makeText(SignupActivity.this, "Password must be 4-8 digits long", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Call signUpUser method to make POST request
+                    //Call signUpUser method to make POST request
                     signUpUser(email, password);
                 }
             }
@@ -69,32 +68,43 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    //GET Request to verify username (email)
-    private void verifyEmail(final String username, final String password) {
-        //Replace with backend URL
-        //////////////////////////////////////////////////////////////////////////////////
-        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons"; //+username
-        //////////////////////////////////////////////////////////////////////////////////
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+    private void signUpUser(final String username, final String password) {
+        //First, verify if the username exists before making the POST request
+        verifyUsernameAvailability(username, password);
+    }
+
+    //Method to verify if the username is available
+    private void verifyUsernameAvailability(final String username, final String password) {
+        // Backend URL to verify if the username already exists (replace with your actual URL)
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player";
+
+        //GET request using Volley to check if username already exists
+        StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            String userId = jsonResponse.getString("userId");
+                            // Parse the response as a JSONArray
+                            JSONArray jsonArray = new JSONArray(response);
+                            boolean usernameExists = false;
 
-                            if (success) {
-                                //If email exists, proceed to check password
-                                if (password.equals(userId)) {
-                                    Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                                    Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
-                                    startActivity(joinLobbyIntent);
-                                } else {
-                                    Toast.makeText(SignupActivity.this, "Password does not match", Toast.LENGTH_SHORT).show();
+                            // Iterate through the array to check if the username exists
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject userObject = jsonArray.getJSONObject(i);
+                                String dbUsername = userObject.optString("name", "");  // Use "name" for username
+
+                                if (dbUsername.equals(username)) {
+                                    usernameExists = true;
+                                    break;
                                 }
+                            }
+
+                            if (usernameExists) {
+                                // If username already exists, show a message and prevent signup
+                                Toast.makeText(SignupActivity.this, "Username is already taken. Please choose another.", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(SignupActivity.this, "Email not found", Toast.LENGTH_SHORT).show();
+                                // If username does not exist, proceed with signup
+                                createNewUser(username, password);  //Call method to create a new user
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -108,102 +118,45 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //Add request to Volley request queue
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        // Add the request to the request queue
+        VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
     }
-    //Post request to add new user
-    private void signUpUser(final String username, final String password) {
-        //Replace with backend URL for signup
-        /////////////////////////////////////////////////////////////////////////////
-        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
-        /////////////////////////////////////////////////////////////////////////////
-        // Create JSON object for request body
+
+    //Method to create a new user using POST request
+    private void createNewUser(final String username, final String password) {
+        // Backend URL for creating a new user (replace with your actual URL)
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player";
+
+        //Create JSON object for request body
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("name", username);  // Use the username as the name field
-            requestBody.put("emailId", username);  // Assuming email is same as username
-            requestBody.put("isActive", true);  // Set active status as true for new user
-            requestBody.put("password", password);  // Include password if needed by backend
+            requestBody.put("password", password);  // Include password as needed by backend
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Create POST request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            // Assuming backend returns success field in response JSON
-                            boolean success = response.getBoolean("success");
-                            String message = response.getString("message");
+            // Create POST request
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, requestBody,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Since there are no errors, we can consider it a successful signup
+                            Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
 
-                            if (success) {
-                                Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                                // Navigate to Join Lobby Activity
-                                Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
-                                startActivity(joinLobbyIntent);
-                            } else {
-                                Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(SignupActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            // Navigate to Join Lobby Activity
+                            Intent joinLobbyIntent = new Intent(SignupActivity.this, JoinLobbyActivity.class);
+                            startActivity(joinLobbyIntent);
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Show error message if something goes wrong
+                    Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        // Add request to Volley request queue
-        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-    }
-
-
-    //PUT Request to update user information
-    private void updateUser(final String username, final String password) {
-        //Replace with backend URL
-        ///////////////////////////////////////////////////////////////
-        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Persons";
-        ///////////////////////////////////////////////////////////////
-        JSONObject requestBody = new JSONObject();
-
-        try {
-            requestBody.put("username", username);
-            requestBody.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            String message = response.getString("message");
-
-                            if (success) {
-                                Toast.makeText(SignupActivity.this, "Update Successful", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(SignupActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(SignupActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignupActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //Add request to Volley request queue
+        // Add the request to the request queue
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 }

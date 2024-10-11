@@ -19,6 +19,22 @@ public class AdminController {
     
     private final String success = "{\"message\":\"success\"}";
     public final String failure = "{\"message\":\"failure\"}";
+    //TODO: Create passwordMatcher
+    //TODO: Create usernameAvailabilityChecker
+    //TODO: Create
+    /*
+    USER VERIFICATION
+    -> public Boolean authenticateUser(String username, String password) {
+            Player player = playerRepository.findByname(name);
+            if(plauer != null && (passwordMatcher.matches(password, player.getPassword())) {
+                 return true;
+            }
+
+            else {
+                return false;
+            }
+        }
+     */
 
     public AdminController(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
