@@ -20,6 +20,7 @@ public class Player{
 
     /*
     * TODO: Decide on the relation to use here
+    *  need to do one to one, one to many, and many to many
     * */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Player_id")
