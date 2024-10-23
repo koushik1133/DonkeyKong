@@ -20,27 +20,27 @@ import org.springframework.stereotype.Component;
  * Represents a WebSocket chat server for handling real-time communication
  * between users. Each user connects to the server using their unique
  * username.
-
+ *
  * This class is annotated with Spring's `@ServerEndpoint` and `@Component`
  * annotations, making it a WebSocket endpoint that can handle WebSocket
  * connections at the "/chat/{username}" endpoint.
-
+ *
  * Example URL: ws://localhost:8080/chat/username
-
+ *
  * The server provides functionality for broadcasting messages to all connected
  * users and sending messages to specific users.
  */
-@ServerEndpoint("/chat/{username}")
+@ServerEndpoint("/chat/1/{username}")
 @Component
-public class ChatServer{
+public class ChatServer1 {
 
     // Store all socket session and their corresponding username
     // Two maps for the ease of retrieval by key
-    private static final Map < Session, String > sessionUsernameMap = new Hashtable < > ();
-    private static final Map < String, Session > usernameSessionMap = new Hashtable < > ();
+    private static Map < Session, String > sessionUsernameMap = new Hashtable < > ();
+    private static Map < String, Session > usernameSessionMap = new Hashtable < > ();
 
     // server side logger
-    private final Logger logger = LoggerFactory.getLogger(ChatServer.class);
+    private final Logger logger = LoggerFactory.getLogger(ChatServer1.class);
 
     /**
      * This method is called when a new WebSocket connection is established.
@@ -52,7 +52,7 @@ public class ChatServer{
     public void onOpen(Session session, @PathParam("username") String username) throws IOException {
 
         // server side log
-        logger.info("[onOpen] {}", username);
+        logger.info("[onOpen] " + username);
 
         // Handle the case of a duplicate username
         if (usernameSessionMap.containsKey(username)) {
@@ -87,7 +87,7 @@ public class ChatServer{
         String username = sessionUsernameMap.get(session);
 
         // server side log
-        logger.info("[onMessage] {}: {}", username, message);
+        logger.info("[onMessage] " + username + ": " + message);
 
         // Direct message to a user using the format "@username <message>"
         if (message.startsWith("@")) {
@@ -122,7 +122,7 @@ public class ChatServer{
         String username = sessionUsernameMap.get(session);
 
         // server side log
-        logger.info("[onClose] {}", username);
+        logger.info("[onClose] " + username);
 
         // remove user from memory mappings
         sessionUsernameMap.remove(session);
@@ -145,7 +145,7 @@ public class ChatServer{
         String username = sessionUsernameMap.get(session);
 
         // do error handling here
-        logger.info("[onError]{}: {}", username, throwable.getMessage());
+        logger.info("[onError]" + username + ": " + throwable.getMessage());
     }
 
     /**
@@ -158,7 +158,7 @@ public class ChatServer{
         try {
             usernameSessionMap.get(username).getBasicRemote().sendText(message);
         } catch (IOException e) {
-            logger.info("[DM Exception] {}", e.getMessage());
+            logger.info("[DM Exception] " + e.getMessage());
         }
     }
 
@@ -172,7 +172,7 @@ public class ChatServer{
             try {
                 session.getBasicRemote().sendText(message);
             } catch (IOException e) {
-                logger.info("[Broadcast Exception] {}", e.getMessage());
+                logger.info("[Broadcast Exception] " + e.getMessage());
             }
         });
     }
