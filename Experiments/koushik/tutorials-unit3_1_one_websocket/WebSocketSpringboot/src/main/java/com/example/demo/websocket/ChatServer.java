@@ -36,8 +36,8 @@ public class ChatServer{
 
     // Store all socket session and their corresponding username
     // Two maps for the ease of retrieval by key
-    private static Map < Session, String > sessionUsernameMap = new Hashtable < > ();
-    private static Map < String, Session > usernameSessionMap = new Hashtable < > ();
+    private static final Map < Session, String > sessionUsernameMap = new Hashtable < > ();
+    private static final Map < String, Session > usernameSessionMap = new Hashtable < > ();
 
     // server side logger
     private final Logger logger = LoggerFactory.getLogger(ChatServer.class);
