@@ -19,9 +19,12 @@ public class ImageReqActivity extends AppCompatActivity {
     private Button btnImageReq;
     private ImageView imageView;
 
-//    public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
-
-    public static final String URL_IMAGE = "http://10.0.2.2:8080/images/1";
+  //  public static final String URL_IMAGE = "http://sharding.org/outgoing/temp/testimg3.jpg";
+//for the tablet
+    //  public static final String URL_IMAGE ="http://10.48.237.172:8080/images/1";
+      //That actually works
+    public static final String URL_IMAGE = "https://cataas.com/cat";
+//    public static final String URL_IMAGE = "http://10.0.2.2:8080/images/1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,6 +9,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Map;
 
 
 /**
@@ -27,6 +28,7 @@ import java.io.IOException;
     private final String mBoundary = "apiclient-" + System.currentTimeMillis();
     private final String mLineEnd = "\r\n";
     private final String mTwoHyphens = "--";
+
 
     public MultipartRequest(int method, String url, byte[] imageData, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
