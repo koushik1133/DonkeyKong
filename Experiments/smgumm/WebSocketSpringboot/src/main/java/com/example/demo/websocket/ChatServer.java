@@ -35,9 +35,8 @@ import org.springframework.stereotype.Component;
 public class ChatServer {
 
     // Store all socket session and their corresponding username
-    // Two maps for the ease of retrieval by key
-    private static Map < Session, String > sessionUsernameMap = new Hashtable < > ();
-    private static Map < String, Session > usernameSessionMap = new Hashtable < > ();
+    private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
+    private static Map<String, Session> usernameSessionMap = new Hashtable<>();
 
     // server side logger
     private final Logger logger = LoggerFactory.getLogger(ChatServer.class);
@@ -51,26 +50,28 @@ public class ChatServer {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException {
 
-        // server side log
-        logger.info("[onOpen] " + username);
+        logger.info("[onOpen] User '{}' has entered the chat arena. Roll out the red carpet!", username);
 
         // Handle the case of a duplicate username
         if (usernameSessionMap.containsKey(username)) {
-            session.getBasicRemote().sendText("Username already exists");
+            session.getBasicRemote().sendText("Oops! Username '" + username + "' is already taken. Try again!");
             session.close();
-        }
-        else {
+        } else {
             // map current session with username
             sessionUsernameMap.put(session, username);
-
-            // map current username with session
             usernameSessionMap.put(username, session);
 
-            // send to the user joining in
-            sendMessageToPArticularUser(username, "Welcome to the chat server, "+username);
+            // Send a warm, ASCII-art welcome message to the new user
+            String welcomeMessage = """
+                +---------------------------+
+                |  Welcome to the Chat!     |
+                |        Have fun, %s!      |
+                +---------------------------+
+                """.formatted(username);
+            sendMessageToUser(username, welcomeMessage);
 
-            // send to everyone in the chat
-            broadcast("User: " + username + " has Joined the Chat");
+            // Send join notification to everyone
+            broadcast("🚀 " + username + " has landed in the chat!");
         }
     }
 
@@ -87,25 +88,16 @@ public class ChatServer {
         String username = sessionUsernameMap.get(session);
 
         // server side log
-        logger.info("[onMessage] " + username + ": " + message);
+        logger.info("[onMessage] '{}' says: {}", username, message);
 
         // Direct message to a user using the format "@username <message>"
         if (message.startsWith("@")) {
-
-            // split by space
-            String[] split_msg =  message.split("\\s+");
-
-            // Combine the rest of message
-            StringBuilder actualMessageBuilder = new StringBuilder();
-            for (int i = 1; i < split_msg.length; i++) {
-                actualMessageBuilder.append(split_msg[i]).append(" ");
-            }
-            String destUserName = split_msg[0].substring(1);    //@username and get rid of @
-            String actualMessage = actualMessageBuilder.toString();
-            sendMessageToPArticularUser(destUserName, "[DM from " + username + "]: " + actualMessage);
-            sendMessageToPArticularUser(username, "[DM from " + username + "]: " + actualMessage);
-        }
-        else { // Message to whole chat
+            String[] splitMessage = message.split("\\s+", 2);
+            String destUsername = splitMessage[0].substring(1);
+            String actualMessage = (splitMessage.length > 1) ? splitMessage[1] : "(whispered silence)";
+            sendMessageToUser(destUsername, "[Private] " + username + " whispers: " + actualMessage);
+            sendMessageToUser(username, "[Private] You whispered to " + destUsername + ": " + actualMessage);
+        } else {
             broadcast(username + ": " + message);
         }
     }
@@ -121,15 +113,14 @@ public class ChatServer {
         // get the username from session-username mapping
         String username = sessionUsernameMap.get(session);
 
-        // server side log
-        logger.info("[onClose] " + username);
+        logger.info("[onClose] '{}' has left the chat. Curtains close...", username);
 
-        // remove user from memory mappings
+        // Remove user from maps
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
-        // send the message to chat
-        broadcast(username + " disconnected");
+        // Notify everyone in the chat
+        broadcast("😢 " + username + " has exited the chat. Goodbye!");
     }
 
     /**
@@ -144,8 +135,8 @@ public class ChatServer {
         // get the username from session-username mapping
         String username = sessionUsernameMap.get(session);
 
-        // do error handling here
-        logger.info("[onError]" + username + ": " + throwable.getMessage());
+        // log the error with a touch of humor
+        logger.warn("[onError] Oops! Something went wrong for '{}': {}", username, throwable.getMessage());
     }
 
     /**
@@ -154,11 +145,11 @@ public class ChatServer {
      * @param username The username of the recipient.
      * @param message  The message to be sent.
      */
-    private void sendMessageToPArticularUser(String username, String message) {
+    private void sendMessageToUser(String username, String message) {
         try {
             usernameSessionMap.get(username).getBasicRemote().sendText(message);
         } catch (IOException e) {
-            logger.info("[DM Exception] " + e.getMessage());
+            logger.warn("[DM Exception] Failed to send message to '{}': {}", username, e.getMessage());
         }
     }
 
@@ -172,7 +163,7 @@ public class ChatServer {
             try {
                 session.getBasicRemote().sendText(message);
             } catch (IOException e) {
-                logger.info("[Broadcast Exception] " + e.getMessage());
+                logger.warn("[Broadcast Exception] Couldn't reach '{}': {}", username, e.getMessage());
             }
         });
     }
