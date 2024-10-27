@@ -13,6 +13,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);  // Link to the activity_home.xml layout
 
+        Button characterSelectionButton = findViewById(R.id.charSelectionBtn);
+
         //Initialize the buttons
         Button proceedBtn = findViewById(R.id.btnProceed);
         Button diffSet = findViewById(R.id.btnDifSet);
@@ -27,13 +29,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //Set click lsitener for Difficulty Settings button
+        //Set click listener for Difficulty Settings button
         diffSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Create an Intent to start SignupActivity
                 Intent diffIntent = new Intent(HomeActivity.this, DifficultySettingsActivity.class);
                 startActivity(diffIntent);  //Start DifficultySettingsActivity
+            }
+        });
+
+        //Set click listener for Character Selection button
+        characterSelectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, CharacterSelectionActivity.class);
+                startActivity(intent);
             }
         });
     }

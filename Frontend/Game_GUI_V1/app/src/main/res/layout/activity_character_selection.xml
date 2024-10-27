@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- activity_character_selection.xml -->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select Your Character"
+    android:textSize="24sp"
+    android:padding="16dp"/>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <!-- Example Character Sprites as ImageButtons -->
+    <ImageButton
+        android:id="@+id/character1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/side_idle_1" />
+
+    <ImageButton
+        android:id="@+id/character2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/side_idle_walk_1" />
+
+    <ImageButton
+        android:id="@+id/character3"
+        android:layout_width="150dp"
+        android:layout_height="122dp"
+        android:src="@drawable/kong_1" />
+
+</LinearLayout>
+</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
