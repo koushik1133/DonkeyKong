@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grass_and_sky"
+    tools:context=".LevelActivity">
+
+    <!-- Ground Block (across bottom) -->
+    <ImageView
+        android:id="@+id/groundBlock"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/ground_block"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Platform Block 1 -->
+    <ImageView
+        android:id="@+id/platformBlock1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/cloud_block"
+        app:layout_constraintBottom_toTopOf="@+id/groundBlock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.2" />
+
+    <!-- Platform Block 2, positioned higher for jumping -->
+    <ImageView
+        android:id="@+id/platformBlock2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/cloud_block"
+        app:layout_constraintBottom_toTopOf="@+id/platformBlock1"
+        app:layout_constraintStart_toEndOf="@+id/platformBlock1"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+    <!-- Higher Block that can only be reached by jumping from another block -->
+    <ImageView
+        android:id="@+id/highBlock"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/cloud_block"
+        app:layout_constraintBottom_toTopOf="@+id/platformBlock2"
+        app:layout_constraintStart_toEndOf="@+id/platformBlock2"
+        app:layout_constraintHorizontal_bias="0.7" />
+
+    <!-- Player Character -->
+    <ImageView
+        android:id="@+id/player"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="56dp"
+        android:src="@drawable/kong_1"
+        app:layout_constraintBottom_toTopOf="@+id/groundBlock"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
