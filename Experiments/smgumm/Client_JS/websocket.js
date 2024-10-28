@@ -20,9 +20,19 @@ function connect() {
         var log = document.getElementById("log");
         log.innerHTML += "Connected to " + event.currentTarget.url + "\n";
     };
+
+
 }
 
 function send() {  // this is how to send messages
     var content = document.getElementById("msg").value;
     ws.send(content);
+}
+
+function disconnect() {
+    if(ws) {
+        ws.close();
+        var log = document.getElementsById("log");
+        log.innerHTML += "Closing connection...\n";
+    }
 }

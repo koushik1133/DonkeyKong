@@ -13,10 +13,11 @@
         android:layout_marginTop="10dp"
         android:text="Server URL (default to):"/>
 
+    <!-- android:text="ws://10.0.2.2:8080/chat/" -->
     <EditText
         android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:text="ws://10.0.2.2:8080/chat/"
+        android:text="ws://10.48.237.172:8080/chat/"
         android:textSize="20dp"
         android:id="@+id/serverEdt" />
     <EditText

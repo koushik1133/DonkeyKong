@@ -54,6 +54,15 @@
         <activity
             android:name=".DisplayObjectsActivity"
             android:exported="true" />
+        <activity
+            android:name=".CharacterSelectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DisplayCharacterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LevelActivity"
+            android:exported="true" />
         <!-- This is now the first thing users see and home button takes them here -->
         <activity
             android:name=".HomeActivity"
