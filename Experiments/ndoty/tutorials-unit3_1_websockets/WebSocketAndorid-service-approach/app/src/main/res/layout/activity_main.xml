@@ -72,4 +72,10 @@
         android:text="Back to chat server#2"
         android:id="@+id/backBtn2" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a test" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>
