@@ -19,18 +19,25 @@
         android:text="ws://10.0.2.2:8080/chat/"
         android:textSize="20dp"
         android:id="@+id/serverEdt" />
+
     <EditText
-        android:layout_marginTop="20dp"
-        android:layout_height="50dp"
+        android:id="@+id/unameEdt"
         android:layout_width="match_parent"
-        android:hint="username"
-        android:textSize="20dp"
-        android:id="@+id/unameEdt" />
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:hint="please enter username"
+        android:textSize="20dp" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Connect"
         android:id="@+id/connectBtn" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="howdy" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
