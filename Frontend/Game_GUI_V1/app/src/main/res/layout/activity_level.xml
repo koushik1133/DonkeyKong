@@ -54,8 +54,8 @@
         android:id="@+id/player"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="156dp"
         android:src="@drawable/kong_1"
         app:layout_constraintBottom_toTopOf="@+id/groundBlock"
         app:layout_constraintStart_toStartOf="parent" />
