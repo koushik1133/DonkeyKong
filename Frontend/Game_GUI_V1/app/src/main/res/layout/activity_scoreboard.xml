@@ -5,60 +5,33 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/player1Score"
+        android:id="@+id/player1Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 1: 3"
-        android:textSize="20sp"
+        android:text="Player 1: 3 Lives"
+        android:textSize="18sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:padding="16dp"/>
+        android:layout_margin="16dp" />
 
     <TextView
-        android:id="@+id/player2Score"
+        android:id="@+id/player2Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2: 3"
-        android:textSize="20sp"
-        android:layout_below="@id/player1Score"
+        android:text="Player 2: 3 Lives"
+        android:textSize="18sp"
+        android:layout_below="@id/player1Lives"
         android:layout_alignParentStart="true"
-        android:padding="16dp"/>
+        android:layout_margin="16dp" />
 
     <TextView
-        android:id="@+id/player3Score"
+        android:id="@+id/player3Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 3: 3"
-        android:textSize="20sp"
-        android:layout_below="@id/player2Score"
+        android:text="Player 3: 3 Lives"
+        android:textSize="18sp"
+        android:layout_below="@id/player2Lives"
         android:layout_alignParentStart="true"
-        android:padding="16dp"/>
-
-    <Button
-        android:id="@+id/hitButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hit Player 1"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"/>
-
-    <Button
-        android:id="@+id/hitButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hit Player 2"
-        android:layout_below="@id/hitButton1"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"/>
-
-    <Button
-        android:id="@+id/hitButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hit Player 3"
-        android:layout_below="@id/hitButton2"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp" />
 
 </RelativeLayout>

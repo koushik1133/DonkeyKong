@@ -1,69 +1,67 @@
 package com.example.androidexample;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ScoreboardActivity {
-    private int player1Score = 3;
-    private int player2Score = 3;
-    private int player3Score = 3;
+public class ScoreboardActivity extends AppCompatActivity{
+    private TextView player1Lives;
+    private TextView player2Lives;
+    private TextView player3Lives;
 
-    private TextView player1ScoreText;
-    private TextView player2ScoreText;
-    private TextView player3ScoreText;
+    private int player1LifeCount = 3;
+    private int player2LifeCount = 3;
+    private int player3LifeCount = 3;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        player1ScoreText = findViewById(R.id.player1Score);
-        player2ScoreText = findViewById(R.id.player2Score);
-        player3ScoreText = findViewById(R.id.player3Score);
-
-        Button hitButton1 = findViewById(R.id.hitButton1);
-        Button hitButton2 = findViewById(R.id.hitButton2);
-        Button hitButton3 = findViewById(R.id.hitButton3);
-
-        hitButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hitPlayer(1);
-            }
-        });
-
-        hitButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hitPlayer(2);
-            }
-        });
-
-        hitButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hitPlayer(3);
-            }
-        });
+        player1Lives = findViewById(R.id.player1Lives);
+        player2Lives = findViewById(R.id.player2Lives);
+        player3Lives = findViewById(R.id.player3Lives);
     }
 
-    private void hitPlayer(int player) {
+    // Call this method when a player gets hit
+    public void playerHit(int player) {
         switch (player) {
             case 1:
-                if (player1Score > 0) player1Score--;
-                player1ScoreText.setText("Player 1: " + player1Score);
+                if (player1LifeCount > 0) {
+                    player1LifeCount--;
+                    updateLivesDisplay(player1Lives, player1LifeCount);
+                }
                 break;
             case 2:
-                if (player2Score > 0) player2Score--;
-                player2ScoreText.setText("Player 2: " + player2Score);
+                if (player2LifeCount > 0) {
+                    player2LifeCount--;
+                    updateLivesDisplay(player2Lives, player2LifeCount);
+                }
                 break;
             case 3:
-                if (player3Score > 0) player3Score--;
-                player3ScoreText.setText("Player 3: " + player3Score);
+                if (player3LifeCount > 0) {
+                    player3LifeCount--;
+                    updateLivesDisplay(player3Lives, player3LifeCount);
+                }
                 break;
         }
+    }
+
+    private void updateLivesDisplay(TextView textView, int lifeCount) {
+        if (lifeCount == 0) {
+            textView.setText(textView.getText().toString().split(":")[0] + ": Out");
+        } else {
+            textView.setText(textView.getText().toString().split(":")[0] + ": " + lifeCount + " Lives");
+        }
+    }
+
+    // Simulate player hits (you can replace this with actual game logic)
+    public void simulateHit() {
+        playerHit(1); // Simulating a hit on Player 1
+        playerHit(2); // Simulating a hit on Player 2
+        playerHit(3); // Simulating a hit on Player 3
     }
 }
