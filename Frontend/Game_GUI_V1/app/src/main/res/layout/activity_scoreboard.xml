@@ -1,71 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- Scoreboard for Player 1 -->
+
     <TextView
-        android:id="@+id/player1_scoreboard"
+        android:id="@+id/player1Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 1: 0"
-        android:textSize="24sp"
+        android:text="Player 1: 3 Lives"
+        android:textSize="18sp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:background="@android:color/white"
-        android:padding="8dp"/>
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp" />
 
-    <!-- Scoreboard for Player 2 -->
     <TextView
-        android:id="@+id/player2_scoreboard"
+        android:id="@+id/player2Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2: 0"
-        android:textSize="24sp"
-        android:layout_below="@id/player1_scoreboard"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:background="@android:color/white"
-        android:padding="8dp"/>
+        android:text="Player 2: 3 Lives"
+        android:textSize="18sp"
+        android:layout_below="@id/player1Lives"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp" />
 
-    <!-- Scoreboard for Player 3 -->
     <TextView
-        android:id="@+id/player3_scoreboard"
+        android:id="@+id/player3Lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 3: 0"
-        android:textSize="24sp"
-        android:layout_below="@id/player2_scoreboard"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:background="@android:color/white"
-        android:padding="8dp"/>
-
-    <!-- Left scoring zone -->
-    <View
-        android:id="@+id/left_zone"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/holo_blue_light"
-        android:layout_alignParentStart="true"/>
-
-    <!-- Middle scoring zone -->
-    <View
-        android:id="@+id/middle_zone"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light"
-        android:layout_toRightOf="@id/left_zone"/>
-
-    <!-- Right scoring zone -->
-    <View
-        android:id="@+id/right_zone"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@android:color/holo_red_light"
-        android:layout_toRightOf="@id/middle_zone"/>
+        android:text="Player 3: 3 Lives"
+        android:textSize="18sp"
+        android:layout_below="@id/player2Lives"
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp" />
 
 </RelativeLayout>
