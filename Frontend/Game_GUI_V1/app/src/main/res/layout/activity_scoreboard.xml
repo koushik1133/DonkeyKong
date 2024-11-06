@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Timer TextView -->
     <TextView
-        android:id="@+id/player1Lives"
+        android:id="@+id/timerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 1: 3 Lives"
-        android:textSize="18sp"
+        android:text="Time: 120"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp" />
 
+    <!-- Player 1 Score -->
     <TextView
-        android:id="@+id/player2Lives"
+        android:id="@+id/player1Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2: 3 Lives"
-        android:textSize="18sp"
-        android:layout_below="@id/player1Lives"
-        android:layout_alignParentStart="true"
-        android:layout_margin="16dp" />
+        android:text="Player 1: 0"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/timerText"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp" />
 
+    <!-- Player 2 Score -->
     <TextView
-        android:id="@+id/player3Lives"
+        android:id="@+id/player2Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 3: 3 Lives"
-        android:textSize="18sp"
-        android:layout_below="@id/player2Lives"
-        android:layout_alignParentStart="true"
-        android:layout_margin="16dp" />
+        android:text="Player 2: 0"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/player1Score"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp" />
+
+    <!-- Player 3 Score -->
+    <TextView
+        android:id="@+id/player3Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player 3: 0"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/player2Score"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp" />
 
 </RelativeLayout>

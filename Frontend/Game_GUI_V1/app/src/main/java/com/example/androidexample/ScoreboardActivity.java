@@ -1,67 +1,87 @@
 package com.example.androidexample;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ScoreboardActivity extends AppCompatActivity{
-    private TextView player1Lives;
-    private TextView player2Lives;
-    private TextView player3Lives;
+    private TextView timerText, player1Score, player2Score, player3Score;
+    private int player1Points = 0, player2Points = 0, player3Points = 0;
+    private boolean player1Out = false, player2Out = false, player3Out = false;
+    private int timeLeft = 120; // 120 seconds timer
 
-    private int player1LifeCount = 3;
-    private int player2LifeCount = 3;
-    private int player3LifeCount = 3;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
 
-        player1Lives = findViewById(R.id.player1Lives);
-        player2Lives = findViewById(R.id.player2Lives);
-        player3Lives = findViewById(R.id.player3Lives);
+        // Initialize UI elements
+        timerText = findViewById(R.id.timerText);
+        player1Score = findViewById(R.id.player1Score);
+        player2Score = findViewById(R.id.player2Score);
+        player3Score = findViewById(R.id.player3Score);
+
+        // Start the countdown timer
+        startGameTimer();
     }
 
-    // Call this method when a player gets hit
-    public void playerHit(int player) {
-        switch (player) {
+    private void startGameTimer() {
+        new CountDownTimer(timeLeft * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeft--;
+                timerText.setText("Time: " + timeLeft);
+
+                // Increment the score for each player who is not out
+                if (!player1Out) player1Points++;
+                if (!player2Out) player2Points++;
+                if (!player3Out) player3Points++;
+
+                updateScores();
+            }
+
+            @Override
+            public void onFinish() {
+                // When the timer finishes, show the winner
+                showWinner();
+            }
+        }.start();
+    }
+
+    private void updateScores() {
+        // Update the score text views
+        player1Score.setText("Player 1: " + player1Points);
+        player2Score.setText("Player 2: " + player2Points);
+        player3Score.setText("Player 3: " + player3Points);
+    }
+
+    private void showWinner() {
+        // Determine the winner by comparing scores
+        int maxScore = Math.max(player1Points, Math.max(player2Points, player3Points));
+        String winner = "It's a tie!";
+
+        if (maxScore == player1Points) winner = "Player 1 wins!";
+        else if (maxScore == player2Points) winner = "Player 2 wins!";
+        else if (maxScore == player3Points) winner = "Player 3 wins!";
+
+        Toast.makeText(ScoreboardActivity.this, winner, Toast.LENGTH_LONG).show();
+    }
+
+    // Method to handle when a player is hit (out)
+    public void onPlayerHit(int playerNumber) {
+        switch (playerNumber) {
             case 1:
-                if (player1LifeCount > 0) {
-                    player1LifeCount--;
-                    updateLivesDisplay(player1Lives, player1LifeCount);
-                }
+                player1Out = true;
                 break;
             case 2:
-                if (player2LifeCount > 0) {
-                    player2LifeCount--;
-                    updateLivesDisplay(player2Lives, player2LifeCount);
-                }
+                player2Out = true;
                 break;
             case 3:
-                if (player3LifeCount > 0) {
-                    player3LifeCount--;
-                    updateLivesDisplay(player3Lives, player3LifeCount);
-                }
+                player3Out = true;
                 break;
         }
-    }
-
-    private void updateLivesDisplay(TextView textView, int lifeCount) {
-        if (lifeCount == 0) {
-            textView.setText(textView.getText().toString().split(":")[0] + ": Out");
-        } else {
-            textView.setText(textView.getText().toString().split(":")[0] + ": " + lifeCount + " Lives");
-        }
-    }
-
-    // Simulate player hits (you can replace this with actual game logic)
-    public void simulateHit() {
-        playerHit(1); // Simulating a hit on Player 1
-        playerHit(2); // Simulating a hit on Player 2
-        playerHit(3); // Simulating a hit on Player 3
     }
 }
