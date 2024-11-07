@@ -68,3 +68,8 @@ class Main {
 
 }
 
+/*
+Admin and Player: One-to-Many – One admin manages many players
+
+Player and Score: One-to-One – Each player has one score
+ */
