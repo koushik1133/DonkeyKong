@@ -1,6 +1,7 @@
 package backend.Players;
 import jakarta.persistence.*;
 import backend.Scores.Score;
+import backend.Administrator.Admin;
 
 @Entity
 public class Player {
@@ -11,6 +12,10 @@ public class Player {
 
     private String username;  // Username of the player
     private String password;  // Password of the player (should be hashed in production)
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id")  // Foreign key for Administration
+    private Admin admin;
 
     @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
     private Score score;  // Each player has exactly one score (one-to-one relationship)
@@ -56,4 +61,7 @@ public class Player {
     public void setScore(Score score) {
         this.score = score;
     }
+
+    public Admin getAdmin() { return admin; }
+    public void setAdmin(Admin admin) { this.admin = admin; }
 }
