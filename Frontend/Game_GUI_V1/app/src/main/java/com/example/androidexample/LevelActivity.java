@@ -30,7 +30,7 @@ public class LevelActivity extends AppCompatActivity {
         player = findViewById(R.id.player);
         countdownTimer = findViewById(R.id.countdownTimer);
 
-        // Set a jump action or button
+        //Set a jump action/button
         player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +40,7 @@ public class LevelActivity extends AppCompatActivity {
             }
         });
 
-        // Start the countdown timer from the server
+        //Start the countdown timer from the server
         fetchCountdownTimer();
     }
 
@@ -49,11 +49,11 @@ public class LevelActivity extends AppCompatActivity {
         isJumping = true;
         //Generic jump from Google
         player.animate()
-                .translationYBy(-200) // Jump up
+                .translationYBy(-200) //Jump up
                 .setDuration(300)
                 .withEndAction(() -> {
                     player.animate()
-                            .translationYBy(200) // Come back down
+                            .translationYBy(200) //Come down
                             .setDuration(300)
                             .withEndAction(() -> isJumping = false);
                 });
@@ -62,8 +62,8 @@ public class LevelActivity extends AppCompatActivity {
     private void fetchCountdownTimer() {
         new Thread(() -> {
             try {
-                // Replace this with your server URL
-                String urlString = "YOUR_SERVER_URL_HERE";
+                //Replace this with server URL
+                String urlString = "SERVER_URL_HERE";
                 URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -79,7 +79,7 @@ public class LevelActivity extends AppCompatActivity {
                 reader.close();
 
                 JSONObject jsonResponse = new JSONObject(response.toString());
-                String countdown = jsonResponse.getString("countdown"); // Adjust based on JSON structure
+                String countdown = jsonResponse.getString("countdown");
 
                 runOnUiThread(() -> countdownTimer.setText(countdown));
             } catch (Exception e) {
