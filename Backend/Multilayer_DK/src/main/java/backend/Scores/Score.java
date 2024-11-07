@@ -17,7 +17,9 @@ public class Score {
     private Player player;  // A score is tied to exactly one player
 
     // Default constructor
-    public Score(int i) {}
+    public Score(int i) {
+        this. = i;
+    }
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
     public Score(int score, Player player) {
