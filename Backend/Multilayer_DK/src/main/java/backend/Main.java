@@ -6,6 +6,8 @@ import backend.Dk.Dk_object;
 import backend.Dk.DkRepository;
 import backend.Players.Player;
 import backend.Players.PlayerRepository;
+import backend.Scores.Score;
+import backend.Scores.ScoreRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -28,14 +30,14 @@ class Main {
     }
 
     /**
-     * 
      * @param playerRepository repository for the Player entity
-     * @param adminRepository repo for the Admin entity
-     * @param dkRepository repo for the Dk entity
-     * Creates a commandLine runner to enter dummy data into the database
+     * @param adminRepository  repo for the Admin entity
+     * @param dkRepository     repo for the Dk entity
+     *                         Creates a commandLine runner to enter dummy data into the database
+     * @param scoreRepository repo for the Score entity
      */
     @Bean
-    CommandLineRunner initPerson(PlayerRepository playerRepository, AdminRepository adminRepository, DkRepository dkRepository) {
+    CommandLineRunner initPerson(PlayerRepository playerRepository, AdminRepository adminRepository, DkRepository dkRepository, ScoreRepository scoreRepository) {
         return args -> {
             Player player1 = new Player("Koushik", "1234");
             Player player2 = new Player("Sam", "1234");
@@ -45,6 +47,10 @@ class Main {
             Dk_object object1 = new Dk_object("bomb",50);
             Dk_object object2 = new Dk_object("bullet",40);
             Dk_object object3 = new Dk_object("barrel",30);
+            Score score1 = new Score(150);
+            Score score2 = new Score(200);
+            Score score3 = new Score(250);
+            Score score4 = new Score(300);
             adminRepository.save(admin1);
             playerRepository.save(player1);
             playerRepository.save(player2);
@@ -53,6 +59,10 @@ class Main {
             dkRepository.save(object1);
             dkRepository.save(object2);
             dkRepository.save(object3);
+            scoreRepository.save(score1);
+            scoreRepository.save(score2);
+            scoreRepository.save(score3);
+            scoreRepository.save(score4);
         };
     }
 
