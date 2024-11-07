@@ -17,8 +17,7 @@ import java.util.Map;
 @ServerEndpoint(value = "/chat/{username}")  // this is Websocket url
 public class ChatSocket {
 
-  // cannot autowire static directly (instead we do it by the below
-  // method
+  // cannot autowire static directly (instead we do it by the below method
 	private static MessageRepository msgRepo; 
 
 	/*
@@ -34,8 +33,8 @@ public class ChatSocket {
 	}
 
 	// Store all socket session and their corresponding username.
-	private static Map<Session, String> sessionUsernameMap = new Hashtable<>();
-	private static Map<String, Session> usernameSessionMap = new Hashtable<>();
+	private static final Map<Session, String> sessionUsernameMap = new Hashtable<>();
+	private static final Map<String, Session> usernameSessionMap = new Hashtable<>();
 
 	private final Logger logger = LoggerFactory.getLogger(ChatSocket.class);
 
