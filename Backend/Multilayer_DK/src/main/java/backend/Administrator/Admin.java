@@ -10,64 +10,7 @@ import java.util.List;
  * 
  * @author Sam Gumm
  */
-/*
-@Entity
-public class Admin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
-    private String password;
-    private String players;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Admin_id")
-    private Admin admin;
-
-
-    public Admin(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public Admin() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getUsername() {
-        return name;
-    }
-
-    public void setUsername(String username) {
-        this.name = username;
-    }
-    public String getPassword() {
-        return password;
-    }
-
-    public String setPassword(String password) {
-        this.password = password;
-    }
-
-    //public String getAdmin() {return admin;}
-
-    //public void setAdmin(Admin admin) {this.admin = admin;}
-
-
-    public void getPlayers() { return players; }
-
-
-    public void setPlayers(Set<Player> players) {
-        this.players = players.toString();
-    }
-}
-*/
 @Setter
 @Getter
 @Entity
