@@ -212,9 +212,6 @@ public class ProfileSelectorActivity extends AppCompatActivity {
 
 
 
-
-
-
     private void putrequest(){
         String putUrl = url + "/" + etRequest.getText().toString(); // Make sure this is the correct ID or endpoint
 
