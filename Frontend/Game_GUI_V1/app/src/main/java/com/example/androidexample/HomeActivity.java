@@ -20,36 +20,30 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);  // Link to the activity_home.xml layout
+        setContentView(R.layout.activity_home);
 
         Button characterSelectionButton = findViewById(R.id.charSelectionBtn);
         Button proceedBtn = findViewById(R.id.btnProceed);
         Button diffSet = findViewById(R.id.btnDifSet);
         levelBtn = findViewById(R.id.levelBtn);
 
-        // Set click listener for the button to navigate to the login/signup page (MainActivity)
         proceedBtn.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             startActivity(intent);
         });
 
-        // Set click listener for Difficulty Settings button
         diffSet.setOnClickListener(view -> {
             Intent diffIntent = new Intent(HomeActivity.this, DifficultySettingsActivity.class);
             startActivity(diffIntent);
         });
 
-        // Set click listener for Character Selection button
         characterSelectionButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CharacterSelectionActivity.class);
             startActivity(intent);
         });
 
-        // Set click listener for Game Level button
         levelBtn.setOnClickListener(view -> {
-            connectWebSocket();  // Connect WebSocket when button is clicked
-
-            // Navigate to LevelActivity
+            connectWebSocket();
             Intent intent = new Intent(HomeActivity.this, LevelActivity.class);
             startActivity(intent);
         });
@@ -82,6 +76,14 @@ public class HomeActivity extends AppCompatActivity {
             webSocketClient.connect();
         } catch (URISyntaxException e) {
             Log.e("HomeActivity", "WebSocket URI Error", e);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webSocketClient != null) {
+            webSocketClient.close();
         }
     }
 }

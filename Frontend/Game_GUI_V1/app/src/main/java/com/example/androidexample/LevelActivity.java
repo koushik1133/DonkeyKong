@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.OutputStream;
 import org.json.JSONObject;
 
 import java.net.URI;
@@ -37,66 +38,58 @@ public class LevelActivity extends AppCompatActivity {
         player = findViewById(R.id.player);
         countdownTimer = findViewById(R.id.countdownTimer);
 
-        //Set a jump action/button
-        player.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isJumping) {
-                    jumpPlayer();
-                }
+        player.setOnClickListener(v -> {
+            if (!isJumping) {
+                jumpPlayer();
             }
         });
 
-        //Start the countdown timer from the server
-        //fetchCountdownTimer();
-
-        // Start the WebSocket connection for the countdown timer
-        startWebSocketConnection();
+        // Start the countdown and then connect to the WebSocket
+        startCountdown();
     }
-
 
     private void jumpPlayer() {
         isJumping = true;
-        //Generic jump from Google
         player.animate()
-                .translationYBy(-200) //Jump up
+                .translationYBy(-200) // Jump up
                 .setDuration(300)
                 .withEndAction(() -> {
                     player.animate()
-                            .translationYBy(200) //Come down
+                            .translationYBy(200) // Come down
                             .setDuration(300)
                             .withEndAction(() -> isJumping = false);
                 });
     }
 
-//    private void fetchCountdownTimer() {
-//        new Thread(() -> {
-//            try {
-//                //Replace this with server URL
-//                String urlString = "ws://coms-3090-031.class.las.iastate.edu:8080/start";
-//                URL url = new URL(urlString);
-//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                connection.setRequestMethod("GET");
-//
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//                StringBuilder response = new StringBuilder();
-//                String line;
-//
-//                while ((line = reader.readLine()) != null) {
-//                    response.append(line);
-//                }
-//
-//                reader.close();
-//
-//                JSONObject jsonResponse = new JSONObject(response.toString());
-//                String countdown = jsonResponse.getString("countdown");
-//
-//                runOnUiThread(() -> countdownTimer.setText(countdown));
-//            } catch (Exception e) {
-//                Log.e("LevelActivity", "Error fetching countdown timer", e);
-//            }
-//        }).start();
-//    }
+    private void startCountdown() {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                connection.setDoOutput(true);
+
+                String postData = "durationInSeconds=120";
+                OutputStream os = connection.getOutputStream();
+                os.write(postData.getBytes());
+                os.flush();
+                os.close();
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    Log.d("LevelActivity", "Countdown started successfully");
+                    runOnUiThread(this::startWebSocketConnection);
+                } else {
+                    Log.e("LevelActivity", "Failed to start countdown: " + responseCode);
+                }
+
+                connection.disconnect();
+            } catch (Exception e) {
+                Log.e("LevelActivity", "Error starting countdown", e);
+            }
+        }).start();
+    }
 
     private void startWebSocketConnection() {
         try {
@@ -114,6 +107,11 @@ public class LevelActivity extends AppCompatActivity {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
+                    String closedBy = remote ? "server" : "local";
+                    runOnUiThread(() -> {
+                        String currentText = countdownTimer.getText().toString();
+                        countdownTimer.setText(currentText + "---\nconnection closed by " + closedBy + "\nreason: " + reason);
+                    });
                     Log.d("LevelActivity", "WebSocket Connection Closed: " + reason);
                 }
 
@@ -136,8 +134,4 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 }
-
-//////////////////////////////////////////////////////////////
-
-
 
