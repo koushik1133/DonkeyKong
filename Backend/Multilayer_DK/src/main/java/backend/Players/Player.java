@@ -21,9 +21,9 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // Unique identifier for the player
-
     private String username;  // Username of the player
-    private String password;  // Password of the player (should be hashed in production)
+    private String password;  // Password of the player
+    private String sprite;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")  // Foreign key for Administration
@@ -47,9 +47,10 @@ public class Player {
     public Player() {}
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
-    public Player(String username, String password) {
+    public Player(String username, String password, String sprite) {
         this.username = username;
         this.password = password;
+        this.sprite = sprite;
     }
     
     //helper methods for the relationship
