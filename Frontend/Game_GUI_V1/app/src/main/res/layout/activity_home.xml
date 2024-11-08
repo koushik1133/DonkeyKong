@@ -44,7 +44,7 @@
 
     <!-- Button to game screen -->
     <Button
-        android:id="@+id/btnLevel"
+        android:id="@+id/levelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Screen"

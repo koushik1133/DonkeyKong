@@ -14,13 +14,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
+
 public class LevelActivity extends AppCompatActivity {
     private ImageView player;
     private boolean isJumping = false;
-
-
     private TextView countdownTimer;
     private Handler handler = new Handler();
+
+
+    private WebSocketClient webSocketClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,10 @@ public class LevelActivity extends AppCompatActivity {
         });
 
         //Start the countdown timer from the server
-        fetchCountdownTimer();
+        //fetchCountdownTimer();
+
+        // Start the WebSocket connection for the countdown timer
+        startWebSocketConnection();
     }
 
 
@@ -59,33 +69,75 @@ public class LevelActivity extends AppCompatActivity {
                 });
     }
 
-    private void fetchCountdownTimer() {
-        new Thread(() -> {
-            try {
-                //Replace this with server URL
-                String urlString = "ws://coms-3090-031.class.las.iastate.edu:8080/start";
-                URL url = new URL(urlString);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
+//    private void fetchCountdownTimer() {
+//        new Thread(() -> {
+//            try {
+//                //Replace this with server URL
+//                String urlString = "ws://coms-3090-031.class.las.iastate.edu:8080/start";
+//                URL url = new URL(urlString);
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                connection.setRequestMethod("GET");
+//
+//                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//                StringBuilder response = new StringBuilder();
+//                String line;
+//
+//                while ((line = reader.readLine()) != null) {
+//                    response.append(line);
+//                }
+//
+//                reader.close();
+//
+//                JSONObject jsonResponse = new JSONObject(response.toString());
+//                String countdown = jsonResponse.getString("countdown");
+//
+//                runOnUiThread(() -> countdownTimer.setText(countdown));
+//            } catch (Exception e) {
+//                Log.e("LevelActivity", "Error fetching countdown timer", e);
+//            }
+//        }).start();
+//    }
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
+    private void startWebSocketConnection() {
+        try {
+            URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
+            webSocketClient = new WebSocketClient(uri) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                    Log.d("LevelActivity", "WebSocket Connection Opened");
                 }
 
-                reader.close();
+                @Override
+                public void onMessage(String message) {
+                    runOnUiThread(() -> countdownTimer.setText(message));
+                }
 
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                String countdown = jsonResponse.getString("countdown");
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    Log.d("LevelActivity", "WebSocket Connection Closed: " + reason);
+                }
 
-                runOnUiThread(() -> countdownTimer.setText(countdown));
-            } catch (Exception e) {
-                Log.e("LevelActivity", "Error fetching countdown timer", e);
-            }
-        }).start();
+                @Override
+                public void onError(Exception ex) {
+                    Log.e("LevelActivity", "WebSocket Error", ex);
+                }
+            };
+            webSocketClient.connect();
+        } catch (URISyntaxException e) {
+            Log.e("LevelActivity", "WebSocket URI Error", e);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (webSocketClient != null) {
+            webSocketClient.close();
+        }
     }
 }
+
+//////////////////////////////////////////////////////////////
+
+
 
