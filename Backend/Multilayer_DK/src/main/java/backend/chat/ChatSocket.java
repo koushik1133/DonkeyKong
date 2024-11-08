@@ -52,7 +52,7 @@ public class ChatSocket {
 		sendMessageToPArticularUser(username, getChatHistory());
 		
     // broadcast that new user joined
-		String message = "User:" + username + " has Joined the Chat";
+		String message = "Player:" + username + " has Joined the game";		//shows the info of the players who currently are playing
 		broadcast(message);
 	}
 
@@ -62,7 +62,7 @@ public class ChatSocket {
 
 		// Handle new messages
 		logger.info("Entered into Message: Got Message:" + message);
-		String username = sessionUsernameMap.get(session);
+		 String username = sessionUsernameMap.get(session);
 
     // Direct message to a user using the format "@username <message>"
 		if (message.startsWith("@")) {

@@ -1,68 +1,67 @@
 package backend.Players;
-
 import jakarta.persistence.*;
+import backend.Scores.Score;
+import backend.Administrator.Admin;
 
 @Entity
-public class Player{
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String username;
-    private String password;
+    private Long id;  // Unique identifier for the player
 
-    /*
-     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
-     * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
-     * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
-     * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
-     */
+    private String username;  // Username of the player
+    private String password;  // Password of the player (should be hashed in production)
 
-    /*
-    * TODO: Decide on the relation to use here
-    *  need to do one to one, one to many, and many to many
-    * */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Player_id")
-    private Player player;
+    @ManyToOne
+    @JoinColumn(name = "admin_id")  // Foreign key for Administration
+    private Admin admin;
 
-    public Player(String username,String password) {
+    @OneToOne(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Score score;  // Each player has exactly one score (one-to-one relationship)
+
+    // Default constructor
+    public Player() {}
+
+    // Constructor with parameters (excluding id, as it will be auto-generated)
+    public Player(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public Player() {
-    }
-
-
-    // =============================== Getters and Setters for each field ================================== //
-
-    public int getId(){
+    // Getters and setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id){
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName(){
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String name){
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public Player getPlayer(){return player;}
+    public Score getScore() {
+        return score;
+    }
 
-    public void setPlayer(Player player){this.player = player;}
+    public void setScore(Score score) {
+        this.score = score;
+    }
 
+    public Admin getAdmin() { return admin; }
+    public void setAdmin(Admin admin) { this.admin = admin; }
 }

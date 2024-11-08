@@ -1,13 +1,13 @@
-package backend.Players;
+package backend.Scores;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface PlayerRepository extends JpaRepository<Player, Long> {
-    Player findById(long id);
+public interface ScoreRepository extends JpaRepository<Score, Long> {
+    Score findById(long id);
 
     @Transactional
     void deleteById(long id);
-    
-    
+
+
 }
