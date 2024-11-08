@@ -6,8 +6,7 @@
 
     <!-- activity_character_selection.xml -->
 <LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
+    android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center">
@@ -30,16 +29,34 @@ android:gravity="center">
         android:id="@+id/character1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/side_idle_1" />
+        android:src="@drawable/player_bald" />
 
     <ImageButton
         android:id="@+id/character2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/side_idle_walk_1" />
+        android:src="@drawable/player_black" />
 
     <ImageButton
         android:id="@+id/character3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/player_orange" />
+
+    <ImageButton
+        android:id="@+id/character4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/player_green" />
+
+    <ImageButton
+        android:id="@+id/character5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/player_red" />
+
+    <ImageButton
+        android:id="@+id/character6"
         android:layout_width="150dp"
         android:layout_height="122dp"
         android:src="@drawable/kong_1" />
