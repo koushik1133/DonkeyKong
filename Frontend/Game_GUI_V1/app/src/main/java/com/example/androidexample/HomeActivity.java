@@ -18,6 +18,8 @@ public class HomeActivity extends AppCompatActivity {
         //Initialize the buttons
         Button proceedBtn = findViewById(R.id.btnProceed);
         Button diffSet = findViewById(R.id.btnDifSet);
+        // Initialize the button for Game Level
+        Button levelBtn = findViewById(R.id.btnLevel);
 
         //Set click listener for the button to navigate to the login/signup page (MainActivity)
         proceedBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +46,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CharacterSelectionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Set click listener for Game Level button
+        levelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Navigate to LevelActivity
+                Intent intent = new Intent(HomeActivity.this, LevelActivity.class);
                 startActivity(intent);
             }
         });

@@ -63,7 +63,7 @@ public class LevelActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 //Replace this with server URL
-                String urlString = "SERVER_URL_HERE";
+                String urlString = "ws://coms-3090-031.class.las.iastate.edu:8080/start";
                 URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
