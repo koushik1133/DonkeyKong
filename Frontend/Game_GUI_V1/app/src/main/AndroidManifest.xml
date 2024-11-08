@@ -58,6 +58,9 @@
             android:name=".CharacterSelectionActivity"
             android:exported="true" />
         <activity
+            android:name=".GameOverActivity"
+            android:exported="true" />
+        <activity
             android:name=".DisplayCharacterActivity"
             android:exported="true" />
         <activity

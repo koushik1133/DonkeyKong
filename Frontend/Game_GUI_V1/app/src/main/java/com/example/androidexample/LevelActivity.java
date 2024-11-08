@@ -14,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.OutputStream;
 import org.json.JSONObject;
+import android.content.Intent;
+
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -105,12 +107,27 @@ public class LevelActivity extends AppCompatActivity {
                     runOnUiThread(() -> countdownTimer.setText(message));
                 }
 
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    String closedBy = remote ? "server" : "local";
+//                    runOnUiThread(() -> {
+//                        String currentText = countdownTimer.getText().toString();
+//                        countdownTimer.setText(currentText + "---\nconnection closed by " + closedBy + "\nreason: " + reason);
+//                    });
+//                    Log.d("LevelActivity", "WebSocket Connection Closed: " + reason);
+//                }
+
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     String closedBy = remote ? "server" : "local";
                     runOnUiThread(() -> {
-                        String currentText = countdownTimer.getText().toString();
-                        countdownTimer.setText(currentText + "---\nconnection closed by " + closedBy + "\nreason: " + reason);
+                        countdownTimer.setText("---\nconnection closed by " + closedBy + "\nreason: " + reason);
+                        if (code == 1000 || "Countdown complete".equals(reason)) {
+                            // Open the Game Over screen when the WebSocket closes due to countdown completion
+                            Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     });
                     Log.d("LevelActivity", "WebSocket Connection Closed: " + reason);
                 }
