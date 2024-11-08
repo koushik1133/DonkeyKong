@@ -10,6 +10,7 @@ import android.widget.EditText;
 //import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+
 public class MainActivity extends AppCompatActivity implements WebSocketListener{
 
     private Button connectBtn;
