@@ -60,7 +60,7 @@ public class PregameChatActivity extends AppCompatActivity{
 
     private void initializeWebSocket() {
         try {
-            URI serverURI = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/chat");  // Change this URL to your server's WebSocket URI
+            URI serverURI = new URI("http://coms-3090-031.class.las.iastate.edu:8080/chat");  // Change this URL to your server's WebSocket URI
             mWebSocketClient = new WebSocketClient(serverURI) {
 
                 @Override
