@@ -1,5 +1,6 @@
 package com.example.androidexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PregameChatActivity extends AppCompatActivity{
-
     private WebSocketClient mWebSocketClient;
     private TextView lobbyTextView;
     private EditText messageEditText;
@@ -46,8 +46,13 @@ public class PregameChatActivity extends AppCompatActivity{
         sendButton.setOnClickListener(v -> {
             String message = messageEditText.getText().toString();
             if (!message.isEmpty()) {
-                sendMessageToLobby(message);
-                messageEditText.setText(""); // Clear the input
+                // Ensure WebSocketClient is initialized before sending message
+                if (mWebSocketClient != null && mWebSocketClient.isOpen()) {
+                    sendMessageToLobby(message);
+                    messageEditText.setText(""); // Clear the input
+                } else {
+                    Toast.makeText(this, "Connection not established. Try again later.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -55,6 +60,8 @@ public class PregameChatActivity extends AppCompatActivity{
         startGameButton.setOnClickListener(v -> {
             // Logic to start the game (e.g., transitioning to a new screen)
             Toast.makeText(this, "Game Starting!", Toast.LENGTH_SHORT).show();
+            Intent levelIntent = new Intent(PregameChatActivity.this, LevelActivity.class);
+            startActivity(levelIntent);
         });
     }
 
@@ -71,21 +78,24 @@ public class PregameChatActivity extends AppCompatActivity{
 
                 @Override
                 public void onMessage(String message) {
-                    try {
-                        JSONObject jsonMessage = new JSONObject(message);
-                        String type = jsonMessage.getString("type");
+                    // Ensure we are on the UI thread when updating UI
+                    runOnUiThread(() -> {
+                        try {
+                            JSONObject jsonMessage = new JSONObject(message);
+                            String type = jsonMessage.getString("type");
 
-                        if ("lobbyUpdate".equals(type)) {
-                            JSONArray players = jsonMessage.getJSONArray("players");
-                            updateLobby(players);
-                        } else if ("message".equals(type)) {
-                            String sender = jsonMessage.getString("sender");
-                            String text = jsonMessage.getString("text");
-                            updateChat(sender, text);
+                            if ("lobbyUpdate".equals(type)) {
+                                JSONArray players = jsonMessage.getJSONArray("players");
+                                updateLobby(players);
+                            } else if ("message".equals(type)) {
+                                String sender = jsonMessage.getString("sender");
+                                String text = jsonMessage.getString("text");
+                                updateChat(sender, text);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    });
                 }
 
                 @Override
@@ -96,12 +106,18 @@ public class PregameChatActivity extends AppCompatActivity{
                 @Override
                 public void onError(Exception ex) {
                     // Handle error
+                    runOnUiThread(() -> {
+                        Toast.makeText(PregameChatActivity.this, "Error: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
                 }
             };
             mWebSocketClient.connect();
 
         } catch (Exception e) {
             e.printStackTrace();
+            runOnUiThread(() -> {
+                Toast.makeText(PregameChatActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
 
@@ -110,7 +126,9 @@ public class PregameChatActivity extends AppCompatActivity{
             JSONObject joinRequest = new JSONObject();
             joinRequest.put("type", "joinLobby");
             joinRequest.put("user", userName);
-            mWebSocketClient.send(joinRequest.toString());
+            if (mWebSocketClient != null && mWebSocketClient.isOpen()) {
+                mWebSocketClient.send(joinRequest.toString());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -122,7 +140,9 @@ public class PregameChatActivity extends AppCompatActivity{
             chatMessage.put("type", "message");
             chatMessage.put("sender", userName);
             chatMessage.put("text", message);
-            mWebSocketClient.send(chatMessage.toString());
+            if (mWebSocketClient != null && mWebSocketClient.isOpen()) {
+                mWebSocketClient.send(chatMessage.toString());
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -137,20 +157,18 @@ public class PregameChatActivity extends AppCompatActivity{
                 e.printStackTrace();
             }
         }
+
         String lobbyText = "Lobby: " + String.join(", ", playersInLobby);
         lobbyTextView.setText(lobbyText);
 
-        if (playersInLobby.size() == 3) {
-            startGameButton.setEnabled(true);  // Enable Start Game button once 3 players are in the lobby
-        } else {
-            startGameButton.setEnabled(false); // Disable until lobby is full
-        }
+        // Remove the conditional check and enable the button always
+        startGameButton.setEnabled(true);  // Always enable Start Game button
     }
 
     private void updateChat(String sender, String message) {
         String currentText = lobbyTextView.getText().toString();
         String newText = currentText + "\n" + sender + ": " + message;
-        lobbyTextView.setText(newText);
+        runOnUiThread(() -> lobbyTextView.setText(newText));
     }
 
     @Override

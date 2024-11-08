@@ -11,7 +11,7 @@
         android:id="@+id/lobbyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lobby: Waiting for players..."
+        android:text="Lobby"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/messageEditText"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,9 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Game"
-        android:enabled="false"
         app:layout_constraintBottom_toTopOf="@+id/messageEditText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
