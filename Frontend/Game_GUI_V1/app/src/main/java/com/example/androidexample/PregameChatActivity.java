@@ -60,7 +60,7 @@ public class PregameChatActivity extends AppCompatActivity{
 
     private void initializeWebSocket() {
         try {
-            URI serverURI = new URI("ws://your.websocket.server.url");  // Change this URL to your server's WebSocket URI
+            URI serverURI = new URI("ws://");  // Change this URL to your server's WebSocket URI
             mWebSocketClient = new WebSocketClient(serverURI) {
 
                 @Override
