@@ -39,10 +39,10 @@ class Main {
     @Bean
     CommandLineRunner initPerson(PlayerRepository playerRepository, AdminRepository adminRepository, DkRepository dkRepository, ScoreRepository scoreRepository) {
         return args -> {
-            Player player1 = new Player("Koushik", "1234");
-            Player player2 = new Player("Sam", "1234");
-            Player player3 = new Player("Nick", "1234");
-            Player player4 = new Player("Alex", "1234");
+            Player player1 = new Player("Koushik", "1234", "kong_1");
+            Player player2 = new Player("Sam", "1234", "kong_1");
+            Player player3 = new Player("Nick", "1234", "kong_1");
+            Player player4 = new Player("Alex", "1234", "kong_1");
             Admin admin1 = new Admin("admin1", "admin1");
             Dk_object object1 = new Dk_object("bomb",50);
             Dk_object object2 = new Dk_object("bullet",40);
