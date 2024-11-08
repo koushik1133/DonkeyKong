@@ -1,10 +1,13 @@
 package backend.Achievements;
 
+import backend.Players.Player;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class AchievementsController {
@@ -27,6 +30,21 @@ public class AchievementsController {
         return achievementsRepository.findById(id)
                 .orElseThrow();
     }
+
+    @GetMapping("/{achievementId}/players")
+    public ResponseEntity<Object> getPlayersByAchievement(@PathVariable Long achievementId) {
+        Optional<Achievements> optionalAchievement = achievementsRepository.findById(achievementId);
+
+        if (optionalAchievement.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Achievements achievement = optionalAchievement.get();
+        Set<Player> players = achievement.getPlayers();
+
+        return ResponseEntity.ok(players);
+    }
+
 
     @PostMapping(path = "/Achievements")
     String createAchievements(@RequestBody Achievements achievement){

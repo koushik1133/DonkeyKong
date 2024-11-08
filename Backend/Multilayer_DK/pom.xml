@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>group_031</groupId>
   <artifactId>backend</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.3</version>
 
   <!-- To make it a spring boot project -->
   <parent>

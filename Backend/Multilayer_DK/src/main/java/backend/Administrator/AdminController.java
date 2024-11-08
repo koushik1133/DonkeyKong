@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 
@@ -19,22 +20,6 @@ public class AdminController {
     
     private final String success = "{\"message\":\"success\"}";
     public final String failure = "{\"message\":\"failure\"}";
-    //TODO: Create passwordMatcher
-    //TODO: Create usernameAvailabilityChecker
-    //TODO: Create
-    /*
-    USER VERIFICATION
-    -> public Boolean authenticateUser(String username, String password) {
-            Player player = playerRepository.findByname(name);
-            if(plauer != null && (passwordMatcher.matches(password, player.getPassword())) {
-                 return true;
-            }
-
-            else {
-                return false;
-            }
-        }
-     */
 
     public AdminController(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
@@ -46,7 +31,7 @@ public class AdminController {
     }
 
     @GetMapping(path = "/Admin/{id}")
-    Admin getUserById( @PathVariable int id){
+    Optional<Admin> getUserById( @PathVariable Long id){
         return adminRepository.findById(id);
     }
 
@@ -59,16 +44,14 @@ public class AdminController {
     }
 
     @PutMapping("/Admin/{id}")
-    Admin updateUser(@PathVariable int id, @RequestBody Admin request){
-        Admin admin = adminRepository.findById(id);
-        if(admin == null)
-            return null;
+    Optional<Admin> updateUser(@PathVariable Long id, @RequestBody Admin request){
+        Optional<Admin> admin = adminRepository.findById(id);
         adminRepository.save(request);
         return adminRepository.findById(id);
     }
 
     @DeleteMapping(path = "/Admin/{id}")
-    String deleteAdmin(@PathVariable int id){
+    String deleteAdmin(@PathVariable Long id){
         adminRepository.deleteById(id);
         return success;
     }
