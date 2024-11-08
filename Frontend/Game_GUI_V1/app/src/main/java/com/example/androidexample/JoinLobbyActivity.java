@@ -28,6 +28,8 @@ public class JoinLobbyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Implement join lobby logic here
                 Toast.makeText(JoinLobbyActivity.this, "Joined the lobby successfully!", Toast.LENGTH_SHORT).show();
+                Intent pregameChatIntent = new Intent(JoinLobbyActivity.this, PregameChatActivity.class);
+                startActivity(pregameChatIntent);
             }
         });
 

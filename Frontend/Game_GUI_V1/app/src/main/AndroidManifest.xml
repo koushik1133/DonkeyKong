@@ -66,6 +66,12 @@
         <activity
             android:name=".ScoreboardActivity"
             android:exported="true" />
+        <activity
+            android:name=".ProfileSelectorActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PregameChatActivity"
+            android:exported="true" />
         <!-- This is now the first thing users see and home button takes them here -->
         <activity
             android:name=".HomeActivity"

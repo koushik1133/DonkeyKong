@@ -1,57 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
 
     <!-- Timer TextView -->
     <TextView
         android:id="@+id/timerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: 120"
+        android:text="Time Left: 120s"
         android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="16dp" />
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
 
-    <!-- Player 1 Score -->
+    <!-- Player Scores -->
     <TextView
         android:id="@+id/player1Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player 1: 0"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/timerText"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp" />
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"/>
 
-    <!-- Player 2 Score -->
     <TextView
         android:id="@+id/player2Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player 2: 0"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/player1Score"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp" />
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"/>
 
-    <!-- Player 3 Score -->
     <TextView
         android:id="@+id/player3Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player 3: 0"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/player2Score"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp" />
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"/>
 
-</RelativeLayout>
+    <!-- End Game Button -->
+    <Button
+        android:id="@+id/endGameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Game"
+        android:textSize="18sp" />
+
+</LinearLayout>

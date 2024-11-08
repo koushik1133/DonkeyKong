@@ -3,84 +3,116 @@ package com.example.androidexample;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ScoreboardActivity extends AppCompatActivity{
-    private TextView timerText, player1Score, player2Score, player3Score;
-    private int player1Points = 0, player2Points = 0, player3Points = 0;
-    private boolean player1Out = false, player2Out = false, player3Out = false;
-    private int timeLeft = 120; // 120 seconds timer
+    // Views
+    private TextView timerText;
+    private TextView player1ScoreText;
+    private TextView player2ScoreText;
+    private TextView player3ScoreText;
+    private Button endGameButton;
+
+    // Scores
+    private int player1Score = 0;
+    private int player2Score = 0;
+    private int player3Score = 0;
+
+    // Game state
+    private boolean player1Active = true;
+    private boolean player2Active = true;
+    private boolean player3Active = true;
+
+    // Timer
+    private CountDownTimer gameTimer;
+    private long timeRemaining = 120 * 1000; // 120 seconds in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
 
-        // Initialize UI elements
+        // Initialize views
         timerText = findViewById(R.id.timerText);
-        player1Score = findViewById(R.id.player1Score);
-        player2Score = findViewById(R.id.player2Score);
-        player3Score = findViewById(R.id.player3Score);
+        player1ScoreText = findViewById(R.id.player1Score);
+        player2ScoreText = findViewById(R.id.player2Score);
+        player3ScoreText = findViewById(R.id.player3Score);
+        endGameButton = findViewById(R.id.endGameButton);
 
-        // Start the countdown timer
+        // Set up end game button click listener
+        endGameButton.setOnClickListener(v -> {
+            // End the game early when clicked
+            endGame();
+        });
+
+        // Start the game timer
         startGameTimer();
     }
 
     private void startGameTimer() {
-        new CountDownTimer(timeLeft * 1000, 1000) {
+        gameTimer = new CountDownTimer(timeRemaining, 1000) { // 1 second interval
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeft--;
-                timerText.setText("Time: " + timeLeft);
+                // Update the timer text
+                timeRemaining = millisUntilFinished;
+                int secondsLeft = (int) (millisUntilFinished / 1000);
+                timerText.setText("Time Left: " + secondsLeft + "s");
 
-                // Increment the score for each player who is not out
-                if (!player1Out) player1Points++;
-                if (!player2Out) player2Points++;
-                if (!player3Out) player3Points++;
+                // Update scores for active players
+                if (player1Active) player1Score++;
+                if (player2Active) player2Score++;
+                if (player3Active) player3Score++;
 
-                updateScores();
+                // Update score displays
+                player1ScoreText.setText("Player 1: " + player1Score);
+                player2ScoreText.setText("Player 2: " + player2Score);
+                player3ScoreText.setText("Player 3: " + player3Score);
             }
 
             @Override
             public void onFinish() {
-                // When the timer finishes, show the winner
-                showWinner();
+                // Game is over when timer finishes
+                endGame();
             }
         }.start();
     }
 
-    private void updateScores() {
-        // Update the score text views
-        player1Score.setText("Player 1: " + player1Points);
-        player2Score.setText("Player 2: " + player2Points);
-        player3Score.setText("Player 3: " + player3Points);
+    private void endGame() {
+        // Stop the timer
+        if (gameTimer != null) {
+            gameTimer.cancel();
+        }
+
+        // Show the winner
+        String winnerMessage = "Game Over! ";
+
+        if (player1Score > player2Score && player1Score > player3Score) {
+            winnerMessage += "Player 1 wins!";
+        } else if (player2Score > player1Score && player2Score > player3Score) {
+            winnerMessage += "Player 2 wins!";
+        } else if (player3Score > player1Score && player3Score > player2Score) {
+            winnerMessage += "Player 3 wins!";
+        } else {
+            winnerMessage += "It's a tie!";
+        }
+
+        // Display winner message
+        timerText.setText(winnerMessage);
     }
 
-    private void showWinner() {
-        // Determine the winner by comparing scores
-        int maxScore = Math.max(player1Points, Math.max(player2Points, player3Points));
-        String winner = "It's a tie!";
-
-        if (maxScore == player1Points) winner = "Player 1 wins!";
-        else if (maxScore == player2Points) winner = "Player 2 wins!";
-        else if (maxScore == player3Points) winner = "Player 3 wins!";
-
-        Toast.makeText(ScoreboardActivity.this, winner, Toast.LENGTH_LONG).show();
-    }
-
-    // Method to handle when a player is hit (out)
-    public void onPlayerHit(int playerNumber) {
+    // Simulate a player being hit and eliminated from the game
+    public void playerHit(int playerNumber) {
         switch (playerNumber) {
             case 1:
-                player1Out = true;
+                player1Active = false;
                 break;
             case 2:
-                player2Out = true;
+                player2Active = false;
                 break;
             case 3:
-                player3Out = true;
+                player3Active = false;
                 break;
         }
     }
