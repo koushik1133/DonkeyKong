@@ -15,7 +15,7 @@ public class CountdownController {
     }
 
     @PostMapping("/start")
-    public String startCountdown(@RequestParam(defaultValue = "120") int durationInSeconds) {
+    public String startCountdown(@RequestParam(defaultValue = "12") int durationInSeconds) {
         countdownHandler.startCountdown(durationInSeconds);
         return "Countdown started for " + durationInSeconds + " seconds.";
     }

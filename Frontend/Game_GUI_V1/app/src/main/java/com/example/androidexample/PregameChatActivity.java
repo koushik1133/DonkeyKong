@@ -1,163 +1,56 @@
 package com.example.androidexample;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-public class PregameChatActivity extends AppCompatActivity{
-
-    private WebSocketClient mWebSocketClient;
-    private TextView lobbyTextView;
-    private EditText messageEditText;
-    private Button sendButton, startGameButton;
-    private List<String> playersInLobby = new ArrayList<>();
-    private String userName = "User_" + (int) (Math.random() * 1000);
+public class PregameChatActivity extends AppCompatActivity implements WebSocketListener{
+    private Button connectBtn;
+    private EditText serverEtx, usernameEtx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pregamechat);
+        setContentView(R.layout.activity_chat_register);
 
-        lobbyTextView = findViewById(R.id.lobbyTextView);
-        messageEditText = findViewById(R.id.messageEditText);
-        sendButton = findViewById(R.id.sendButton);
-        startGameButton = findViewById(R.id.startGameButton);
+        /* initialize UI elements */
+        connectBtn = (Button) findViewById(R.id.connectBtn);
+        serverEtx = (EditText) findViewById(R.id.serverEdt);
+        usernameEtx = (EditText) findViewById(R.id.unameEdt);
 
-        // Initialize WebSocket connection
-        initializeWebSocket();
+        /* connect button listener */
+        connectBtn.setOnClickListener(view -> {
+            String serverUrl = serverEtx.getText().toString() + usernameEtx.getText().toString();
 
-        // Send button action
-        sendButton.setOnClickListener(v -> {
-            String message = messageEditText.getText().toString();
-            if (!message.isEmpty()) {
-                sendMessageToLobby(message);
-                messageEditText.setText(""); // Clear the input
-            }
-        });
+            // Establish WebSocket connection and set listener
+            WebSocketManager.getInstance().connectWebSocket(serverUrl);
+            WebSocketManager.getInstance().setWebSocketListener(PregameChatActivity.this);
 
-        // Start Game Button Action
-        startGameButton.setOnClickListener(v -> {
-            // Logic to start the game (e.g., transitioning to a new screen)
-            Toast.makeText(this, "Game Starting!", Toast.LENGTH_SHORT).show();
+            // got to chat activity
+            Intent intent = new Intent(this, ChatActivity.class);
+            startActivity(intent);
         });
     }
 
-    private void initializeWebSocket() {
-        try {
-            URI serverURI = new URI("http://coms-3090-031.class.las.iastate.edu:8080/chat");  // Change this URL to your server's WebSocket URI
-            mWebSocketClient = new WebSocketClient(serverURI) {
-
-                @Override
-                public void onOpen(ServerHandshake handshakedata) {
-                    // Connection opened
-                    sendJoinRequest();
-                }
-
-                @Override
-                public void onMessage(String message) {
-                    try {
-                        JSONObject jsonMessage = new JSONObject(message);
-                        String type = jsonMessage.getString("type");
-
-                        if ("lobbyUpdate".equals(type)) {
-                            JSONArray players = jsonMessage.getJSONArray("players");
-                            updateLobby(players);
-                        } else if ("message".equals(type)) {
-                            String sender = jsonMessage.getString("sender");
-                            String text = jsonMessage.getString("text");
-                            updateChat(sender, text);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    // Connection closed
-                }
-
-                @Override
-                public void onError(Exception ex) {
-                    // Handle error
-                }
-            };
-            mWebSocketClient.connect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendJoinRequest() {
-        try {
-            JSONObject joinRequest = new JSONObject();
-            joinRequest.put("type", "joinLobby");
-            joinRequest.put("user", userName);
-            mWebSocketClient.send(joinRequest.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendMessageToLobby(String message) {
-        try {
-            JSONObject chatMessage = new JSONObject();
-            chatMessage.put("type", "message");
-            chatMessage.put("sender", userName);
-            chatMessage.put("text", message);
-            mWebSocketClient.send(chatMessage.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updateLobby(JSONArray players) {
-        playersInLobby.clear();
-        for (int i = 0; i < players.length(); i++) {
-            try {
-                playersInLobby.add(players.getString(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        String lobbyText = "Lobby: " + String.join(", ", playersInLobby);
-        lobbyTextView.setText(lobbyText);
-
-        if (playersInLobby.size() == 3) {
-            startGameButton.setEnabled(true);  // Enable Start Game button once 3 players are in the lobby
-        } else {
-            startGameButton.setEnabled(false); // Disable until lobby is full
-        }
-    }
-
-    private void updateChat(String sender, String message) {
-        String currentText = lobbyTextView.getText().toString();
-        String newText = currentText + "\n" + sender + ": " + message;
-        lobbyTextView.setText(newText);
-    }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mWebSocketClient != null) {
-            mWebSocketClient.close();
-        }
-    }
+    public void onWebSocketMessage(String message) {}
+
+    @Override
+    public void onWebSocketClose(int code, String reason, boolean remote) {}
+
+    @Override
+    public void onWebSocketOpen(ServerHandshake handshakedata) {}
+
+    @Override
+    public void onWebSocketError(Exception ex) {}
 }

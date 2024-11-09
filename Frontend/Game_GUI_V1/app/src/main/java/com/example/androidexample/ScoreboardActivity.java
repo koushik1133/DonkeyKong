@@ -70,7 +70,6 @@ public class ScoreboardActivity extends AppCompatActivity{
                 player2ScoreText.setText("Player 2: " + player2Score);
                 player3ScoreText.setText("Player 3: " + player3Score);
             }
-
             @Override
             public void onFinish() {
                 // Game is over when timer finishes

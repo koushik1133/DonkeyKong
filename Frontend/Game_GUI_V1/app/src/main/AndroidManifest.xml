@@ -73,6 +73,9 @@
             android:name=".ProfileSelectorActivity"
             android:exported="true" />
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".PregameChatActivity"
             android:exported="true" />
         <!-- This is now the first thing users see and home button takes them here -->
@@ -91,5 +94,7 @@
             android:exported="true" />
     <!-- End here -->
     </application>
+
+
 
 </manifest>
