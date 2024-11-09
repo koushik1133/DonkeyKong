@@ -44,11 +44,19 @@ public class PlayerController{
     }
 
     @PutMapping("/Player/{id}")
-    Optional<Player> updatePlayer(@PathVariable Long id, @RequestBody Player request){
-        Optional<Player> player = playerRepository.findById(id);
-        playerRepository.save(request);
-        return playerRepository.findById(id);
+    public ResponseEntity<Player> updatePlayer(@PathVariable Long id, @RequestBody Player request) {
+        Player player = playerRepository.findById(id)
+                .orElseThrow();
+
+        // Update the fields
+        if (request.getUsername() != null) player.setUsername(request.getUsername());
+        if (request.getPassword() != null) player.setPassword(request.getPassword());
+        if (request.getSprite() != null) player.setSprite(request.getSprite());
+
+        playerRepository.save(player);
+        return ResponseEntity.ok(player);
     }
+
 
     @DeleteMapping(path = "/Player/{id}")
     String deletePlayer(@PathVariable Long id){
