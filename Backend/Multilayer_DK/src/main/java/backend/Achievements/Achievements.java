@@ -1,11 +1,13 @@
 package backend.Achievements;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import backend.Players.Player;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -18,6 +20,11 @@ public class Achievements {
 
     private String title;
     private String description;
+
+    @ManyToMany(mappedBy = "achievements")
+    @JsonBackReference
+    private Set<Player> players = new HashSet<>();
+
 
     public Achievements() {}
 
