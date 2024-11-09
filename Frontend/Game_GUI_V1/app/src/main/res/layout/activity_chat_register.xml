@@ -14,11 +14,11 @@
         android:text="Server URL (default to):"/>
 
     <EditText
-        android:layout_height="50dp"
+        android:id="@+id/serverEdt"
         android:layout_width="match_parent"
-        android:text="ws://10.0.2.2:8080/chat/"
-        android:textSize="20dp"
-        android:id="@+id/serverEdt" />
+        android:layout_height="50dp"
+        android:text="http://coms-3090-031.class.las.iastate.edu:8080/chat/"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/unameEdt"
