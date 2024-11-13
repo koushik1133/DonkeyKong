@@ -13,8 +13,10 @@ import onetomany.Phones.Phone;
 import onetomany.Phones.PhoneRepository;
 import onetomany.Users.User;
 import onetomany.Users.UserRepository;
+//import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 class Main {
 
     public static void main(String[] args) {
