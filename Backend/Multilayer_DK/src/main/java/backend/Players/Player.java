@@ -1,7 +1,9 @@
 package backend.Players;
 import backend.Achievements.Achievements;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import backend.Scores.Score;
 import backend.Administrator.Admin;
@@ -15,6 +17,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Player {
 
     // Getters and setters
@@ -39,7 +42,6 @@ public class Player {
             joinColumns = @JoinColumn(name = "player_id"),
             inverseJoinColumns = @JoinColumn(name = "achievement_id")
     )
-    @JsonManagedReference
     private Set<Achievements> achievements = new HashSet<>();
 
 
