@@ -226,6 +226,8 @@ public class ProfileSelectorActivity extends AppCompatActivity {
             putBody = new JSONObject(etRequest.getText().toString());
         } catch (Exception e) {
             e.printStackTrace();
+            tvResponse.setText("Error creating PUT JSON object.");
+            return;
         }
 
         JsonObjectRequest putRequest = new JsonObjectRequest(
