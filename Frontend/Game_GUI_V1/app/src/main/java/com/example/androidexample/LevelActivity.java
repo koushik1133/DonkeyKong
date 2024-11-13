@@ -72,7 +72,7 @@ public class LevelActivity extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
 
-                String postData = "durationInSeconds=10";
+                String postData = "durationInSeconds=100";
                 OutputStream os = connection.getOutputStream();
                 os.write(postData.getBytes());
                 os.flush();

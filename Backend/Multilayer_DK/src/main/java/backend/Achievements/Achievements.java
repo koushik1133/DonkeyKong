@@ -2,6 +2,8 @@ package backend.Achievements;
 
 import backend.Players.Player;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Achievements {
 
     @Id
@@ -22,7 +25,6 @@ public class Achievements {
     private String description;
 
     @ManyToMany(mappedBy = "achievements")
-    @JsonBackReference
     private Set<Player> players = new HashSet<>();
 
 
