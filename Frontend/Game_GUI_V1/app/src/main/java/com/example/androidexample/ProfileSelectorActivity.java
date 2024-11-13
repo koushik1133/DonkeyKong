@@ -138,6 +138,8 @@ public class ProfileSelectorActivity extends AppCompatActivity {
             postBody = new JSONObject(etRequest.getText().toString());
         } catch (Exception e) {
             e.printStackTrace();
+            tvResponse.setText("Error creating JSON object.");
+            return;
         }
 
         JsonObjectRequest request = new JsonObjectRequest(
@@ -147,13 +149,13 @@ public class ProfileSelectorActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        tvResponse.setText(response.toString());
+                        tvResponse.setText("POST response: " + response.toString());
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        tvResponse.setText(error.getMessage());
+                        tvResponse.setText("POST request failed: " + error.getMessage());
                     }
                 }
         ) {
