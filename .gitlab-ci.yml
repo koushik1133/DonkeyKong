@@ -9,9 +9,9 @@ android-build:
     - monreal                  # <-- change to your runner's tag
   before_script:                    # change 'Frontend' to where you have 'gradlew'
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/Game_GUI_V1/gradlew
+    - chmod +x ./Game_GUI_V1/gradlew
   script:
-    - cd Frontend/Game_GUI_V1                   # change 'Frontend' to where you have 'gradlew' (do not add / in the beginning)
+    - cd Game_GUI_V1                   # change 'Frontend' to where you have 'gradlew' (do not add / in the beginning)
     - ./gradlew build
   only:
     refs:
@@ -26,9 +26,9 @@ android-test:
     - monreal                  # <-- change to your runner's tag
   before_script:                   # change 'Frontend' to where you have 'gradlew'
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/Game_GUI_V1/gradlew
+    - chmod +x ./Game_GUI_V1/gradlew
   script:
-    - cd Frontend/Game_GUI_V1                  # change 'Frontend' to where you have 'gradlew' (do not add / in the beginning)
+    - cd Game_GUI_V1                  # change 'Frontend' to where you have 'gradlew' (do not add / in the beginning)
     - ./gradlew test
   only:
     refs:
