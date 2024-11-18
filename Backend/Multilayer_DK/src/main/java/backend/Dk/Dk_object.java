@@ -1,11 +1,15 @@
 package backend.Dk;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Sam Gumm, Koushik
  */
 
+@Setter
+@Getter
 @Entity
 public class Dk_object{
 
@@ -33,35 +37,4 @@ public class Dk_object{
 
     public Dk_object() {
     }
-
-
-    // =============================== Getters and Setters for each field ================================== //
-
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-
-    public String getObject(){
-        return object;
-    }
-
-    public void setObject(String name){
-        this.object = name;
-    }
-
-    public int getDamage(){
-        return damage;
-    }
-
-    public void setDamage(int damage){
-        this.damage = damage;
-    }
-
-    public void setDk_obj(Dk_object dk_obj){this.dk_obj = dk_obj;}
-
-    public Dk_object getDk_obj(){return dk_obj;}
 }
