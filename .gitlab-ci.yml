@@ -50,7 +50,7 @@ auto-deploy:
       - Backend/**/*    # more specifically - only when changes are made inside the 'Backend' folder
 
 android-build:
-  image: afirefly/android-ci:java17 # Docker image that has Android environments installed     gjandres/android-ci:latest
+  image: gjandres/android-ci:latest # Docker image that has Android environments installed     gjandres/android-ci:latest
   stage: androidbuild               # one of the stages listed above
   tags:
    - android_tag                    # change to your runner's tag
@@ -67,7 +67,7 @@ android-build:
       - Frontend/**/*               # more specifically - only when changes are made inside the 'Frontend' folder
 
 android-test:
-  image: afirefly/android-ci:java17
+  image: gjandres/android-ci:latest
   stage: androidtest               # one of the stages listed above
   tags:
     - android_tag                   # change to your runner's tag
