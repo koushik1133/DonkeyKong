@@ -3,7 +3,7 @@ stages:
   - androidtest
 
 android-build:
-  image: afirefly/android-ci:java17
+  image: gjandres/android-ci:latest
   stage: androidbuild
   tags:
     - Nick_Doty                  # <-- change to your runner's tag
@@ -20,7 +20,7 @@ android-build:
       - Game_GUI_V1/**/*
 
 android-test:
-  image: afirefly/android-ci:java17
+  image: gjandres/android-ci:latest
   stage: androidtest
   tags:
     - Nick_Doty                  # <-- change to your runner's tag
