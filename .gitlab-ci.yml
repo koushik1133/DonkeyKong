@@ -6,7 +6,7 @@ android-build:
   image: afirefly/android-ci:java17
   stage: androidbuild
   tags:
-    - Nick_Doty_tag                  # <-- change to your runner's tag
+    - Nick_Doty                  # <-- change to your runner's tag
   before_script:                    # change 'Frontend' to where you have 'gradlew'
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Game_GUI_V1/gradlew
@@ -23,7 +23,7 @@ android-test:
   image: afirefly/android-ci:java17
   stage: androidtest
   tags:
-    - Nick)Doty_tag                  # <-- change to your runner's tag
+    - Nick_Doty                  # <-- change to your runner's tag
   before_script:                   # change 'Frontend' to where you have 'gradlew'
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Game_GUI_V1/gradlew
