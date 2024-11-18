@@ -17,7 +17,7 @@ android-build:
     refs:
       - monreal_CICD
     changes:
-      - Frontend/**/*
+      - Game_GUI_V1/**/*
 
 android-test:
   image: afirefly/android-ci:java17
@@ -34,4 +34,4 @@ android-test:
     refs:
       - monreal_CICD
     changes:
-      - Frontend/**/*
+      - Game_GUI_V1/**/*
