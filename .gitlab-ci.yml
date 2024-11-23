@@ -6,7 +6,7 @@ stages:             # these stages (jobs) forms the CICD pipeline
 maven-build:            
   stage: mavenbuild     # one of the stages listed above
   tags:                 # to specify which runner to execute this job
-    - koushik_runner    # changed this from springboot_tag to springboot_runner since i named it that in root
+    - koushik_tag    # changed this from springboot_tag to springboot_runner since i named it that in root
   script:               # what to execute for this job
     - cd Backend        # change 'Backend' to to where you have the pom.xml (do not add / in the beginning)
     - mvn package       # maven package
