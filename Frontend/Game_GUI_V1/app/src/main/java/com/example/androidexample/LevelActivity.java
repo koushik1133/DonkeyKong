@@ -1,3 +1,223 @@
+//New V2
+//package com.example.androidexample;
+//
+//import android.os.Bundle;
+//import android.util.Log;
+//import android.view.MotionEvent;    // This is for the drag motion
+//import android.widget.ImageView;
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import org.java_websocket.client.WebSocketClient;
+//import org.java_websocket.handshake.ServerHandshake;
+//
+//import java.net.URI;
+//import java.net.URISyntaxException;
+//
+//import android.content.Intent;
+//import android.os.Handler;
+//import android.view.View;
+//import android.widget.TextView;
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import java.io.OutputStream;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//
+//public class LevelActivity extends AppCompatActivity {
+//    private ImageView player;
+//    private WebSocketClient webSocketClient;
+//    private static final String SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/game";
+//    private float dX, dY;   // Values for drag calculations
+//    private boolean isJumping = false;
+//
+//    private TextView countdownTimer;
+//
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_level);
+//
+//        player = findViewById(R.id.player);
+//
+//        // Drag-to-Move Listener
+//        player.setOnTouchListener((v, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    // Record the initial touch position
+//                    dX = player.getX() - event.getRawX();
+//                    dY = player.getY() - event.getRawY();
+//                    return true;
+//                case MotionEvent.ACTION_MOVE:
+//                    // Move the sprite to the new position
+//                    player.setX(event.getRawX() + dX);
+//                    player.setY(event.getRawY() + dY);
+//                    sendPlayerPosition(); // Update the backend with the new position
+//                    return true;
+//                case MotionEvent.ACTION_UP:
+//                    // Perform a jump after releasing the touch
+//                    if (!isJumping) {
+//                        jumpPlayer(event.getRawX() - dX); // Pass the horizontal momentum
+//                    }
+//                    return true;
+//                default:
+//                    return false;
+//            }
+//        });
+//
+//        // Connect to WebSocket for real-time updates
+//        connectWebSocket();
+//        // Connect to countdown WebSocket
+//        startCountdown(10); // Set the time for countdown
+//    }
+//
+//    private void jumpPlayer(float horizontalMomentum) {
+//        isJumping = true;
+//
+//        // Jump animation with forward/backward momentum
+//        player.animate()
+//                .translationXBy(horizontalMomentum) // Apply horizontal motion
+//                .translationYBy(-200) // Jump upward
+//                .setDuration(300)
+//                .withEndAction(() -> player.animate()
+//                        .translationYBy(200) // Fall back down
+//                        .setDuration(300)
+//                        .withEndAction(() -> isJumping = false));
+//        sendPlayerPosition();
+//    }
+//
+//    private void sendPlayerPosition() {
+//        if (webSocketClient != null) {
+//            float x = player.getX() + player.getWidth() / 2;
+//            float y = player.getY() + player.getHeight() / 2;
+//            webSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
+//        }
+//    }
+//
+//    private void connectWebSocket() {
+//        try {
+//            URI uri = new URI(SERVER_URL);
+//            webSocketClient = new WebSocketClient(uri) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                    Log.d("LevelActivity", "WebSocket Connected to Game");
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    Log.d("LevelActivity", "Position Update: " + message);
+//                    // Parse and update positions of other players here
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    Log.d("LevelActivity", "WebSocket Closed: " + reason);
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//                    Log.e("LevelActivity", "WebSocket Error", ex);
+//                }
+//            };
+//            webSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            Log.e("LevelActivity", "WebSocket URI Error", e);
+//        }
+//    }
+//
+//    private void startCountdown(int durationInSeconds) {
+//        new Thread(() -> {
+//            try {
+//                // Specify the server URL for starting the countdown
+//                URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                connection.setRequestMethod("POST");
+//                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//                connection.setDoOutput(true);
+//
+//                // Set the countdown duration dynamically (e.g., 100 seconds)
+//                String postData = "durationInSeconds=" + durationInSeconds;
+//                try (OutputStream os = connection.getOutputStream()) {
+//                    os.write(postData.getBytes());
+//                    os.flush();
+//                }
+//
+//                // Handle server response
+//                int responseCode = connection.getResponseCode();
+//                if (responseCode == HttpURLConnection.HTTP_OK) {
+//                    Log.d("LevelActivity", "Countdown started successfully");
+//                    runOnUiThread(this::startWebSocketConnection);  // Start WebSocket connection
+//                } else {
+//                    Log.e("LevelActivity", "Failed to start countdown: " + responseCode);
+//                }
+//
+//                connection.disconnect();
+//            } catch (Exception e) {
+//                Log.e("LevelActivity", "Error starting countdown", e);
+//            }
+//        }).start();
+//    }
+//
+//        private void startWebSocketConnection() {
+//        try {
+//            URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
+//            webSocketClient = new WebSocketClient(uri) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                    Log.d("LevelActivity", "WebSocket Connection Opened");
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    runOnUiThread(() -> countdownTimer.setText(message));
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    String closedBy = remote ? "server" : "local";
+//                    runOnUiThread(() -> {
+//                        countdownTimer.setText("---\nconnection closed by " + closedBy + "\nreason: " + reason);
+//                        if (code == 1000 || "Countdown complete".equals(reason)) {
+//                            // Open the Game Over screen when the WebSocket closes due to countdown completion
+//                            Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    });
+//                    Log.d("LevelActivity", "WebSocket Connection Closed: " + reason);
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//                    Log.e("LevelActivity", "WebSocket Error", ex);
+//                }
+//            };
+//            webSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            Log.e("LevelActivity", "WebSocket URI Error", e);
+//        }
+//    }
+//
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (webSocketClient != null) {
+//            webSocketClient.close();
+//        }
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+//Orignal V1
 package com.example.androidexample;
 
 import android.content.Intent;
@@ -106,7 +326,7 @@ public class LevelActivity extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
 
-                String postData = "durationInSeconds=100";  // Replace 100 with any int and that will be countdown value
+                String postData = "durationInSeconds=10";  // Replace 10 with any int and that will be countdown value
                 OutputStream os = connection.getOutputStream();
                 os.write(postData.getBytes());
                 os.flush();
