@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.2" />
 
-    <!-- Platform Block 2, positioned higher for jumping -->
+    <!-- Platform Block 2 -->
     <ImageView
         android:id="@+id/platformBlock2"
         android:layout_width="50dp"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toEndOf="@+id/platformBlock1"
         app:layout_constraintHorizontal_bias="0.5" />
 
-    <!-- Higher Block that can only be reached by jumping from another block -->
+    <!-- High Block -->
     <ImageView
         android:id="@+id/highBlock"
         android:layout_width="50dp"
@@ -73,4 +73,28 @@
         app:layout_constraintBottom_toTopOf="@+id/groundBlock"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Custom Joystick View -->
+    <com.example.androidexample.JoystickViewActivity
+        android:id="@+id/joystickView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/joystick_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_margin="50dp"
+        app:layout_constraintStart_margin="50dp" />
+
+    <!-- Jump Button -->
+    <Button
+        android:id="@+id/jumpButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Jump"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginBottom="16dp"
+        app:layout_constraintMarginEnd="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
