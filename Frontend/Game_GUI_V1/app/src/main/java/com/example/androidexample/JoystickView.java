@@ -7,14 +7,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class JoystickViewActivity extends View {
+public class JoystickView extends View {
 
     private float centerX, centerY; // Center of the joystick
     private float baseRadius, knobRadius; // Radius of the base and knob
     private float knobX, knobY; // Position of the knob
     private JoystickListener joystickListener; // Listener for joystick events
 
-    public JoystickViewActivity(Context context, AttributeSet attrs) {
+    public JoystickView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

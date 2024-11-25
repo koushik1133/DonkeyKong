@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Custom Joystick View -->
-    <com.example.androidexample.JoystickViewActivity
+    <com.example.androidexample.JoystickView
         android:id="@+id/joystickView"
         android:layout_width="150dp"
         android:layout_height="150dp"

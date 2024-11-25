@@ -17,13 +17,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import com.example.androidexample.JoystickViewActivity; // Custom joystick class with xml
-
 
 public class LevelActivity extends AppCompatActivity {
     private ImageView player;
     private Button jumpButton; // Separate button for jumping
-    private JoystickViewActivity joystick; // Custom joystick view for movement
+    private JoystickView joystick; // Custom joystick view for movement
     private boolean isJumping = false;
     private float lastJoystickDirectionX = 0; // Track last joystick X direction for momentum
     private WebSocketClient countdownWebSocketClient;
