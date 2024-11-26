@@ -27,42 +27,78 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/ground_block"
+        android:tag="obstacle"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!-- Platform Block 1 -->
+    <!-- Platform Block 1 (Top Left) -->
+
+    <!-- Platform Block 2 (Top Right) -->
+
+    <!-- Platform Block 3 (Center) -->
+
+    <!-- Platform Block 4 (Bottom Left) -->
+
+    <!-- Platform Block 5 (Bottom Right) -->
+
     <ImageView
         android:id="@+id/platformBlock1"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_margin="8dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="312dp"
         android:background="@drawable/cloud_block"
-        app:layout_constraintBottom_toTopOf="@+id/groundBlock"
+        android:tag="obstacle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Platform Block 2 -->
     <ImageView
         android:id="@+id/platformBlock2"
-        android:layout_width="50dp"
+        android:layout_width="85dp"
         android:layout_height="50dp"
-        android:layout_margin="8dp"
+        android:layout_marginTop="292dp"
+        android:layout_marginEnd="156dp"
         android:background="@drawable/cloud_block"
-        app:layout_constraintBottom_toTopOf="@+id/platformBlock1"
-        app:layout_constraintStart_toEndOf="@+id/platformBlock1"
-        app:layout_constraintHorizontal_bias="0.5" />
+        android:tag="obstacle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- High Block -->
     <ImageView
-        android:id="@+id/highBlock"
-        android:layout_width="50dp"
+        android:id="@+id/platformBlock3"
+        android:layout_width="75dp"
         android:layout_height="50dp"
-        android:layout_margin="8dp"
         android:background="@drawable/cloud_block"
-        app:layout_constraintBottom_toTopOf="@+id/platformBlock2"
-        app:layout_constraintStart_toEndOf="@+id/platformBlock2"
-        app:layout_constraintHorizontal_bias="0.7" />
+        android:tag="obstacle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.443"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.624" />
 
     <!-- Player Character -->
+
+    <ImageView
+        android:id="@+id/platformBlock4"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginBottom="204dp"
+        android:background="@drawable/cloud_block"
+        android:tag="obstacle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/platformBlock5"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginBottom="216dp"
+        android:background="@drawable/cloud_block"
+        android:tag="obstacle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageView
         android:id="@+id/player"
         android:layout_width="50dp"
@@ -73,26 +109,108 @@
         app:layout_constraintBottom_toTopOf="@+id/groundBlock"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--    &lt;!&ndash; Custom Joystick View &ndash;&gt;-->
-<!--    <com.example.androidexample.JoystickView-->
-<!--        android:id="@+id/joystickView"-->
-<!--        android:layout_width="150dp"-->
-<!--        android:layout_height="150dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginBottom="50dp"-->
-<!--        android:layout_marginStart="50dp" />-->
-
-<!--    &lt;!&ndash; Jump Button &ndash;&gt;-->
-<!--    <Button-->
-<!--        android:id="@+id/jumpButton"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:text="Jump"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintMarginBottom="16dp"-->
-<!--        app:layout_constraintMarginEnd="16dp" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@drawable/grass_and_sky"-->
+<!--    tools:context=".LevelActivity">-->
+
+<!--    &lt;!&ndash; Countdown Timer TextView &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/countdownTimer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Time Remaining:"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textColor="@android:color/black"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    &lt;!&ndash; Ground Block (across bottom) &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/groundBlock"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/ground_block"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+
+<!--    &lt;!&ndash; Platform Block 1 &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/platformBlock1"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:background="@drawable/cloud_block"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/groundBlock"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.2" />-->
+
+<!--    &lt;!&ndash; Platform Block 2 &ndash;&gt;-->
+
+<!--    &lt;!&ndash; High Block &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Player Character &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/platformBlock2"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:layout_marginStart="180dp"-->
+<!--        android:layout_marginBottom="132dp"-->
+<!--        android:background="@drawable/cloud_block"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/platformBlock1"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/platformBlock1" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/highBlock"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:layout_marginStart="76dp"-->
+<!--        android:layout_marginBottom="264dp"-->
+<!--        android:background="@drawable/cloud_block"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/platformBlock2"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/platformBlock2" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/player"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginStart="44dp"-->
+<!--        android:layout_marginBottom="224dp"-->
+<!--        android:src="@drawable/kong_1"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/groundBlock"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    &lt;!&ndash;    &lt;!&ndash; Custom Joystick View &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <com.example.androidexample.JoystickView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/joystickView"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="150dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="150dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginBottom="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginStart="50dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash; Jump Button &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <Button&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/jumpButton"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="100dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="50dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text="Jump"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="18sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textColor="@android:color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintMarginBottom="16dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintMarginEnd="16dp" />&ndash;&gt;-->
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
