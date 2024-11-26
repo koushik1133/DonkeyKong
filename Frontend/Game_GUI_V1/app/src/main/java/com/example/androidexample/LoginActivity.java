@@ -67,45 +67,42 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    //GET Request to verify username/password
-    //for testing errors
+    // GET Request to verify username/password for testing errors
     private void verifyUsername(final String username, final String password) {
         // Backend URL to verify if the email exists (replace with your actual URL)
-        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player?email=" + username;
+        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player";
 
-        //GET request using Volley
+        // GET request using Volley
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("LoginActivity", "Response: " + response);  //Log the raw response for debugging
+                        Log.d("LoginActivity", "Response: " + response);  // Log the raw response for debugging
 
                         try {
-                            //Parse as JSONArray if the response is an array
+                            // Parse the response as JSONArray
                             JSONArray jsonArray = new JSONArray(response);
 
                             boolean nameExists = false;
 
-                            //Iterate through the array to find a matching username
+                            // Iterate through the array to find a matching username and password
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject userObject = jsonArray.getJSONObject(i);
-                                String dbUsername = userObject.optString("name", "");
+                                String dbUsername = userObject.optString("username", "");  // Corrected field name
                                 String dbPassword = userObject.optString("password", "");
 
                                 if (dbUsername.equals(username) && dbPassword.equals(password)) {
-                                    // Email found in the database
+                                    // Username and password match
                                     nameExists = true;
-                                    Toast.makeText(LoginActivity.this, "Username verified, logging in...", Toast.LENGTH_SHORT).show();
-                                    //Call the method to update password or proceed to lobby
-                                    //updateUserPassword(emailID, password);
+                                    Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                                     Intent loginIntent = new Intent(LoginActivity.this, JoinLobbyActivity.class);
-                                    startActivity(loginIntent);  //Start JoinLobbyActivity
-                                    break;  // Exit loop once email is found
+                                    startActivity(loginIntent);  // Start JoinLobbyActivity
+                                    return;  // Exit loop once a match is found
                                 }
                             }
 
                             if (!nameExists) {
-                                // If email is not found in any of the objects
+                                // If no match was found
                                 Toast.makeText(LoginActivity.this, "Username or Password not found!", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
@@ -174,3 +171,60 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+//old verify username method that had error with parsing string to back end
+//    private void verifyUsername(final String username, final String password) {
+//        // Backend URL to verify if the email exists (replace with your actual URL)
+//        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player?email=" + username;
+//
+//        //GET request using Volley
+//        StringRequest getRequest = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.d("LoginActivity", "Response: " + response);  //Log the raw response for debugging
+//
+//                        try {
+//                            //Parse as JSONArray if the response is an array
+//                            JSONArray jsonArray = new JSONArray(response);
+//
+//                            boolean nameExists = false;
+//
+//                            //Iterate through the array to find a matching username
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                JSONObject userObject = jsonArray.getJSONObject(i);
+//                                String dbUsername = userObject.optString("name", "");
+//                                String dbPassword = userObject.optString("password", "");
+//
+//                                if (dbUsername.equals(username) && dbPassword.equals(password)) {
+//                                    // Email found in the database
+//                                    nameExists = true;
+//                                    Toast.makeText(LoginActivity.this, "Username verified, logging in...", Toast.LENGTH_SHORT).show();
+//                                    //Call the method to update password or proceed to lobby
+//                                    //updateUserPassword(emailID, password);
+//                                    Intent loginIntent = new Intent(LoginActivity.this, JoinLobbyActivity.class);
+//                                    startActivity(loginIntent);  //Start JoinLobbyActivity
+//                                    break;  // Exit loop once email is found
+//                                }
+//                            }
+//
+//                            if (!nameExists) {
+//                                // If email is not found in any of the objects
+//                                Toast.makeText(LoginActivity.this, "Username or Password not found!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            Toast.makeText(LoginActivity.this, "JSON Parsing Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(LoginActivity.this, "Request failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        );
+//
+//        // Add the request to the request queue
+//        VolleySingleton.getInstance(this).addToRequestQueue(getRequest);
+//    }
