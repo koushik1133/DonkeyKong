@@ -1,210 +1,4 @@
-//New V4 with attempt at joystick. Missing class error...
-//package com.example.androidexample;
-//
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.widget.Button;
-//import android.widget.ImageView;
-//import android.widget.TextView;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import org.java_websocket.client.WebSocketClient;
-//import org.java_websocket.handshake.ServerHandshake;
-//
-//import java.io.OutputStream;
-//import java.net.HttpURLConnection;
-//import java.net.URI;
-//import java.net.URISyntaxException;
-//import java.net.URL;
-//
-//
-//public class LevelActivity extends AppCompatActivity {
-//    private ImageView player;
-//    private Button jumpButton; // Separate button for jumping
-//    private JoystickView joystick; // Custom joystick view for movement
-//    private boolean isJumping = false;
-//    private float lastJoystickDirectionX = 0; // Track last joystick X direction for momentum
-//    private WebSocketClient countdownWebSocketClient;
-//    private WebSocketClient positionWebSocketClient;
-//    private TextView countdownTimer;
-//
-//    private static final String POSITION_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/position";
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_level);
-//
-//        // Initialize UI components
-//        player = findViewById(R.id.player);
-//        jumpButton = findViewById(R.id.jumpButton); // Reference the jump button
-//        joystick = findViewById(R.id.joystickView); // Reference the joystick view
-//        countdownTimer = findViewById(R.id.countdownTimer);
-//
-//        // Handle joystick movement
-//        joystick.setOnJoystickMoveListener((angle, strength) -> {
-//            // Calculate movement based on joystick angle and strength
-//            float deltaX = (float) (Math.cos(Math.toRadians(angle)) * strength);
-//            float deltaY = (float) (Math.sin(Math.toRadians(angle)) * strength);
-//
-//            // Update player position
-//            player.setX(player.getX() + deltaX);
-//            player.setY(player.getY() + deltaY);
-//
-//            // Track last horizontal direction for jump momentum
-//            lastJoystickDirectionX = deltaX;
-//
-//            // Send updated position to the server
-//            sendPlayerPosition();
-//        });
-//
-//        // Handle jump button press
-//        jumpButton.setOnClickListener(v -> {
-//            if (!isJumping) {
-//                jumpPlayer(lastJoystickDirectionX); // Use last horizontal direction for momentum
-//            }
-//        });
-//
-//        // Start the countdown timer and connect to the WebSocket
-//        startCountdown();
-//
-//        // Connect to the position reporting WebSocket
-//        connectPositionWebSocket();
-//    }
-//
-//    private void jumpPlayer(float horizontalMomentum) {
-//        isJumping = true;
-//        player.animate()
-//                .translationXBy(horizontalMomentum) // Apply horizontal momentum
-//                .translationYBy(-200) // Jump upward
-//                .setDuration(300)
-//                .withEndAction(() -> player.animate()
-//                        .translationYBy(200) // Fall back down
-//                        .setDuration(300)
-//                        .withEndAction(() -> {
-//                            isJumping = false;
-//
-//                            // Send the updated position after the jump
-//                            sendPlayerPosition();
-//                        }));
-//    }
-//
-//    private void startCountdown() {
-//        new Thread(() -> {
-//            try {
-//                URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
-//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                connection.setRequestMethod("POST");
-//                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//                connection.setDoOutput(true);
-//
-//                String postData = "durationInSeconds=10"; // Replace 10 with your countdown duration
-//                try (OutputStream os = connection.getOutputStream()) {
-//                    os.write(postData.getBytes());
-//                    os.flush();
-//                }
-//
-//                int responseCode = connection.getResponseCode();
-//                if (responseCode == HttpURLConnection.HTTP_OK) {
-//                    Log.d("LevelActivity", "Countdown started successfully");
-//                    runOnUiThread(this::startCountdownWebSocketConnection);
-//                } else {
-//                    Log.e("LevelActivity", "Failed to start countdown: " + responseCode);
-//                }
-//                connection.disconnect();
-//            } catch (Exception e) {
-//                Log.e("LevelActivity", "Error starting countdown", e);
-//            }
-//        }).start();
-//    }
-//
-//    private void startCountdownWebSocketConnection() {
-//        try {
-//            URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
-//            countdownWebSocketClient = new WebSocketClient(uri) {
-//                @Override
-//                public void onOpen(ServerHandshake handshakedata) {
-//                    Log.d("LevelActivity", "Countdown WebSocket Connected");
-//                }
-//
-//                @Override
-//                public void onMessage(String message) {
-//                    runOnUiThread(() -> countdownTimer.setText(message));
-//                }
-//
-//                @Override
-//                public void onClose(int code, String reason, boolean remote) {
-//                    Log.d("LevelActivity", "Countdown WebSocket Closed: " + reason);
-//                }
-//
-//                @Override
-//                public void onError(Exception ex) {
-//                    Log.e("LevelActivity", "Countdown WebSocket Error", ex);
-//                }
-//            };
-//            countdownWebSocketClient.connect();
-//        } catch (URISyntaxException e) {
-//            Log.e("LevelActivity", "Countdown WebSocket URI Error", e);
-//        }
-//    }
-//
-//    private void connectPositionWebSocket() {
-//        try {
-//            URI uri = new URI(POSITION_SERVER_URL);
-//            positionWebSocketClient = new WebSocketClient(uri) {
-//                @Override
-//                public void onOpen(ServerHandshake handshakedata) {
-//                    Log.d("LevelActivity", "Position WebSocket Connected");
-//                }
-//
-//                @Override
-//                public void onMessage(String message) {
-//                    Log.d("LevelActivity", "Position WebSocket Message: " + message);
-//                    // Handle position updates for other players if needed
-//                }
-//
-//                @Override
-//                public void onClose(int code, String reason, boolean remote) {
-//                    Log.d("LevelActivity", "Position WebSocket Closed: " + reason);
-//                }
-//
-//                @Override
-//                public void onError(Exception ex) {
-//                    Log.e("LevelActivity", "Position WebSocket Error", ex);
-//                }
-//            };
-//            positionWebSocketClient.connect();
-//        } catch (URISyntaxException e) {
-//            Log.e("LevelActivity", "Position WebSocket URI Error", e);
-//        }
-//    }
-//
-//    private void sendPlayerPosition() {
-//        // Ensure position WebSocket is open
-//        if (positionWebSocketClient != null && positionWebSocketClient.isOpen()) {
-//            float x = player.getX() + player.getWidth() / 2;
-//            float y = player.getY() + player.getHeight() / 2;
-//            positionWebSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
-//        } else {
-//            Log.e("LevelActivity", "Position WebSocket is not open.");
-//        }
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (countdownWebSocketClient != null) {
-//            countdownWebSocketClient.close();
-//        }
-//        if (positionWebSocketClient != null) {
-//            positionWebSocketClient.close();
-//        }
-//    }
-//}
-
-
-//V3.6
-//Instead of jump we avoid platforms and just use our finger to move also shows current player (x,y)
+//V4 multi player
 package com.example.androidexample;
 
 import android.content.Intent;
@@ -219,23 +13,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LevelActivity extends AppCompatActivity {
-    private ImageView player;
+    private List<ImageView> activePlayers; // List for dynamic players
     private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
-    private boolean isJumping = false;
-    private TextView countdownTimer, positionDebugger; // Added position debugger for real-time tracking
-    private float dX, dY; // Values for drag calculations
-    private float touchStartX, touchStartY; // Starting touch coordinates
+    private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
 
+    private float dX, dY; // Values for drag calculations
     private WebSocketClient countdownWebSocketClient;
     private WebSocketClient positionWebSocketClient;
 
+    private int activePlayerCount = 4; // Change to 2, 3, or 4 as needed
     private static final String POSITION_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/position";
 
     @Override
@@ -243,12 +37,17 @@ public class LevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
 
-        // Initialize UI elements
-        player = findViewById(R.id.player);
-        countdownTimer = findViewById(R.id.countdownTimer);
-        positionDebugger = findViewById(R.id.positionDebugger); // Debugging view for real-time position
+        // Initialize player views
+        activePlayers = new ArrayList<>();
+        activePlayers.add(findViewById(R.id.player1)); // Player 1
+        activePlayers.add(findViewById(R.id.player2)); // Player 2
+        activePlayers.add(findViewById(R.id.player3)); // Player 3
+        activePlayers.add(findViewById(R.id.player4)); // Player 4
 
-        // Reference the ground and platform blocks
+        countdownTimer = findViewById(R.id.countdownTimer);
+        positionDebugger = findViewById(R.id.positionDebugger);
+
+        // Initialize platform and ground blocks
         groundBlock = findViewById(R.id.groundBlock);
         platformBlock1 = findViewById(R.id.platformBlock1);
         platformBlock2 = findViewById(R.id.platformBlock2);
@@ -256,37 +55,8 @@ public class LevelActivity extends AppCompatActivity {
         platformBlock4 = findViewById(R.id.platformBlock4);
         platformBlock5 = findViewById(R.id.platformBlock5);
 
-        // Set up drag movement for the player
-        player.setOnTouchListener((view, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    // Calculate the offset between the player position and touch point
-                    dX = view.getX() - event.getRawX();
-                    dY = view.getY() - event.getRawY();
-                    touchStartX = event.getRawX();
-                    touchStartY = event.getRawY();
-                    return true;
-
-                case MotionEvent.ACTION_MOVE:
-                    // Calculate the new position based on touch movement
-                    float newX = event.getRawX() + dX;
-                    float newY = event.getRawY() + dY;
-
-                    // Check collisions and boundaries
-                    if (isInsideBounds(newX, newY) && !isCollidingWithObstacles(newX, newY)) {
-                        player.setX(newX);
-                        player.setY(newY);
-
-                        // Send updated position to the backend and update debugger
-                        sendPlayerPosition();
-                        updatePositionDebugger(newX, newY);
-                    }
-                    return true;
-
-                default:
-                    return false;
-            }
-        });
+        // Set up player visibility and movement
+        setupPlayers();
 
         // Start the countdown timer and connect to WebSocket
         startCountdown();
@@ -296,42 +66,49 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
-     * Starts the countdown timer using a POST request to the backend.
+     * Dynamically sets up active players and movement for the local player.
      */
-    private void startCountdown() {
-        new Thread(() -> {
-            try {
-                URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setDoOutput(true);
-
-                // Specify countdown duration (in seconds)
-                String postData = "durationInSeconds=10";
-                try (OutputStream os = connection.getOutputStream()) {
-                    os.write(postData.getBytes());
-                    os.flush();
-                }
-
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    Log.d("LevelActivity", "Countdown started successfully");
-                    runOnUiThread(this::startCountdownWebSocketConnection);
-                } else {
-                    Log.e("LevelActivity", "Failed to start countdown: " + responseCode);
-                }
-                connection.disconnect();
-            } catch (Exception e) {
-                Log.e("LevelActivity", "Error starting countdown", e);
+    private void setupPlayers() {
+        for (int i = 0; i < activePlayers.size(); i++) {
+            if (i < activePlayerCount) {
+                activePlayers.get(i).setVisibility(View.VISIBLE); // Show active players
+            } else {
+                activePlayers.get(i).setVisibility(View.GONE); // Hide inactive players
             }
-        }).start();
+        }
+
+        // Set up drag movement for the local player (player1)
+        activePlayers.get(0).setOnTouchListener((view, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    dX = view.getX() - event.getRawX();
+                    dY = view.getY() - event.getRawY();
+                    return true;
+
+                case MotionEvent.ACTION_MOVE:
+                    float newX = event.getRawX() + dX;
+                    float newY = event.getRawY() + dY;
+
+                    if (isInsideBounds(newX, newY) && !isCollidingWithObstacles(newX, newY)) {
+                        activePlayers.get(0).setX(newX);
+                        activePlayers.get(0).setY(newY);
+
+                        // Send position to backend and update debugger
+                        sendPlayerPosition("player1", newX, newY);
+                        updatePositionDebugger("player1", newX, newY);
+                    }
+                    return true;
+
+                default:
+                    return false;
+            }
+        });
     }
 
     /**
-     * Establishes WebSocket connection for countdown updates.
+     * Starts the countdown timer using a WebSocket connection.
      */
-    private void startCountdownWebSocketConnection() {
+    private void startCountdown() {
         try {
             URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
             countdownWebSocketClient = new WebSocketClient(uri) {
@@ -345,7 +122,6 @@ public class LevelActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         countdownTimer.setText(message);
                         if ("0".equals(message)) {
-                            // Navigate to the Game Over screen
                             Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
                             startActivity(intent);
                             finish();
@@ -356,19 +132,6 @@ public class LevelActivity extends AppCompatActivity {
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     Log.d("LevelActivity", "Countdown WebSocket Closed: " + reason);
-                    String closedBy = remote ? "server" : "local";
-
-                    runOnUiThread(() -> {
-                        countdownTimer.setText("---\nconnection closed by " + closedBy + "\nreason: " + reason);
-
-                        // Handle the WebSocket closure logic for game over
-                        if (code == 1000 || "Countdown complete".equals(reason) || "0".equals(reason)) {
-                            Log.d("LevelActivity", "Countdown complete. Transitioning to Game Over screen.");
-                            Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
                 }
 
                 @Override
@@ -383,7 +146,7 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
-     * Establishes WebSocket connection to send player position updates.
+     * Establishes WebSocket connection to receive and update player positions.
      */
     private void connectPositionWebSocket() {
         try {
@@ -396,7 +159,25 @@ public class LevelActivity extends AppCompatActivity {
 
                 @Override
                 public void onMessage(String message) {
-                    Log.d("LevelActivity", "Position WebSocket Message: " + message);
+                    runOnUiThread(() -> {
+                        try {
+                            // Parse the incoming JSON message
+                            String[] parts = message.replace("{", "").replace("}", "").split(",");
+                            String playerId = parts[0].split(":")[1].replace("\"", "").trim();
+                            float x = Float.parseFloat(parts[1].split(":")[1].trim());
+                            float y = Float.parseFloat(parts[2].split(":")[1].trim());
+
+                            int playerIndex = Integer.parseInt(playerId.replace("player", "")) - 1;
+                            if (playerIndex < activePlayerCount) {
+                                ImageView player = activePlayers.get(playerIndex);
+                                player.setX(x - player.getWidth() / 2);
+                                player.setY(y - player.getHeight() / 2);
+                                updatePositionDebugger(playerId, x, y);
+                            }
+                        } catch (Exception e) {
+                            Log.e("LevelActivity", "Error parsing position update: " + message, e);
+                        }
+                    });
                 }
 
                 @Override
@@ -416,29 +197,23 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     /**
-     * Sends the player's current position to the backend WebSocket.
+     * Sends the specified player's position to the backend WebSocket.
      */
-    private void sendPlayerPosition() {
-        if (positionWebSocketClient != null && positionWebSocketClient.isOpen() && player != null) {
-            float x = player.getX() + player.getWidth() / 2;
-            float y = player.getY() + player.getHeight() / 2;
-
-            if (!Float.isNaN(x) && !Float.isNaN(y)) {
-                positionWebSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
-                Log.d("PlayerPosition", "Sent: x=" + x + ", y=" + y);
-            } else {
-                Log.e("PlayerPosition", "Position values are NaN. Not sent.");
-            }
+    private void sendPlayerPosition(String playerId, float x, float y) {
+        if (positionWebSocketClient != null && positionWebSocketClient.isOpen()) {
+            String message = String.format("{\"playerId\":\"%s\",\"x\":%.2f,\"y\":%.2f}", playerId, x, y);
+            positionWebSocketClient.send(message);
+            Log.d("PlayerPosition", "Sent: " + message);
         } else {
-            Log.e("PlayerPosition", "WebSocket or player is null. Not sent.");
+            Log.e("PlayerPosition", "WebSocket is not open. Position not sent.");
         }
     }
 
     /**
-     * Updates the position debugger with the current (x, y) coordinates.
+     * Updates the position debugger with the specified player's current position.
      */
-    private void updatePositionDebugger(float x, float y) {
-        String position = String.format("Player Position: x=%.2f, y=%.2f", x, y);
+    private void updatePositionDebugger(String playerId, float x, float y) {
+        String position = String.format("%s Position: x=%.2f, y=%.2f", playerId, x, y);
         positionDebugger.setText(position);
     }
 
@@ -448,8 +223,8 @@ public class LevelActivity extends AppCompatActivity {
     private boolean isInsideBounds(float newX, float newY) {
         float screenWidth = getResources().getDisplayMetrics().widthPixels;
         float screenHeight = getResources().getDisplayMetrics().heightPixels;
-        float playerWidth = player.getWidth();
-        float playerHeight = player.getHeight();
+        float playerWidth = activePlayers.get(0).getWidth();
+        float playerHeight = activePlayers.get(0).getHeight();
 
         return newX >= 0 && newX + playerWidth <= screenWidth &&
                 newY >= 0 && newY + playerHeight <= screenHeight;
@@ -459,24 +234,19 @@ public class LevelActivity extends AppCompatActivity {
      * Checks for collisions between the player and any obstacle.
      */
     private boolean isCollidingWithObstacles(float newX, float newY) {
-        return isColliding(player, groundBlock, newX, newY) ||
-                isColliding(player, platformBlock1, newX, newY) ||
-                isColliding(player, platformBlock2, newX, newY) ||
-                isColliding(player, platformBlock3, newX, newY) ||
-                isColliding(player, platformBlock4, newX, newY) ||
-                isColliding(player, platformBlock5, newX, newY);
+        return isColliding(activePlayers.get(0), groundBlock, newX, newY) ||
+                isColliding(activePlayers.get(0), platformBlock1, newX, newY) ||
+                isColliding(activePlayers.get(0), platformBlock2, newX, newY) ||
+                isColliding(activePlayers.get(0), platformBlock3, newX, newY) ||
+                isColliding(activePlayers.get(0), platformBlock4, newX, newY) ||
+                isColliding(activePlayers.get(0), platformBlock5, newX, newY);
     }
 
-    /**
-     * Checks if the player is colliding with a specific obstacle.
-     */
     private boolean isColliding(ImageView player, ImageView obstacle, float newX, float newY) {
         float playerWidth = player.getWidth();
         float playerHeight = player.getHeight();
 
-        // Adjust padding for collision proximity
-        float padding = 10;
-
+        float padding = 10; // Adjust for proximity
         float obstacleX = obstacle.getX() - padding;
         float obstacleY = obstacle.getY() - padding;
         float obstacleWidth = obstacle.getWidth() + 2 * padding;
@@ -491,14 +261,310 @@ public class LevelActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (countdownWebSocketClient != null) {
-            countdownWebSocketClient.close();
-        }
-        if (positionWebSocketClient != null) {
-            positionWebSocketClient.close();
-        }
+        if (countdownWebSocketClient != null) countdownWebSocketClient.close();
+        if (positionWebSocketClient != null) positionWebSocketClient.close();
     }
 }
+
+
+
+
+//V3.6
+//Instead of jump we avoid platforms and just use our finger to move also shows current player (x,y)
+//package com.example.androidexample;
+//
+//import android.content.Intent;
+//import android.os.Bundle;
+//import android.util.Log;
+//import android.view.MotionEvent;
+//import android.view.View;
+//import android.widget.ImageView;
+//import android.widget.TextView;
+//import androidx.appcompat.app.AppCompatActivity;
+//
+//import org.java_websocket.client.WebSocketClient;
+//import org.java_websocket.handshake.ServerHandshake;
+//
+//import java.io.OutputStream;
+//import java.net.HttpURLConnection;
+//import java.net.URI;
+//import java.net.URISyntaxException;
+//import java.net.URL;
+//
+//public class LevelActivity extends AppCompatActivity {
+//    private ImageView player;
+//    private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
+//    private boolean isJumping = false;
+//    private TextView countdownTimer, positionDebugger; // Added position debugger for real-time tracking
+//    private float dX, dY; // Values for drag calculations
+//    private float touchStartX, touchStartY; // Starting touch coordinates
+//
+//    private WebSocketClient countdownWebSocketClient;
+//    private WebSocketClient positionWebSocketClient;
+//
+//    private static final String POSITION_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/position";
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_level);
+//
+//        // Initialize UI elements
+//        player = findViewById(R.id.player);
+//        countdownTimer = findViewById(R.id.countdownTimer);
+//        positionDebugger = findViewById(R.id.positionDebugger); // Debugging view for real-time position
+//
+//        // Reference the ground and platform blocks
+//        groundBlock = findViewById(R.id.groundBlock);
+//        platformBlock1 = findViewById(R.id.platformBlock1);
+//        platformBlock2 = findViewById(R.id.platformBlock2);
+//        platformBlock3 = findViewById(R.id.platformBlock3);
+//        platformBlock4 = findViewById(R.id.platformBlock4);
+//        platformBlock5 = findViewById(R.id.platformBlock5);
+//
+//        // Set up drag movement for the player
+//        player.setOnTouchListener((view, event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    // Calculate the offset between the player position and touch point
+//                    dX = view.getX() - event.getRawX();
+//                    dY = view.getY() - event.getRawY();
+//                    touchStartX = event.getRawX();
+//                    touchStartY = event.getRawY();
+//                    return true;
+//
+//                case MotionEvent.ACTION_MOVE:
+//                    // Calculate the new position based on touch movement
+//                    float newX = event.getRawX() + dX;
+//                    float newY = event.getRawY() + dY;
+//
+//                    // Check collisions and boundaries
+//                    if (isInsideBounds(newX, newY) && !isCollidingWithObstacles(newX, newY)) {
+//                        player.setX(newX);
+//                        player.setY(newY);
+//
+//                        // Send updated position to the backend and update debugger
+//                        sendPlayerPosition();
+//                        updatePositionDebugger(newX, newY);
+//                    }
+//                    return true;
+//
+//                default:
+//                    return false;
+//            }
+//        });
+//
+//        // Start the countdown timer and connect to WebSocket
+//        startCountdown();
+//
+//        // Connect to the position reporting WebSocket
+//        connectPositionWebSocket();
+//    }
+//
+//    /**
+//     * Starts the countdown timer using a POST request to the backend.
+//     */
+//    private void startCountdown() {
+//        new Thread(() -> {
+//            try {
+//                URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
+//                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                connection.setRequestMethod("POST");
+//                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//                connection.setDoOutput(true);
+//
+//                // Specify countdown duration (in seconds)
+//                String postData = "durationInSeconds=10";
+//                try (OutputStream os = connection.getOutputStream()) {
+//                    os.write(postData.getBytes());
+//                    os.flush();
+//                }
+//
+//                int responseCode = connection.getResponseCode();
+//                if (responseCode == HttpURLConnection.HTTP_OK) {
+//                    Log.d("LevelActivity", "Countdown started successfully");
+//                    runOnUiThread(this::startCountdownWebSocketConnection);
+//                } else {
+//                    Log.e("LevelActivity", "Failed to start countdown: " + responseCode);
+//                }
+//                connection.disconnect();
+//            } catch (Exception e) {
+//                Log.e("LevelActivity", "Error starting countdown", e);
+//            }
+//        }).start();
+//    }
+//
+//    /**
+//     * Establishes WebSocket connection for countdown updates.
+//     */
+//    private void startCountdownWebSocketConnection() {
+//        try {
+//            URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
+//            countdownWebSocketClient = new WebSocketClient(uri) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                    Log.d("LevelActivity", "Countdown WebSocket Connected");
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    runOnUiThread(() -> {
+//                        countdownTimer.setText(message);
+//                        if ("0".equals(message)) {
+//                            // Navigate to the Game Over screen
+//                            Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    Log.d("LevelActivity", "Countdown WebSocket Closed: " + reason);
+//                    String closedBy = remote ? "server" : "local";
+//
+//                    runOnUiThread(() -> {
+//                        countdownTimer.setText("---\nconnection closed by " + closedBy + "\nreason: " + reason);
+//
+//                        // Handle the WebSocket closure logic for game over
+//                        if (code == 1000 || "Countdown complete".equals(reason) || "0".equals(reason)) {
+//                            Log.d("LevelActivity", "Countdown complete. Transitioning to Game Over screen.");
+//                            Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//                    Log.e("LevelActivity", "Countdown WebSocket Error", ex);
+//                }
+//            };
+//            countdownWebSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            Log.e("LevelActivity", "Countdown WebSocket URI Error", e);
+//        }
+//    }
+//
+//    /**
+//     * Establishes WebSocket connection to send player position updates.
+//     */
+//    private void connectPositionWebSocket() {
+//        try {
+//            URI uri = new URI(POSITION_SERVER_URL);
+//            positionWebSocketClient = new WebSocketClient(uri) {
+//                @Override
+//                public void onOpen(ServerHandshake handshakedata) {
+//                    Log.d("LevelActivity", "Position WebSocket Connected");
+//                }
+//
+//                @Override
+//                public void onMessage(String message) {
+//                    Log.d("LevelActivity", "Position WebSocket Message: " + message);
+//                }
+//
+//                @Override
+//                public void onClose(int code, String reason, boolean remote) {
+//                    Log.d("LevelActivity", "Position WebSocket Closed: " + reason);
+//                }
+//
+//                @Override
+//                public void onError(Exception ex) {
+//                    Log.e("LevelActivity", "Position WebSocket Error", ex);
+//                }
+//            };
+//            positionWebSocketClient.connect();
+//        } catch (URISyntaxException e) {
+//            Log.e("LevelActivity", "Position WebSocket URI Error", e);
+//        }
+//    }
+//
+//    /**
+//     * Sends the player's current position to the backend WebSocket.
+//     */
+//    private void sendPlayerPosition() {
+//        if (positionWebSocketClient != null && positionWebSocketClient.isOpen() && player != null) {
+//            float x = player.getX() + player.getWidth() / 2;
+//            float y = player.getY() + player.getHeight() / 2;
+//
+//            if (!Float.isNaN(x) && !Float.isNaN(y)) {
+//                positionWebSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
+//                Log.d("PlayerPosition", "Sent: x=" + x + ", y=" + y);
+//            } else {
+//                Log.e("PlayerPosition", "Position values are NaN. Not sent.");
+//            }
+//        } else {
+//            Log.e("PlayerPosition", "WebSocket or player is null. Not sent.");
+//        }
+//    }
+//
+//    /**
+//     * Updates the position debugger with the current (x, y) coordinates.
+//     */
+//    private void updatePositionDebugger(float x, float y) {
+//        String position = String.format("Player Position: x=%.2f, y=%.2f", x, y);
+//        positionDebugger.setText(position);
+//    }
+//
+//    /**
+//     * Checks if the player's new position is inside the screen bounds.
+//     */
+//    private boolean isInsideBounds(float newX, float newY) {
+//        float screenWidth = getResources().getDisplayMetrics().widthPixels;
+//        float screenHeight = getResources().getDisplayMetrics().heightPixels;
+//        float playerWidth = player.getWidth();
+//        float playerHeight = player.getHeight();
+//
+//        return newX >= 0 && newX + playerWidth <= screenWidth &&
+//                newY >= 0 && newY + playerHeight <= screenHeight;
+//    }
+//
+//    /**
+//     * Checks for collisions between the player and any obstacle.
+//     */
+//    private boolean isCollidingWithObstacles(float newX, float newY) {
+//        return isColliding(player, groundBlock, newX, newY) ||
+//                isColliding(player, platformBlock1, newX, newY) ||
+//                isColliding(player, platformBlock2, newX, newY) ||
+//                isColliding(player, platformBlock3, newX, newY) ||
+//                isColliding(player, platformBlock4, newX, newY) ||
+//                isColliding(player, platformBlock5, newX, newY);
+//    }
+//
+//    /**
+//     * Checks if the player is colliding with a specific obstacle.
+//     */
+//    private boolean isColliding(ImageView player, ImageView obstacle, float newX, float newY) {
+//        float playerWidth = player.getWidth();
+//        float playerHeight = player.getHeight();
+//
+//        // Adjust padding for collision proximity
+//        float padding = 10;
+//
+//        float obstacleX = obstacle.getX() - padding;
+//        float obstacleY = obstacle.getY() - padding;
+//        float obstacleWidth = obstacle.getWidth() + 2 * padding;
+//        float obstacleHeight = obstacle.getHeight() + 2 * padding;
+//
+//        return newX < obstacleX + obstacleWidth &&
+//                newX + playerWidth > obstacleX &&
+//                newY < obstacleY + obstacleHeight &&
+//                newY + playerHeight > obstacleY;
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (countdownWebSocketClient != null) {
+//            countdownWebSocketClient.close();
+//        }
+//        if (positionWebSocketClient != null) {
+//            positionWebSocketClient.close();
+//        }
+//    }
+//}
 
 
 //New V3 there is a jump capability (unpredictable)
