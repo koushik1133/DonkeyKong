@@ -203,10 +203,8 @@
 //}
 
 
-
-
-//New V3.5
-//Instead of jump we avoid platforms and just use our finger to move
+//V3.6
+//Instead of jump we avoid platforms and just use our finger to move also shows current player (x,y)
 package com.example.androidexample;
 
 import android.content.Intent;
@@ -231,7 +229,7 @@ public class LevelActivity extends AppCompatActivity {
     private ImageView player;
     private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
     private boolean isJumping = false;
-    private TextView countdownTimer;
+    private TextView countdownTimer, positionDebugger; // Added position debugger for real-time tracking
     private float dX, dY; // Values for drag calculations
     private float touchStartX, touchStartY; // Starting touch coordinates
 
@@ -248,6 +246,7 @@ public class LevelActivity extends AppCompatActivity {
         // Initialize UI elements
         player = findViewById(R.id.player);
         countdownTimer = findViewById(R.id.countdownTimer);
+        positionDebugger = findViewById(R.id.positionDebugger); // Debugging view for real-time position
 
         // Reference the ground and platform blocks
         groundBlock = findViewById(R.id.groundBlock);
@@ -257,10 +256,11 @@ public class LevelActivity extends AppCompatActivity {
         platformBlock4 = findViewById(R.id.platformBlock4);
         platformBlock5 = findViewById(R.id.platformBlock5);
 
-        // Set up drag movement
+        // Set up drag movement for the player
         player.setOnTouchListener((view, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    // Calculate the offset between the player position and touch point
                     dX = view.getX() - event.getRawX();
                     dY = view.getY() - event.getRawY();
                     touchStartX = event.getRawX();
@@ -268,6 +268,7 @@ public class LevelActivity extends AppCompatActivity {
                     return true;
 
                 case MotionEvent.ACTION_MOVE:
+                    // Calculate the new position based on touch movement
                     float newX = event.getRawX() + dX;
                     float newY = event.getRawY() + dY;
 
@@ -276,8 +277,9 @@ public class LevelActivity extends AppCompatActivity {
                         player.setX(newX);
                         player.setY(newY);
 
-                        // Send position to backend
+                        // Send updated position to the backend and update debugger
                         sendPlayerPosition();
+                        updatePositionDebugger(newX, newY);
                     }
                     return true;
 
@@ -293,6 +295,9 @@ public class LevelActivity extends AppCompatActivity {
         connectPositionWebSocket();
     }
 
+    /**
+     * Starts the countdown timer using a POST request to the backend.
+     */
     private void startCountdown() {
         new Thread(() -> {
             try {
@@ -302,7 +307,8 @@ public class LevelActivity extends AppCompatActivity {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setDoOutput(true);
 
-                String postData = "durationInSeconds=10"; // Countdown duration
+                // Specify countdown duration (in seconds)
+                String postData = "durationInSeconds=10";
                 try (OutputStream os = connection.getOutputStream()) {
                     os.write(postData.getBytes());
                     os.flush();
@@ -322,6 +328,9 @@ public class LevelActivity extends AppCompatActivity {
         }).start();
     }
 
+    /**
+     * Establishes WebSocket connection for countdown updates.
+     */
     private void startCountdownWebSocketConnection() {
         try {
             URI uri = new URI("ws://coms-3090-031.class.las.iastate.edu:8080/countdown");
@@ -336,7 +345,7 @@ public class LevelActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         countdownTimer.setText(message);
                         if ("0".equals(message)) {
-                            // Navigate to Game Over screen
+                            // Navigate to the Game Over screen
                             Intent intent = new Intent(LevelActivity.this, GameOverActivity.class);
                             startActivity(intent);
                             finish();
@@ -362,7 +371,6 @@ public class LevelActivity extends AppCompatActivity {
                     });
                 }
 
-
                 @Override
                 public void onError(Exception ex) {
                     Log.e("LevelActivity", "Countdown WebSocket Error", ex);
@@ -374,6 +382,9 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Establishes WebSocket connection to send player position updates.
+     */
     private void connectPositionWebSocket() {
         try {
             URI uri = new URI(POSITION_SERVER_URL);
@@ -404,32 +415,50 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sends the player's current position to the backend WebSocket.
+     */
     private void sendPlayerPosition() {
-        if (positionWebSocketClient != null && positionWebSocketClient.isOpen()) {
+        if (positionWebSocketClient != null && positionWebSocketClient.isOpen() && player != null) {
             float x = player.getX() + player.getWidth() / 2;
             float y = player.getY() + player.getHeight() / 2;
-            positionWebSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
+
+            if (!Float.isNaN(x) && !Float.isNaN(y)) {
+                positionWebSocketClient.send(String.format("{\"x\":%.2f,\"y\":%.2f}", x, y));
+                Log.d("PlayerPosition", "Sent: x=" + x + ", y=" + y);
+            } else {
+                Log.e("PlayerPosition", "Position values are NaN. Not sent.");
+            }
         } else {
-            Log.e("LevelActivity", "Position WebSocket is not open.");
+            Log.e("PlayerPosition", "WebSocket or player is null. Not sent.");
         }
     }
 
+    /**
+     * Updates the position debugger with the current (x, y) coordinates.
+     */
+    private void updatePositionDebugger(float x, float y) {
+        String position = String.format("Player Position: x=%.2f, y=%.2f", x, y);
+        positionDebugger.setText(position);
+    }
 
+    /**
+     * Checks if the player's new position is inside the screen bounds.
+     */
     private boolean isInsideBounds(float newX, float newY) {
-        // Ensure player stays within screen bounds
         float screenWidth = getResources().getDisplayMetrics().widthPixels;
         float screenHeight = getResources().getDisplayMetrics().heightPixels;
         float playerWidth = player.getWidth();
         float playerHeight = player.getHeight();
 
-        // Adjust bounds to keep the player fully visible
         return newX >= 0 && newX + playerWidth <= screenWidth &&
                 newY >= 0 && newY + playerHeight <= screenHeight;
     }
 
-
+    /**
+     * Checks for collisions between the player and any obstacle.
+     */
     private boolean isCollidingWithObstacles(float newX, float newY) {
-        // Check collision with ground and platform blocks
         return isColliding(player, groundBlock, newX, newY) ||
                 isColliding(player, platformBlock1, newX, newY) ||
                 isColliding(player, platformBlock2, newX, newY) ||
@@ -438,13 +467,15 @@ public class LevelActivity extends AppCompatActivity {
                 isColliding(player, platformBlock5, newX, newY);
     }
 
-
+    /**
+     * Checks if the player is colliding with a specific obstacle.
+     */
     private boolean isColliding(ImageView player, ImageView obstacle, float newX, float newY) {
         float playerWidth = player.getWidth();
         float playerHeight = player.getHeight();
 
-        // Adjust the proximity for collision detection
-        float padding = 10; // Allow the player to get closer before stopping
+        // Adjust padding for collision proximity
+        float padding = 10;
 
         float obstacleX = obstacle.getX() - padding;
         float obstacleY = obstacle.getY() - padding;
@@ -456,7 +487,6 @@ public class LevelActivity extends AppCompatActivity {
                 newY < obstacleY + obstacleHeight &&
                 newY + playerHeight > obstacleY;
     }
-
 
     @Override
     protected void onDestroy() {
@@ -471,12 +501,7 @@ public class LevelActivity extends AppCompatActivity {
 }
 
 
-
-
-
-
-
-//New V3
+//New V3 there is a jump capability (unpredictable)
 //package com.example.androidexample;
 //
 //import android.content.Intent;
