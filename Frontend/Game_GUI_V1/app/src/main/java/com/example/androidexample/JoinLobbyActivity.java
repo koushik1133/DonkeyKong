@@ -15,6 +15,7 @@
 //
 //public class JoinLobbyActivity extends AppCompatActivity {
 //    private WebSocketClient webSocketClient;
+//    // Server URL goes here, will be called on later
 //    private static final String SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/lobby";
 //
 //    @Override
@@ -43,6 +44,7 @@
 //                        Log.d("JoinLobbyActivity", "Server Message: " + message);
 //
 //                        // Start the game when the server sends a "GAME_START" message
+//                        // This can be set to any string like True or Ready
 //                        if (message.equals("GAME_START")) {
 //                            Toast.makeText(JoinLobbyActivity.this, "Game Starting!", Toast.LENGTH_SHORT).show();
 //                            Intent intent = new Intent(JoinLobbyActivity.this, LevelActivity.class);

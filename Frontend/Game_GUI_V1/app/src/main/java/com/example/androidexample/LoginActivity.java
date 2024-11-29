@@ -171,7 +171,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-//old verify username method that had error with parsing string to back end
+// Old verify username method that had error with parsing string to back end
+// Keep until this is verified by all
+//
 //    private void verifyUsername(final String username, final String password) {
 //        // Backend URL to verify if the email exists (replace with your actual URL)
 //        String url = "http://coms-3090-031.class.las.iastate.edu:8080/Player?email=" + username;
