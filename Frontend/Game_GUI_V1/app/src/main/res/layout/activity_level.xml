@@ -129,6 +129,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Barrel Model -->
+    <ImageView
+        android:id="@+id/barrelModel"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/Barrel_model"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Bomb Model -->
+    <ImageView
+        android:id="@+id/bombModel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="250dp"
+        android:src="@drawable/Bomb_model"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Another Score Increase Object -->
+    <ImageView
+        android:id="@+id/anotherScoreIncreaseObject"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/another_score_increase_object"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Score Increase Object -->
+    <ImageView
+        android:id="@+id/scoreIncreaseObject"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="400dp"
+        android:layout_marginTop="300dp"
+        android:src="@drawable/score_increase_object"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Position Debugger -->
     <TextView
         android:id="@+id/positionDebugger"
