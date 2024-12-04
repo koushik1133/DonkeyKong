@@ -136,7 +136,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="200dp"
-        android:src="@drawable/Barrel_model"
+        android:src="@drawable/barrel_model"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,7 +147,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="300dp"
         android:layout_marginTop="250dp"
-        android:src="@drawable/Bomb_model"
+        android:src="@drawable/bomb_model"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -172,7 +172,6 @@
         android:src="@drawable/score_increase_object"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <!-- Position Debugger -->
     <TextView
         android:id="@+id/positionDebugger"
@@ -181,7 +180,7 @@
         android:layout_marginStart="288dp"
         android:layout_marginBottom="680dp"
         android:text="Player Position: x=0.00, y=0.00"
-        android:textColor="@android:color/red"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
