@@ -153,23 +153,23 @@
 
     <!-- Another Score Increase Object -->
     <ImageView
-        android:id="@+id/anotherScoreIncreaseObject"
+        android:id="@+id/scoreIncrease1"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="150dp"
-        android:src="@drawable/another_score_increase_object"
+        android:src="@drawable/score_increase1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Score Increase Object -->
     <ImageView
-        android:id="@+id/scoreIncreaseObject"
+        android:id="@+id/scoreIncrease2"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="400dp"
         android:layout_marginTop="300dp"
-        android:src="@drawable/score_increase_object"
+        android:src="@drawable/score_increase2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!-- Position Debugger -->
