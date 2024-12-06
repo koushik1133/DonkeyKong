@@ -27,7 +27,7 @@ public class LevelActivity extends AppCompatActivity {
     private ImageView player1, player2, player3, player4;
     private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
     private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
-    private ImageView barrelModel, bombModel, bulletModel;
+    private ImageView barrelModel, bombModel, bulletModel, explosionModel;
     private ImageView scoreIncrease1, scoreIncrease2;
 
     private float dX, dY; // Values for drag calculations
@@ -413,6 +413,53 @@ public class LevelActivity extends AppCompatActivity {
             player1Score += 10;
         }
 
+        if (isColliding(player2Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player2Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player2Hitbox, bombModel)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player2Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player2Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
+
+        if (isColliding(player3Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player3Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player3Hitbox, bombModel)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player3Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player3Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
+
+        if (isColliding(player4Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player4Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player4Hitbox, bombModel)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player4Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player4Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
         // Repeat for other players if necessary (player2, player3, etc.)
         // Update the score display as needed
     }
