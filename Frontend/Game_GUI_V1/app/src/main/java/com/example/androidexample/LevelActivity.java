@@ -464,6 +464,7 @@ public class LevelActivity extends AppCompatActivity {
         // Update the score display as needed
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -471,9 +472,25 @@ public class LevelActivity extends AppCompatActivity {
         // Check if 5 seconds have passed to trigger bomb explosion
         if (System.currentTimeMillis() - bombTimerStart > 5000 && !isBombExploding) {
             isBombExploding = true;
-            // Change the bomb image and expand the hitbox
-            bombModel.setImageResource(R.drawable.explosion); // Set explosion image
-            explosionHitbox.set(bombHitbox.left - 50, bombHitbox.top - 50, bombHitbox.right + 50, bombHitbox.bottom + 50); // Expand hitbox
+            explosionStartTime = System.currentTimeMillis(); // Record the animation start time
+            explosionFrameIndex = 0; // Start from the first frame of the animation
+        }
+
+        // Handle explosion animation
+        if (isBombExploding) {
+            // Determine the current frame based on time elapsed
+            int elapsed = (int) (System.currentTimeMillis() - explosionStartTime);
+            explosionFrameIndex = elapsed / FRAME_DURATION;
+
+            // Stop animation if all frames are played
+            if (explosionFrameIndex >= explosionFrames.length) {
+                isBombExploding = false; // Stop the explosion
+            } else {
+                bombModel.setImageResource(explosionFrames[explosionFrameIndex]);
+            }
+
+            // Expand the hitbox for the explosion
+            explosionHitbox.set(bombHitbox.left - 50, bombHitbox.top - 50, bombHitbox.right + 50, bombHitbox.bottom + 50);
         }
 
         // Check for collision with explosion hitbox (example for player1)
@@ -481,6 +498,7 @@ public class LevelActivity extends AppCompatActivity {
             player1Score -= 15; // Deduct points for bomb explosion
         }
     }
+
 
     private void handlePlayerHit() {
         // Handle the player getting hit by the bomb explosion
