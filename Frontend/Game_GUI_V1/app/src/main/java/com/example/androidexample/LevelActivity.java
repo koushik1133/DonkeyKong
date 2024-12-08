@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
+import android.graphics.Canvas;
+
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -506,7 +508,25 @@ public class LevelActivity extends AppCompatActivity {
         }
 
         // Check for collision with explosion hitbox (example for player1)
-        if (isColliding(player1Hitbox, explosionHitbox)) {
+        if (isColliding(player1Hitbox, explosion1)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion2)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion3)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion4)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion5)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion6)) {
+            player1Score -= 15; // Deduct points for bomb explosion
+        }
+        if (isColliding(player1Hitbox, explosion7)) {
             player1Score -= 15; // Deduct points for bomb explosion
         }
     }
