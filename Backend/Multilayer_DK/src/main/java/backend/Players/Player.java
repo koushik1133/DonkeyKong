@@ -69,5 +69,6 @@ public class Player {
         this.achievements.remove(achievement);
         this.getPlayers().remove(this);
     }
-
+    private int xPosition;
+    private int yPosition;
 }

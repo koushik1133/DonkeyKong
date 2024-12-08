@@ -2,6 +2,7 @@ package backend.Players;
 
 import backend.Achievements.Achievements;
 import backend.Achievements.AchievementsRepository;
+import backend.Dk.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/player")
 public class PlayerController{
 
     @Autowired
@@ -30,9 +32,18 @@ public class PlayerController{
         return playerRepository.findAll();
     }
 
-    @GetMapping(path = "/Player/{id}")
+    /*@GetMapping(path = "/Player/{id}")
     Optional<Player> getPlayerById( @PathVariable Long id){
         return playerRepository.findById(id);
+    }*/
+
+    @Autowired
+    private PlayerService playerService;
+
+    @GetMapping("/{playerId}/score")
+    public int getPlayerScore(@PathVariable Long playerId) {
+        Player player = playerService.getPlayerById(playerId);
+        return player.getScore().getScoreValue(); // Return the current score
     }
 
     @PostMapping(path = "/Player")
