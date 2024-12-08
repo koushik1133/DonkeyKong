@@ -27,7 +27,7 @@ public class LevelActivity extends AppCompatActivity {
     private ImageView player1, player2, player3, player4;
     private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
     private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
-    private ImageView barrelModel, bombModel, bulletModel, explosionModel;
+    private ImageView barrelModel, bombModel, bulletModel, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7;
     private ImageView scoreIncrease1, scoreIncrease2;
 
     private float dX, dY; // Values for drag calculations
@@ -464,6 +464,18 @@ public class LevelActivity extends AppCompatActivity {
         // Update the score display as needed
     }
 
+    private int explosionFrameIndex = 0;
+    private long explosionStartTime;
+    private static final int FRAME_DURATION = 50; // 50ms per frame
+    private int[] explosionFrames = {
+            R.drawable.explosion_1,
+            R.drawable.explosion_2,
+            R.drawable.explosion_3,
+            R.drawable.explosion_4,
+            R.drawable.explosion_5,
+            R.drawable.explosion_6,
+            R.drawable.explosion_7,
+    };
 
     @Override
     protected void onDraw(Canvas canvas) {

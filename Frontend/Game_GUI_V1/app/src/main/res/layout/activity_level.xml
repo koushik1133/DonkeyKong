@@ -185,6 +185,76 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Explosion Images -->
+    <ImageView
+        android:id="@+id/explosion1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_1"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_2"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_3"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_4"
+        android:layout_marginStart="350dp"
+        android:layout_marginTop="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion5"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_5"
+        android:layout_marginStart="450dp"
+        android:layout_marginTop="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_6"
+        android:layout_marginStart="550dp"
+        android:layout_marginTop="350dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/explosion7"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/explosion_7"
+        android:layout_marginStart="650dp"
+        android:layout_marginTop="400dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 <!-- Works with single player versions of Level Activity -->
