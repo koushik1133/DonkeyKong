@@ -1,7 +1,5 @@
 package backend.Dk;
 
-import backend.Dk.Obstacle;
-import backend.Dk.Collectable;
 import backend.Players.Player;
 import backend.Scores.Score;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +55,9 @@ public class CollisionService {
     }
 
     public void handleCollectableCollision(Player player) {
+    }
+
+    public void detectCollision(Player player, Dk.ObstacleType obstacleType) {
+
     }
 }

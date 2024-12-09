@@ -34,4 +34,12 @@ public class Score {
     public int getScoreValue() {
         return score;
     }
+        @Setter
+        @Getter
+        private int value;
+
+        public Score(int value) {
+            this.value = value;
+        }
+
 }

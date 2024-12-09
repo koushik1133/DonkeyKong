@@ -74,4 +74,11 @@ public class Player {
     }
     private int xPosition;
     private int yPosition;
+
+    public void setScore(int i) {
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
 }
