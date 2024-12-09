@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
+import android.graphics.Canvas;
+
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -27,7 +29,7 @@ public class LevelActivity extends AppCompatActivity {
     private ImageView player1, player2, player3, player4;
     private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
     private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
-    private ImageView barrelModel, bombModel, bulletModel, explosionModel;
+    private ImageView barrelModel, bombModel, bulletModel, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7;
     private ImageView scoreIncrease1, scoreIncrease2;
 
     private float dX, dY; // Values for drag calculations
@@ -464,29 +466,8 @@ public class LevelActivity extends AppCompatActivity {
         // Update the score display as needed
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
 
-        // Check if 5 seconds have passed to trigger bomb explosion
-        if (System.currentTimeMillis() - bombTimerStart > 5000 && !isBombExploding) {
-            isBombExploding = true;
-            // Change the bomb image and expand the hitbox
-            bombModel.setImageResource(R.drawable.explosion); // Set explosion image
-            explosionHitbox.set(bombHitbox.left - 50, bombHitbox.top - 50, bombHitbox.right + 50, bombHitbox.bottom + 50); // Expand hitbox
-        }
 
-        // Check for collision with explosion hitbox (example for player1)
-        if (isColliding(player1Hitbox, explosionHitbox)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-    }
-
-    private void handlePlayerHit() {
-        // Handle the player getting hit by the bomb explosion
-        Log.d("LevelActivity", "Player hit by bomb explosion!");
-        // You can add code here to reduce health, display effects, etc.
-    }
 
     @Override
     protected void onDestroy() {
