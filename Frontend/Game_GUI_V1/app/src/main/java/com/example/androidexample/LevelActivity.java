@@ -469,6 +469,10 @@ public class LevelActivity extends AppCompatActivity {
     private int explosionFrameIndex = 0;
     private long explosionStartTime;
     private static final int FRAME_DURATION = 50; // 50ms per frame
+    private static final int EXPLOSION_DAMAGE = 15;
+    private static final int EXPLOSION_DURATION = 5000; // 5 seconds
+    private static final int EXPLOSION_HITBOX_EXPANSION = 50;
+
     private int[] explosionFrames = {
             R.drawable.explosion_1,
             R.drawable.explosion_2,
@@ -483,52 +487,46 @@ public class LevelActivity extends AppCompatActivity {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // Check if 5 seconds have passed to trigger bomb explosion
-        if (System.currentTimeMillis() - bombTimerStart > 5000 && !isBombExploding) {
+        long currentTime = System.currentTimeMillis();
+
+        // Trigger bomb explosion after 5 seconds
+        if (currentTime - bombTimerStart > EXPLOSION_DURATION && !isBombExploding) {
             isBombExploding = true;
-            explosionStartTime = System.currentTimeMillis(); // Record the animation start time
-            explosionFrameIndex = 0; // Start from the first frame of the animation
+            explosionStartTime = currentTime; // Record the animation start time
+            explosionFrameIndex = 0;         // Start from the first frame
         }
 
         // Handle explosion animation
         if (isBombExploding) {
-            // Determine the current frame based on time elapsed
-            int elapsed = (int) (System.currentTimeMillis() - explosionStartTime);
+            // Determine the current frame index
+            int elapsed = (int) (currentTime - explosionStartTime);
             explosionFrameIndex = elapsed / FRAME_DURATION;
 
-            // Stop animation if all frames are played
+            // Stop animation after the last frame
             if (explosionFrameIndex >= explosionFrames.length) {
                 isBombExploding = false; // Stop the explosion
             } else {
                 bombModel.setImageResource(explosionFrames[explosionFrameIndex]);
+
+                // Update the explosion hitbox
+                explosionHitbox.set(
+                        bombHitbox.left - EXPLOSION_HITBOX_EXPANSION,
+                        bombHitbox.top - EXPLOSION_HITBOX_EXPANSION,
+                        bombHitbox.right + EXPLOSION_HITBOX_EXPANSION,
+                        bombHitbox.bottom + EXPLOSION_HITBOX_EXPANSION
+                );
+
+                // Check for collisions with players
+                if (isColliding(player1Hitbox, explosionHitbox)) {
+                    player1Score -= EXPLOSION_DAMAGE;
+                }
             }
+        }
+    }
 
-            // Expand the hitbox for the explosion
-            explosionHitbox.set(bombHitbox.left - 50, bombHitbox.top - 50, bombHitbox.right + 50, bombHitbox.bottom + 50);
-        }
-
-        // Check for collision with explosion hitbox (example for player1)
-        if (isColliding(player1Hitbox, explosion1)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion2)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion3)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion4)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion5)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion6)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
-        if (isColliding(player1Hitbox, explosion7)) {
-            player1Score -= 15; // Deduct points for bomb explosion
-        }
+    // Helper method to check collision
+    private boolean isColliding(RectF playerHitbox, RectF explosionHitbox) {
+        return RectF.intersects(playerHitbox, explosionHitbox);
     }
 
 
