@@ -2,7 +2,6 @@ package backend.Players;
 import backend.Achievements.Achievements;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import backend.Scores.Score;
@@ -46,7 +45,7 @@ public class Player {
 
 
     // Default constructor
-    public Player() {}
+    public Player(String player1, String pass123) {}
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
     public Player(String username, String password, String sprite) {
@@ -54,7 +53,11 @@ public class Player {
         this.password = password;
         this.sprite = sprite;
     }
-    
+
+    public Player() {
+
+    }
+
     //helper methods for the relationship
     public void addAchievement(Achievements achievement) {
         this.achievements.add(achievement);

@@ -23,7 +23,7 @@ public class Score {
 
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
-    public Score(int score) {
+    public Score(int score, Player player) {
         this.score= score;
     }
 

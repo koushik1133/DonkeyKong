@@ -55,4 +55,7 @@ public class CollisionService {
             }
         }
     }
+
+    public void handleCollectableCollision(Player player) {
+    }
 }
