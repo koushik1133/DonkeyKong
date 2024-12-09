@@ -23,23 +23,19 @@ public class Score {
 
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
-    public Score(int score, Player player) {
+    public Score(int score) {
         this.score= score;
     }
 
     public Score() {
-
     }
 
     public int getScoreValue() {
         return score;
     }
-        @Setter
-        @Getter
-        private int value;
 
-        public Score(int value) {
-            this.value = value;
-        }
+    @Setter
+    @Getter
+    private int value;
 
 }
