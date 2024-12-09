@@ -466,75 +466,8 @@ public class LevelActivity extends AppCompatActivity {
         // Update the score display as needed
     }
 
-    private int explosionFrameIndex = 0;
-    private long explosionStartTime;
-    private static final int FRAME_DURATION = 50; // 50ms per frame
-    private static final int EXPLOSION_DAMAGE = 15;
-    private static final int EXPLOSION_DURATION = 5000; // 5 seconds
-    private static final int EXPLOSION_HITBOX_EXPANSION = 50;
-
-    private int[] explosionFrames = {
-            R.drawable.explosion_1,
-            R.drawable.explosion_2,
-            R.drawable.explosion_3,
-            R.drawable.explosion_4,
-            R.drawable.explosion_5,
-            R.drawable.explosion_6,
-            R.drawable.explosion_7,
-    };
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        long currentTime = System.currentTimeMillis();
-
-        // Trigger bomb explosion after 5 seconds
-        if (currentTime - bombTimerStart > EXPLOSION_DURATION && !isBombExploding) {
-            isBombExploding = true;
-            explosionStartTime = currentTime; // Record the animation start time
-            explosionFrameIndex = 0;         // Start from the first frame
-        }
-
-        // Handle explosion animation
-        if (isBombExploding) {
-            // Determine the current frame index
-            int elapsed = (int) (currentTime - explosionStartTime);
-            explosionFrameIndex = elapsed / FRAME_DURATION;
-
-            // Stop animation after the last frame
-            if (explosionFrameIndex >= explosionFrames.length) {
-                isBombExploding = false; // Stop the explosion
-            } else {
-                bombModel.setImageResource(explosionFrames[explosionFrameIndex]);
-
-                // Update the explosion hitbox
-                explosionHitbox.set(
-                        bombHitbox.left - EXPLOSION_HITBOX_EXPANSION,
-                        bombHitbox.top - EXPLOSION_HITBOX_EXPANSION,
-                        bombHitbox.right + EXPLOSION_HITBOX_EXPANSION,
-                        bombHitbox.bottom + EXPLOSION_HITBOX_EXPANSION
-                );
-
-                // Check for collisions with players
-                if (isColliding(player1Hitbox, explosionHitbox)) {
-                    player1Score -= EXPLOSION_DAMAGE;
-                }
-            }
-        }
-    }
-
-    // Helper method to check collision
-    private boolean isColliding(RectF playerHitbox, RectF explosionHitbox) {
-        return RectF.intersects(playerHitbox, explosionHitbox);
-    }
 
 
-    private void handlePlayerHit() {
-        // Handle the player getting hit by the bomb explosion
-        Log.d("LevelActivity", "Player hit by bomb explosion!");
-        // You can add code here to reduce health, display effects, etc.
-    }
 
     @Override
     protected void onDestroy() {
