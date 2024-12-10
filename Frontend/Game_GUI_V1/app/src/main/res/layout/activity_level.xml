@@ -216,16 +216,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-          android:id="@+id/explosion4"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:layout_marginStart="288dp"
-          android:layout_marginTop="280dp"
-          android:src="@drawable/explosion_4"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
     <!--<ImageView
         android:id="@+id/explosion5"
         android:layout_width="50dp"
