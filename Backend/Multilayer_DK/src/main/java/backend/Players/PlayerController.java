@@ -2,7 +2,6 @@ package backend.Players;
 
 import backend.Achievements.Achievements;
 import backend.Achievements.AchievementsRepository;
-import backend.Dk.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/player")
 public class PlayerController{
 
     @Autowired
@@ -32,18 +30,9 @@ public class PlayerController{
         return playerRepository.findAll();
     }
 
-    /*@GetMapping(path = "/Player/{id}")
+    @GetMapping(path = "/Player/{id}")
     Optional<Player> getPlayerById( @PathVariable Long id){
         return playerRepository.findById(id);
-    }*/
-
-    @Autowired
-    private PlayerService playerService;
-
-    @GetMapping("/{playerId}/score")
-    public int getPlayerScore(@PathVariable Long playerId) {
-        Player player = playerService.getPlayerById(playerId);
-        return player.getScore().getScoreValue(); // Return the current score
     }
 
     @PostMapping(path = "/Player")
@@ -63,6 +52,9 @@ public class PlayerController{
         if (request.getUsername() != null) player.setUsername(request.getUsername());
         if (request.getPassword() != null) player.setPassword(request.getPassword());
         if (request.getSprite() != null) player.setSprite(request.getSprite());
+        if (request.getPlayerX() != 0) player.setPlayerX(request.getPlayerX());
+        if (request.getPlayerY() != 0) player.setPlayerY(request.getPlayerY());
+        if (request.getFinalscore() != 0) player.setFinalscore(request.getFinalscore());
 
         playerRepository.save(player);
         return ResponseEntity.ok(player);

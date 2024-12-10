@@ -26,6 +26,7 @@ public class Player {
     private String username;  // Username of the player
     private String password;  // Password of the player
     private String sprite;
+    //private String Score;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")  // Foreign key for Administration
@@ -45,25 +46,23 @@ public class Player {
 
 
     // Default constructor
-    public Player(String player1, String pass123) {}
+   // public Player(String player1, String pass123) {}
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
     public Player(String username, String password, String sprite) {
         this.username = username;
         this.password = password;
         this.sprite = sprite;
+        //this.Score = Score;
     }
 
-    public Player() {
-
-    }
+    public Player() {}
 
     //helper methods for the relationship
     public void addAchievement(Achievements achievement) {
         this.achievements.add(achievement);
         this.getPlayers().add(this);
     }
-
     private Collection<Player> getPlayers() {
         return java.util.List.of();
     }
@@ -72,13 +71,17 @@ public class Player {
         this.achievements.remove(achievement);
         this.getPlayers().remove(this);
     }
-    private int xPosition;
-    private int yPosition;
-
-    public void setScore(int i) {
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
-    }
+    @OneToOne
+    @JoinColumn(name = "player_id")
+    private Player player;
+    // Getters and setters
+    @Getter
+    @Setter
+    private int playerX;
+    @Getter
+    @Setter
+    private int playerY;
+    @Getter
+    @Setter
+    private int finalscore;
 }

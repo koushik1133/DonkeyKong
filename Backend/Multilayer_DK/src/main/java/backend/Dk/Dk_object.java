@@ -16,8 +16,10 @@ public class Dk_object{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String object;
-    private int damage;
+    private String object; // bomb, barrel, or bullet
+    private int xPosition;
+    private int yPosition;
+    private int damage; //50 for bomb, 100 for barrel, 150 for bullet
 
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
@@ -30,9 +32,11 @@ public class Dk_object{
     @JoinColumn(name = "Dk_id")
     private Dk_object dk_obj;
 
-    public Dk_object(String object, int damage) {
+    public Dk_object(String object, int damage, int xPosition, int yPosition) {
         this.object = object;
         this.damage = damage;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
     }
 
     public Dk_object() {

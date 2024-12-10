@@ -15,7 +15,7 @@ public class Score {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;  // Unique identifier for the score
 
-    private int score;  // The score value for the player
+    public int score;  // The score value for the player
 
     @OneToOne
     @JoinColumn(name = "player_id")  // Foreign key column linking the score to a player

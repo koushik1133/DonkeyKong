@@ -1,6 +1,7 @@
 package backend.Scores;
 
 import org.springframework.web.bind.annotation.*;
+//import backend.Players.Player;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class ScoreController{
 
     final
     ScoreRepository ScoreRepository;
+    //Player player;
 
     private final String success = "{\"message\":\"success\"}";
     public final String failure = "{\"message\":\"failure\"}";
@@ -45,6 +47,7 @@ public class ScoreController{
         Score score = ScoreRepository.findById(id);
         if(score == null)
             return null;
+
         ScoreRepository.save(request);
         return ScoreRepository.findById(id);
     }
