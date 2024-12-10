@@ -89,13 +89,14 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Player Characters -->
+
     <ImageView
         android:id="@+id/player1"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="156dp"
-        android:src="@drawable/kong_1"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="240dp"
+        android:src="@drawable/player_bald"
         app:layout_constraintBottom_toTopOf="@+id/groundBlock"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -105,13 +106,9 @@
         android:layout_height="50dp"
         android:layout_marginStart="256dp"
         android:layout_marginBottom="156dp"
-        android:src="@drawable/kong_1"
+        android:src="@drawable/player_green"
         app:layout_constraintBottom_toTopOf="@+id/groundBlock"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Barrel Model -->
-
-    <!-- Bomb Model -->
 
     <ImageView
         android:id="@+id/player3"
@@ -119,7 +116,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="196dp"
         android:layout_marginEnd="304dp"
-        android:src="@drawable/kong_1"
+        android:src="@drawable/player_orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +126,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="148dp"
         android:layout_marginEnd="72dp"
-        android:src="@drawable/kong_1"
+        android:src="@drawable/player_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -143,7 +140,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Another Score Increase Object -->
     <ImageView
         android:id="@+id/bombModel"
         android:layout_width="50dp"
@@ -154,7 +150,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Score Increase Object -->
     <ImageView
         android:id="@+id/scoreIncrease1"
         android:layout_width="40dp"
@@ -177,18 +172,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Position Debugger -->
-
-     <TextView
-          android:id="@+id/positionDebugger"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="160dp"
-          android:layout_marginBottom="648dp"
-          android:text="Player Position: x=0.00, y=0.00"
-          android:textColor="@android:color/holo_red_dark"
-          android:textSize="16sp"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Explosion Images -->
     <!--  <ImageView
@@ -221,7 +204,19 @@
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent" />-->
 
-      <ImageView
+    <TextView
+        android:id="@+id/positionDebugger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="636dp"
+        android:text="Player Position: x=0.00, y=0.00"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
           android:id="@+id/explosion4"
           android:layout_width="50dp"
           android:layout_height="50dp"

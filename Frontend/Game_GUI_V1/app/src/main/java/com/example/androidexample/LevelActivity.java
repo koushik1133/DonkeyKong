@@ -374,7 +374,7 @@ public class LevelActivity extends AppCompatActivity {
         scoreIncrease1Hitbox = new RectF(scoreIncrease1.getX(), scoreIncrease1.getY(), scoreIncrease1.getX() + scoreIncrease1.getWidth(), scoreIncrease1.getY() + scoreIncrease1.getHeight());
         //Initialize score increase 2 hitbox
         scoreIncrease2Hitbox = new RectF(scoreIncrease2.getX(), scoreIncrease2.getY(), scoreIncrease2.getX() + scoreIncrease2.getWidth(), scoreIncrease2.getY() + scoreIncrease2.getHeight());
-        // Initialize explosion hitbox
+        //Initialize explosion hitbox
         explosionHitbox = new RectF(explosion4.getX(), explosion4.getY(), explosion4.getX() + explosion4.getWidth(), explosion4.getY() + explosion4.getHeight());
     }
 
