@@ -24,25 +24,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelActivity extends AppCompatActivity
-    {
-        private List<ImageView> activePlayers; // List of active player ImageViews
-        private ImageView player1, player2, player3, player4;
-        private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
-        private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
+public class LevelActivity extends AppCompatActivity {
+    private List<ImageView> activePlayers; // List of active player ImageViews
+    private ImageView player1, player2, player3, player4;
+    private ImageView groundBlock, platformBlock1, platformBlock2, platformBlock3, platformBlock4, platformBlock5;
+    private TextView countdownTimer, positionDebugger; // Debugger for real-time positions
 
-        private float dX, dY; // Values for drag calculations
-        private WebSocketClient countdownWebSocketClient;
-        private WebSocketClient positionWebSocketClient;
+    private float dX, dY; // Values for drag calculations
+    private WebSocketClient countdownWebSocketClient;
+    private WebSocketClient positionWebSocketClient;
 
-        private static final String POSITION_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/position";
-        private static final String COUNTDOWN_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/countdown";
+    private static final String POSITION_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/position";
+    private static final String COUNTDOWN_SERVER_URL = "ws://coms-3090-031.class.las.iastate.edu:8080/countdown";
 
-        private static final int DEFAULT_PLAYER_COUNT = 2; // Default to 2 players for initial testing
-        private static final int COUNTDOWN_DURATION = 15; // Countdown duration in seconds
+    private static final int DEFAULT_PLAYER_COUNT = 2; // Default to 2 players for initial testing
+    private static final int COUNTDOWN_DURATION = 15; // Countdown duration in seconds
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level);
 
@@ -75,12 +74,27 @@ public class LevelActivity extends AppCompatActivity
 
         // Connect to the position reporting WebSocket
         connectPositionWebSocket();
+
+        bombModel = findViewById(R.id.bombModel);
+        bombModel.setImageResource(bombResource);
+
+        // Set a delay of 5 seconds to change the model
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Change the image to explosion4
+                bombModel.setImageResource(explosionResource);
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
     }
 
-        /**
-         * Initializes the active players based on the specified count.
-         */
-        private void setupActivePlayers(int count) {
+    private int bombResource = R.drawable.bomb_model;
+    private int explosionResource = R.drawable.explosion_4;
+
+    /**
+     * Initializes the active players based on the specified count.
+     */
+    private void setupActivePlayers(int count) {
         activePlayers.clear();
         if (count >= 1) activePlayers.add(player1);
         if (count >= 2) activePlayers.add(player2);
@@ -94,10 +108,10 @@ public class LevelActivity extends AppCompatActivity
         player4.setVisibility(count >= 4 ? View.VISIBLE : View.GONE);
     }
 
-        /**
-         * Sets up touch movement for the local player (player1).
-         */
-        private void setupPlayerMovement() {
+    /**
+     * Sets up touch movement for the local player (player1).
+     */
+    private void setupPlayerMovement() {
         player1.setOnTouchListener((view, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -125,10 +139,10 @@ public class LevelActivity extends AppCompatActivity
         });
     }
 
-        /**
-         * Starts the countdown timer using a POST request and a WebSocket connection.
-         */
-        private void startCountdown() {
+    /**
+     * Starts the countdown timer using a POST request and a WebSocket connection.
+     */
+    private void startCountdown() {
         new Thread(() -> {
             try {
                 URL url = new URL("http://coms-3090-031.class.las.iastate.edu:8080/countdown/start");
@@ -157,10 +171,10 @@ public class LevelActivity extends AppCompatActivity
         }).start();
     }
 
-        /**
-         * Connects to the countdown WebSocket for real-time updates.
-         */
-        private void connectCountdownWebSocket() {
+    /**
+     * Connects to the countdown WebSocket for real-time updates.
+     */
+    private void connectCountdownWebSocket() {
         try {
             URI uri = new URI(COUNTDOWN_SERVER_URL);
             countdownWebSocketClient = new WebSocketClient(uri) {
@@ -211,10 +225,10 @@ public class LevelActivity extends AppCompatActivity
         }
     }
 
-        /**
-         * Establishes WebSocket connection to receive and update player positions.
-         */
-        private void connectPositionWebSocket() {
+    /**
+     * Establishes WebSocket connection to receive and update player positions.
+     */
+    private void connectPositionWebSocket() {
         try {
             URI uri = new URI(POSITION_SERVER_URL);
             positionWebSocketClient = new WebSocketClient(uri) {
@@ -262,10 +276,10 @@ public class LevelActivity extends AppCompatActivity
         }
     }
 
-        /**
-         * Sends the specified player's position to the backend WebSocket.
-         */
-        private void sendPlayerPosition(String playerId, float x, float y) {
+    /**
+     * Sends the specified player's position to the backend WebSocket.
+     */
+    private void sendPlayerPosition(String playerId, float x, float y) {
         if (positionWebSocketClient != null && positionWebSocketClient.isOpen()) {
             String message = String.format("{\"playerId\":\"%s\",\"x\":%.2f,\"y\":%.2f}", playerId, x, y);
             positionWebSocketClient.send(message);
@@ -275,18 +289,18 @@ public class LevelActivity extends AppCompatActivity
         }
     }
 
-        /**
-         * Updates the position debugger with the specified player's current position.
-         */
-        private void updatePositionDebugger(String playerId, float x, float y) {
+    /**
+     * Updates the position debugger with the specified player's current position.
+     */
+    private void updatePositionDebugger(String playerId, float x, float y) {
         String position = String.format("%s Position: x=%.2f, y=%.2f", playerId, x, y);
         positionDebugger.setText(position);
     }
 
-        /**
-         * Checks if the player's new position is inside the screen bounds.
-         */
-        private boolean isInsideBounds(float newX, float newY) {
+    /**
+     * Checks if the player's new position is inside the screen bounds.
+     */
+    private boolean isInsideBounds(float newX, float newY) {
         float screenWidth = getResources().getDisplayMetrics().widthPixels;
         float screenHeight = getResources().getDisplayMetrics().heightPixels;
         float playerWidth = player1.getWidth();
@@ -296,10 +310,10 @@ public class LevelActivity extends AppCompatActivity
                 newY >= 0 && newY + playerHeight <= screenHeight;
     }
 
-        /**
-         * Checks for collisions between the player and any obstacle.
-         */
-        private boolean isCollidingWithObstacles(float newX, float newY) {
+    /**
+     * Checks for collisions between the player and any obstacle.
+     */
+    private boolean isCollidingWithObstacles(float newX, float newY) {
         return isColliding(player1, groundBlock, newX, newY) ||
                 isColliding(player1, platformBlock1, newX, newY) ||
                 isColliding(player1, platformBlock2, newX, newY) ||
@@ -308,7 +322,7 @@ public class LevelActivity extends AppCompatActivity
                 isColliding(player1, platformBlock5, newX, newY);
     }
 
-        private boolean isColliding(ImageView player, ImageView obstacle, float newX, float newY) {
+    private boolean isColliding(ImageView player, ImageView obstacle, float newX, float newY) {
         float playerWidth = player.getWidth();
         float playerHeight = player.getHeight();
 
@@ -324,135 +338,129 @@ public class LevelActivity extends AppCompatActivity
                 newY + playerHeight > obstacleY;
     }
 
-        private boolean isColliding(RectF playerHitbox, ImageView obstacle) {
-            RectF obstacleHitbox = new RectF(obstacle.getX(), obstacle.getY(),
-                    obstacle.getX() + obstacle.getWidth(),
-                    obstacle.getY() + obstacle.getHeight());
-            return RectF.intersects(playerHitbox, obstacleHitbox);
+    private boolean isColliding(RectF playerHitbox, ImageView obstacle) {
+        RectF obstacleHitbox = new RectF(obstacle.getX(), obstacle.getY(),
+                obstacle.getX() + obstacle.getWidth(),
+                obstacle.getY() + obstacle.getHeight());
+        return RectF.intersects(playerHitbox, obstacleHitbox);
+    }
+
+    // Player scores, starting from 0
+    private int player1Score = 0;
+    private int player2Score = 0;
+    private int player3Score = 0;
+    private int player4Score = 0;
+    private long startTime = System.currentTimeMillis();
+    private ImageView barrelModel, bombModel, bulletModel, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7;
+    private RectF player1Hitbox, player2Hitbox, player3Hitbox, player4Hitbox;
+    private ImageView scoreIncrease1, scoreIncrease2;
+    private RectF bombHitbox, barrelHitbox, bulletHitbox, scoreIncrease1Hitbox, scoreIncrease2Hitbox, explosionHitbox;
+
+    //Initializes the hitboxes to an images pixel height and length
+    private void initializeHitboxes() {
+        // Initialize hitboxes for players
+        player1Hitbox = new RectF(player1.getX(), player1.getY(), player1.getX() + player1.getWidth(), player1.getY() + player1.getHeight());
+        player2Hitbox = new RectF(player2.getX(), player2.getY(), player2.getX() + player2.getWidth(), player2.getY() + player2.getHeight());
+        player3Hitbox = new RectF(player3.getX(), player3.getY(), player3.getX() + player3.getWidth(), player3.getY() + player3.getHeight());
+        player4Hitbox = new RectF(player4.getX(), player4.getY(), player4.getX() + player4.getWidth(), player4.getY() + player4.getHeight());
+
+        // Initialize bomb hitbox
+        bombHitbox = new RectF(bombModel.getX(), bombModel.getY(), bombModel.getX() + bombModel.getWidth(), bombModel.getY() + bombModel.getHeight());
+        // Initializes barrel hitbox
+        barrelHitbox = new RectF(barrelModel.getX(), barrelModel.getY(), barrelModel.getX() + barrelModel.getWidth(), barrelModel.getY() + barrelModel.getHeight());
+        //Initialize bullet hitbox
+        barrelHitbox = new RectF(bulletModel.getX(), barrelModel.getY(), bulletModel.getX() + bulletModel.getWidth(), bulletModel.getY() + bulletModel.getHeight());
+        //Initialize score increase 1 hitbox
+        scoreIncrease1Hitbox = new RectF(scoreIncrease1.getX(), scoreIncrease1.getY(), scoreIncrease1.getX() + scoreIncrease1.getWidth(), scoreIncrease1.getY() + scoreIncrease1.getHeight());
+        //Initialize score increase 2 hitbox
+        scoreIncrease2Hitbox = new RectF(scoreIncrease2.getX(), scoreIncrease2.getY(), scoreIncrease2.getX() + scoreIncrease2.getWidth(), scoreIncrease2.getY() + scoreIncrease2.getHeight());
+        // Initialize explosion hitbox
+        explosionHitbox = new RectF(explosion4.getX(), explosion4.getY(), explosion4.getX() + explosion4.getWidth(), explosion4.getY() + explosion4.getHeight());
+    }
+
+    //counts down with timer to get scores
+    private void updateCountdown() {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        int remainingTime = 120 - (int) (elapsedTime / 1000);
+
+        countdownTimer.setText(String.valueOf(remainingTime));
+
+        // Update the scores based on remaining time
+        updateScores(remainingTime);
+    }
+
+    //updates scores based on object interaction
+    private void updateScores(int remainingTime) {
+        // Each player earns 1 point per second
+        player1Score = 120 - remainingTime;
+        player2Score = 120 - remainingTime;
+        player3Score = 120 - remainingTime;
+        player4Score = 120 - remainingTime;
+
+        // Check for collisions and update scores
+        if (isColliding(player1Hitbox, barrelModel)) {
+            player1Score -= 5;
         }
-
-        // Player scores, starting from 0
-        private int player1Score = 0;
-        private int player2Score = 0;
-        private int player3Score = 0;
-        private int player4Score = 0;
-        private long startTime = System.currentTimeMillis();
-        private ImageView barrelModel, bombModel, bulletModel, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7;
-        private RectF player1Hitbox, player2Hitbox, player3Hitbox, player4Hitbox;
-        private ImageView scoreIncrease1, scoreIncrease2;
-        private RectF bombHitbox, barrelHitbox, bulletHitbox, scoreIncrease1Hitbox, scoreIncrease2Hitbox, explosionHitbox;
-
-        private void initializeHitboxes() {
-            // Initialize hitboxes for players
-            player1Hitbox = new RectF(player1.getX(), player1.getY(), player1.getX() + player1.getWidth(), player1.getY() + player1.getHeight());
-            player2Hitbox = new RectF(player2.getX(), player2.getY(), player2.getX() + player2.getWidth(), player2.getY() + player2.getHeight());
-            player3Hitbox = new RectF(player3.getX(), player3.getY(), player3.getX() + player3.getWidth(), player3.getY() + player3.getHeight());
-            player4Hitbox = new RectF(player4.getX(), player4.getY(), player4.getX() + player4.getWidth(), player4.getY() + player4.getHeight());
-
-            // Initialize bomb hitbox
-            bombHitbox = new RectF(bombModel.getX(), bombModel.getY(), bombModel.getX() + bombModel.getWidth(), bombModel.getY() + bombModel.getHeight());
-            // Initializes barrel hitbox
-            barrelHitbox = new RectF(barrelModel.getX(), barrelModel.getY(), barrelModel.getX() + barrelModel.getWidth(), barrelModel.getY() + barrelModel.getHeight());
-            //Initialize bullet hitbox
-            barrelHitbox = new RectF(bulletModel.getX(), barrelModel.getY(), bulletModel.getX() + bulletModel.getWidth(), bulletModel.getY() + bulletModel.getHeight());
-            //Initialize score increase 1 hitbox
-            scoreIncrease1Hitbox = new RectF(scoreIncrease1.getX(), scoreIncrease1.getY(), scoreIncrease1.getX() + scoreIncrease1.getWidth(), scoreIncrease1.getY() + scoreIncrease1.getHeight());
-            //Initialize score increase 2 hitbox
-            scoreIncrease2Hitbox = new RectF(scoreIncrease2.getX(), scoreIncrease2.getY(), scoreIncrease2.getX() + scoreIncrease2.getWidth(), scoreIncrease2.getY() + scoreIncrease2.getHeight());
-            // Initialize explosion hitbox (initially same size as the bomb)
-            explosionHitbox = new RectF(bombHitbox.left - 50, bombHitbox.top - 50, bombHitbox.right + 50, bombHitbox.bottom + 50);
+        if (isColliding(player1Hitbox, bulletModel)) {
+            player1Score -= 10;
         }
-        private void updateCountdown() {
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            int remainingTime = 120 - (int) (elapsedTime / 1000);
-
-            countdownTimer.setText(String.valueOf(remainingTime));
-
-            // Update the scores based on remaining time
-            updateScores(remainingTime);
+        if (isColliding(player1Hitbox, explosion4)) {
+            player1Score -= 15;
         }
-
-        private void updateScores(int remainingTime) {
-            // Each player earns 1 point per second
-            player1Score = 120 - remainingTime;
-            player2Score = 120 - remainingTime;
-            player3Score = 120 - remainingTime;
-            player4Score = 120 - remainingTime;
-
-            // Check for collisions and update scores
-            if (isColliding(player1Hitbox, barrelModel)) {
-                player1Score -= 5;
-            }
-            if (isColliding(player1Hitbox, bulletModel)) {
-                player1Score -= 10;
-            }
-            if (isColliding(player1Hitbox, bombModel)) {
-                player1Score -= 15;
-            }
-            if (isColliding(player1Hitbox, scoreIncrease1)) {
-                player1Score += 5;
-            }
-            if (isColliding(player1Hitbox, scoreIncrease2)) {
-                player1Score += 10;
-            }
-
-            if (isColliding(player2Hitbox, barrelModel)) {
-                player1Score -= 5;
-            }
-            if (isColliding(player2Hitbox, bulletModel)) {
-                player1Score -= 10;
-            }
-            if (isColliding(player2Hitbox, bombModel)) {
-                player1Score -= 15;
-            }
-            if (isColliding(player2Hitbox, scoreIncrease1)) {
-                player1Score += 5;
-            }
-            if (isColliding(player2Hitbox, scoreIncrease2)) {
-                player1Score += 10;
-            }
-
-            if (isColliding(player3Hitbox, barrelModel)) {
-                player1Score -= 5;
-            }
-            if (isColliding(player3Hitbox, bulletModel)) {
-                player1Score -= 10;
-            }
-            if (isColliding(player3Hitbox, bombModel)) {
-                player1Score -= 15;
-            }
-            if (isColliding(player3Hitbox, scoreIncrease1)) {
-                player1Score += 5;
-            }
-            if (isColliding(player3Hitbox, scoreIncrease2)) {
-                player1Score += 10;
-            }
-
-            if (isColliding(player4Hitbox, barrelModel)) {
-                player1Score -= 5;
-            }
-            if (isColliding(player4Hitbox, bulletModel)) {
-                player1Score -= 10;
-            }
-            if (isColliding(player4Hitbox, bombModel)) {
-                player1Score -= 15;
-            }
-            if (isColliding(player4Hitbox, scoreIncrease1)) {
-                player1Score += 5;
-            }
-            if (isColliding(player4Hitbox, scoreIncrease2)) {
-                player1Score += 10;
-            }
-            // Repeat for other players if necessary (player2, player3, etc.)
-            // Update the score display as needed
+        if (isColliding(player1Hitbox, scoreIncrease1)) {
+            player1Score += 5;
         }
-        @Override
-        protected void onDestroy() {
-        super.onDestroy();
-        if (countdownWebSocketClient != null) countdownWebSocketClient.close();
-        if (positionWebSocketClient != null) positionWebSocketClient.close();
+        if (isColliding(player1Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
+        if (isColliding(player2Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player2Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player2Hitbox, explosion4)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player2Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player2Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
+        if (isColliding(player3Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player3Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player3Hitbox, explosion4)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player3Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player3Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
+        if (isColliding(player4Hitbox, barrelModel)) {
+            player1Score -= 5;
+        }
+        if (isColliding(player4Hitbox, bulletModel)) {
+            player1Score -= 10;
+        }
+        if (isColliding(player4Hitbox, explosion4)) {
+            player1Score -= 15;
+        }
+        if (isColliding(player4Hitbox, scoreIncrease1)) {
+            player1Score += 5;
+        }
+        if (isColliding(player4Hitbox, scoreIncrease2)) {
+            player1Score += 10;
+        }
     }
 }
+
 
 
 
