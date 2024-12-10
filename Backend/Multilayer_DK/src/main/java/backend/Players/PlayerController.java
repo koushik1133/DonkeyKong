@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/player")
+@RequestMapping("/api/player") //TODO: why was this changed @Koushik
 public class PlayerController{
 
     @Autowired
@@ -43,6 +43,13 @@ public class PlayerController{
     @GetMapping("/{playerId}/score")
     public int getPlayerScore(@PathVariable Long playerId) {
         Player player = playerService.getPlayerById(playerId);
+        /*
+        TODO: What is going on here
+            - player.getScore() returns a Score object (containing int score, int id)
+            - player.getScore().getScore() specifically returns the int score
+            - player.getScore().getScoreValue() also returns int score
+            - not even sure what the point of (int value) is....
+         */
         return player.getScore().getScoreValue(); // Return the current score
     }
 
@@ -81,6 +88,7 @@ public class PlayerController{
             @PathVariable Long playerId,
             @PathVariable Long achievementId) {
 
+        //TODO: go over this a little bit
         Optional<Player> optionalPlayer = playerRepository.findById(playerId);
         Optional<Achievements> optionalAchievement = achievementsRepository.findById(achievementId);
 

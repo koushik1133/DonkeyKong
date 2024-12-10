@@ -11,6 +11,10 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class LobbyWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    /**
+     *
+     * @param config
+     */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         //client side subscribes to <topic> to receive messages
@@ -18,6 +22,10 @@ public class LobbyWebSocketConfig implements WebSocketMessageBrokerConfigurer {
         config.setApplicationDestinationPrefixes("/app");
     }
 
+    /**
+     *
+     * @param registry maps to /game-ws as an EndPoint
+     */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/game-ws").setAllowedOrigins("*").withSockJS();

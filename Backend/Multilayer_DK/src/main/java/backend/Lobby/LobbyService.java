@@ -15,17 +15,33 @@ public class LobbyService {
     private final PlayerRepository playerRepository;
     private final ScoreRepository scoreRepository;
 
+    /**
+     *
+     * @param playerRepository
+     * @param scoreRepository
+     */
     public LobbyService(PlayerRepository playerRepository, ScoreRepository scoreRepository) {
         this.playerRepository = playerRepository;
         this.scoreRepository = scoreRepository;
     }
 
+    /**
+     *
+     * @param lobbyID
+     * @return
+     */
     public Lobby createLobby(String lobbyID) {
         Lobby lobby = new Lobby(lobbyID);
         lobbies.put(lobbyID, lobby);
         return lobby;
     }
 
+    /**
+     *
+     * @param lobbyID
+     * @param playerID
+     * @return
+     */
     public Lobby joinLobby(String lobbyID, Long playerID) {
         Lobby lobby = lobbies.get(lobbyID);
 
@@ -44,7 +60,11 @@ public class LobbyService {
         return lobby;
     }
 
-    //TODO: add ability to return entire lobby
+    /**
+     *
+     * @param lobbyID
+     * @return
+     */
     public List<Long> getLobbyPlayers(String lobbyID) {
         Lobby lobby = lobbies.get(lobbyID);
         if(lobby == null) {
@@ -55,6 +75,14 @@ public class LobbyService {
         return lobby.getPlayers();
     }
 
+    /**
+     *
+     * @param lobbyID ID of lobby the player to be updated is in
+     * @param playerID ID of the player to update
+     * @param x new X-Coordinate
+     * @param y new Y-Coordinate
+     * @param scoreValue new Score
+     */
     public void updatePlayerState(String lobbyID, Long playerID, int x, int y, int scoreValue) {
         Lobby lobby = lobbies.get(lobbyID);
         //if lobby is empty return
@@ -62,6 +90,7 @@ public class LobbyService {
         //if lobby does not contain the player return
         if(!lobby.getPlayers().contains(playerID)) return;
 
+        //Trawls through playerRepo for player with matching ID
         playerRepository.findById(playerID).ifPresent(p -> {
             p.setXPosition(x);
             p.setYPosition(y);
@@ -77,8 +106,5 @@ public class LobbyService {
             }
             playerRepository.save(p);
         });
-
-
-
     }
 }
