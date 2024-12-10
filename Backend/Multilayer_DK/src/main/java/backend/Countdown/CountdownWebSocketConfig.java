@@ -6,7 +6,7 @@ import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
 @EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer {
+public class CountdownWebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public CountdownHandler countdownHandler() {

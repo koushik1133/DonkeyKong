@@ -11,6 +11,8 @@ import lombok.Setter;
 public class Score {
 
     // Getters and setters
+
+    //TODO why does this have an ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;  // Unique identifier for the score
@@ -23,23 +25,20 @@ public class Score {
 
 
     // Constructor with parameters (excluding id, as it will be auto-generated)
-    public Score(int score, Player player) {
+    public Score(int score) {
         this.score= score;
     }
 
     public Score() {
-
     }
 
     public int getScoreValue() {
         return score;
     }
-        @Setter
-        @Getter
-        private int value;
 
-        public Score(int value) {
-            this.value = value;
-        }
+    //TODO: why is this here
+    @Setter
+    @Getter
+    private int value;
 
 }
