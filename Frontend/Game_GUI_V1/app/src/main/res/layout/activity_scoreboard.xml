@@ -41,15 +41,9 @@
         android:textSize="18sp"
         android:layout_marginBottom="20dp"/>
 
-    <TextView
-        android:id="@+id/player4Score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player 4: 0"
-        android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
-
     <!-- End Game Button -->
+
+
     <Button
         android:id="@+id/endGameButton"
         android:layout_width="wrap_content"

@@ -13,22 +13,17 @@ public class ScoreboardActivity extends AppCompatActivity{
     private TextView player1ScoreText;
     private TextView player2ScoreText;
     private TextView player3ScoreText;
-    private TextView player4ScoreText;
     private Button endGameButton;
 
     // Scores
     private int player1Score = 0;
     private int player2Score = 0;
     private int player3Score = 0;
-    private int player4Score = 0;
-
 
     // Game state
     private boolean player1Active = true;
     private boolean player2Active = true;
     private boolean player3Active = true;
-    private boolean player4Active = true;
-
 
     // Timer
     private CountDownTimer gameTimer;
@@ -44,7 +39,6 @@ public class ScoreboardActivity extends AppCompatActivity{
         player1ScoreText = findViewById(R.id.player1Score);
         player2ScoreText = findViewById(R.id.player2Score);
         player3ScoreText = findViewById(R.id.player3Score);
-        player4ScoreText = findViewById(R.id.player4Score);
         endGameButton = findViewById(R.id.endGameButton);
 
         // Set up end game button click listener
@@ -70,14 +64,12 @@ public class ScoreboardActivity extends AppCompatActivity{
                 if (player1Active) player1Score++;
                 if (player2Active) player2Score++;
                 if (player3Active) player3Score++;
-                if (player4Active) player4Score++;
 
 
                 // Update score displays
                 player1ScoreText.setText("Player 1: " + player1Score);
                 player2ScoreText.setText("Player 2: " + player2Score);
                 player3ScoreText.setText("Player 3: " + player3Score);
-                player4ScoreText.setText("Player 4: " + player4Score);
 
             }
             @Override
@@ -103,8 +95,6 @@ public class ScoreboardActivity extends AppCompatActivity{
             winnerMessage += "Player 2 wins!";
         } else if (player3Score > player1Score && player3Score > player2Score) {
             winnerMessage += "Player 3 wins!";
-        } else if (player4Score > player1Score && player4Score > player2Score) {
-            winnerMessage += "Player 4 wins!";
         } else {
             winnerMessage += "It's a tie!";
         }
@@ -124,9 +114,6 @@ public class ScoreboardActivity extends AppCompatActivity{
                 break;
             case 3:
                 player3Active = false;
-                break;
-            case 4:
-                player4Active = false;
                 break;
         }
     }
