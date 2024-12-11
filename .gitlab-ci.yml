@@ -10,7 +10,7 @@ maven-build:
   tags:                 # to specify which runner to execute this job
     - springboot_runner    # changed this from springboot_tag to springboot_runner since i named it that in root
   script:               # what to execute for this job
-    - cd 2_mstafa_2//Backend//Multilayer_DK      # change 'backend' to to where you have the pom.xml (do not add / in the beginning)
+    - cd C://users//samue//2_mstafa_2//Backend//Multilayer_DK      # change 'backend' to to where you have the pom.xml (do not add / in the beginning)
     - mvn package       # maven package
   artifacts:            # where to output the packaged jar file, change 'Backend' to to where you have the pom.xml
     paths:
