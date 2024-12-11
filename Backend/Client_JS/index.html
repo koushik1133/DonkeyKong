@@ -1,39 +1,10 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-  <title>Donkey Kong</title>
+    <title>WebSocket Position Sender</title>
+    <script src="app.js" defer></script>
 </head>
-
 <body>
-  <table style="width: 100%">
-    <tr>
-      <td>
-        <input type="text" id="wsserver"
-	style = "width: 15rem;"
-        placeholder="ws://localhost:8080/chat/"
-	value ="ws://localhost:8080/chat/"	
-/>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="text" id="username" style:"width=100%;" placeholder="Username" />
-        <button type="button" onclick="connect();">Connect</button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <textarea readonly="true" rows="10" cols="80" id="log"></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input type="text" size="51" id="msg" placeholder="Message" />
-        <button type="button" onclick="send();">Send</button>
-      </td>
-    </tr>
-  </table>
+<h1>WebSocket Position Sender</h1>
 </body>
-<script src="websocket.js"></script>
-
 </html>

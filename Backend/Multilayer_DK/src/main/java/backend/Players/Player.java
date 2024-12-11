@@ -84,4 +84,11 @@ public class Player {
     @Getter
     @Setter
     private int finalscore;
+
+    public void setXPosition(int x) {
+        this.playerX = x;
+    }
+    public void setYPosition(int y) {
+        this.playerY = y;
+    }
 }
