@@ -349,10 +349,9 @@ public class LevelActivity extends AppCompatActivity {
     private int player1Score = 0;
     private int player2Score = 0;
     private int player3Score = 0;
-    private int player4Score = 0;
     private long startTime = System.currentTimeMillis();
     private ImageView barrelModel, bombModel, bulletModel, explosion1, explosion2, explosion3, explosion4, explosion5, explosion6, explosion7;
-    private RectF player1Hitbox, player2Hitbox, player3Hitbox, player4Hitbox;
+    private RectF player1Hitbox, player2Hitbox, player3Hitbox;
     private ImageView scoreIncrease1, scoreIncrease2;
     private RectF bombHitbox, barrelHitbox, bulletHitbox, scoreIncrease1Hitbox, scoreIncrease2Hitbox, explosionHitbox;
 
@@ -362,7 +361,6 @@ public class LevelActivity extends AppCompatActivity {
         player1Hitbox = new RectF(player1.getX(), player1.getY(), player1.getX() + player1.getWidth(), player1.getY() + player1.getHeight());
         player2Hitbox = new RectF(player2.getX(), player2.getY(), player2.getX() + player2.getWidth(), player2.getY() + player2.getHeight());
         player3Hitbox = new RectF(player3.getX(), player3.getY(), player3.getX() + player3.getWidth(), player3.getY() + player3.getHeight());
-        player4Hitbox = new RectF(player4.getX(), player4.getY(), player4.getX() + player4.getWidth(), player4.getY() + player4.getHeight());
 
         // Initialize bomb hitbox
         bombHitbox = new RectF(bombModel.getX(), bombModel.getY(), bombModel.getX() + bombModel.getWidth(), bombModel.getY() + bombModel.getHeight());
@@ -395,7 +393,6 @@ public class LevelActivity extends AppCompatActivity {
         player1Score = 120 - remainingTime;
         player2Score = 120 - remainingTime;
         player3Score = 120 - remainingTime;
-        player4Score = 120 - remainingTime;
 
         // Check for collisions and update scores
         if (isColliding(player1Hitbox, barrelModel)) {
@@ -414,49 +411,34 @@ public class LevelActivity extends AppCompatActivity {
             player1Score += 10;
         }
         if (isColliding(player2Hitbox, barrelModel)) {
-            player1Score -= 5;
+            player2Score -= 5;
         }
         if (isColliding(player2Hitbox, bulletModel)) {
-            player1Score -= 10;
+            player2Score -= 10;
         }
         if (isColliding(player2Hitbox, explosion4)) {
-            player1Score -= 15;
+            player2Score -= 15;
         }
         if (isColliding(player2Hitbox, scoreIncrease1)) {
-            player1Score += 5;
+            player2Score += 5;
         }
         if (isColliding(player2Hitbox, scoreIncrease2)) {
-            player1Score += 10;
+            player2Score += 10;
         }
         if (isColliding(player3Hitbox, barrelModel)) {
-            player1Score -= 5;
+            player3Score -= 5;
         }
         if (isColliding(player3Hitbox, bulletModel)) {
-            player1Score -= 10;
+            player3Score -= 10;
         }
         if (isColliding(player3Hitbox, explosion4)) {
-            player1Score -= 15;
+            player3Score -= 15;
         }
         if (isColliding(player3Hitbox, scoreIncrease1)) {
-            player1Score += 5;
+            player3Score += 5;
         }
         if (isColliding(player3Hitbox, scoreIncrease2)) {
-            player1Score += 10;
-        }
-        if (isColliding(player4Hitbox, barrelModel)) {
-            player1Score -= 5;
-        }
-        if (isColliding(player4Hitbox, bulletModel)) {
-            player1Score -= 10;
-        }
-        if (isColliding(player4Hitbox, explosion4)) {
-            player1Score -= 15;
-        }
-        if (isColliding(player4Hitbox, scoreIncrease1)) {
-            player1Score += 5;
-        }
-        if (isColliding(player4Hitbox, scoreIncrease2)) {
-            player1Score += 10;
+            player3Score += 10;
         }
     }
 }
